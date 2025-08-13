@@ -2,6 +2,12 @@ import { useState, useEffect } from 'react'
 import './App.css'
 import liff from '@line/liff'
 
+type Profile = {
+  userId: string
+  displayName: string
+  pictureUrl: string
+  statusMessage?: string
+}
 
 function App() {
   const [profile, setProfile] = useState<Profile | null>(null)
