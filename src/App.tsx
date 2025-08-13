@@ -13,7 +13,7 @@ function App() {
   const [profile, setProfile] = useState<Profile | null>(null)
 
   useEffect(() => {
-    liff.init({ liffId: '2007750755-JNQLOKwl' })
+    liff.init({ liffId: '2007750755-nv6wlyNZ' })
       .then(() => {
         if (liff.isLoggedIn()) {
 
