@@ -56,7 +56,7 @@ function App() {
 
                     <div className="border-t-10 border-white"></div>
 
-                    <div className="px-6 py-4 pb-16 text-black bg-gradient-to-b from-[#2D1406] to-[#4C2B00]">
+                    <div className="px-6 py-4 pb-16 text-yellow-100 bg-gradient-to-b from-[#2D1406] to-[#4C2B00]">
                         <div className="text-left">
                             <p className="font-semibold text-lg">Username: {profile?.displayName}</p>
                             <p className="text-sm">User ID: {profile?.userId}</p>
