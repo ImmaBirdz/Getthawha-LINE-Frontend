@@ -1,3 +1,50 @@
+@font-face {
+  font-family: 'Artifika';
+  src: url('/fonts/Artifika-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.font-artifika {
+    font-family: 'Artifika', sans-serif;
+}
+
+@font-face {
+  font-family: 'Arya';
+  src: url('/fonts/Arya-Regular.ttf') format('truetype'),
+       url('/fonts/Arya-Bold.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.font-arya {
+    font-family: 'Arya', sans-serif;
+}
+
+@font-face {
+  font-family: 'Tiro Gurmukhi';
+  src: url('/fonts/TiroGurmukhi-Regular.ttf') format('truetype'),
+       url('/fonts/TiroGurmukhi-Italic.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.font-tiroGurmukhi {
+    font-family: 'Tiro Gurmukhi', sans-serif;
+}
+
+@font-face {
+  font-family: 'Tiro Tamil';
+  src: url('/fonts/TiroTamil-Regular.ttf') format('truetype'),
+       url('/fonts/TiroTamil-Italic.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.font-tiroTamil {
+    font-family: 'Tiro Tamil', sans-serif;
+}
+
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
