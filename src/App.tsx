@@ -43,11 +43,11 @@ function App() {
 return (
   profile ? (
     <div className="App">
-      <div className="w-[360px] min-h-screen bg-gradient-to-b from-[#5c2500] to-[#d59700] flex flex-col">
+      <div className="m-0 w-[360px] min-h-screen bg-gradient-to-b from-[#5c2500] to-[#d59700] flex flex-col">
         
         {/* Header */}
         <div className="p-2">
-          <div className="text-[25px] text-yellow-300 ">GETTHAWHA</div>
+          <div className="text-[30px] text-yellow-300 ">GETTHAWHA</div>
           <div className="text-[15px] text-yellow-200 relative bottom-2 ">THAI MASSAGE</div>
         </div>
 
