@@ -49,7 +49,8 @@ function App() {
     return (
         profile ? (
             <div className="App">
-                <div className="m-0 w-[360px] min-h-screen bg-gradient-to-b from-[#2D1406] to-[#4C2B00] flex flex-col relative">
+               <div className="m-0 w-[360px] min-h-screen bg-[linear-gradient(90deg,#2D1406_29%,#4C2B00_75%)] flex flex-col relative">
+
 
             {/* img left top corner */}
             <img src={border1} alt="Left Top"  className="absolute top-0 left-0 w-16 h-16" />
@@ -65,7 +66,8 @@ function App() {
 
                     <div className="border-t-10 border-white"></div>
 
-                    <div className="px-6 py-4 pb-16 text-[#B9A43B] bg-gradient-to-b from-[#2D1406] to-[#4C2B00]">
+                  <div className="px-6 py-4 pb-16 text-[#D49F00] bg-[linear-gradient(90deg,#2D1406_25%,#734B00_100%)]">
+
                         <div className="text-left">
                             <p className="font-semibold text-lg font-tiroGurmukhi">Username: {profile?.displayName}</p>
                             <p className="text-sm font-tiroGurmukhi">User ID: {profile?.userId}</p>
