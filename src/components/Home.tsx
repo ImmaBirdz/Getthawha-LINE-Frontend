@@ -4,6 +4,9 @@ import {
 } from 'react'
 import '../App.css'
 import liff from '@line/liff'
+import border1 from '../assets/border1.png'
+import border2 from '../assets/border2.png'
+
 
 type Profile = {
     userId: string
@@ -46,7 +49,13 @@ function App() {
     return (
         profile ? (
             <div className="App">
-                <div className="m-0 w-[360px] min-h-screen bg-gradient-to-b from-[#2D1406] to-[#4C2B00] flex flex-col">
+                <div className="m-0 w-[360px] min-h-screen bg-gradient-to-b from-[#2D1406] to-[#4C2B00] flex flex-col relative">
+
+            {/* img left top corner */}
+            <img src={border1} alt="Left Top"  className="absolute top-0 left-0 w-16 h-16" />
+
+            {/* img right top corner */}
+            <img src={border2} alt="Right Top" className="absolute top-0 right-0 w-16 h-16" />
 
                     {/* Header */}
                     <div className="p-2">
