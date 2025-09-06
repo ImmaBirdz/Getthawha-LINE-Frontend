@@ -50,17 +50,17 @@ function App() {
 
                     {/* Header */}
                     <div className="p-2">
-                        <div className="text-[30px] text-yellow-300 ">GETTHAWHA</div>
-                        <div className="text-[15px] text-yellow-200 relative bottom-2 ">THAI MASSAGE</div>
+                        <div className="text-[30px] text-[#DEC33A] font-artifika">GETTHAWHA</div>
+                        <div className="text-[20px] text-[#B9A43B] relative bottom-2 font-arya">THAI MASSAGE</div>
                     </div>
 
                     <div className="border-t-10 border-white"></div>
 
-                    <div className="px-6 py-4 pb-16 text-yellow-100 bg-gradient-to-b from-[#2D1406] to-[#4C2B00]">
+                    <div className="px-6 py-4 pb-16 text-[#B9A43B] bg-gradient-to-b from-[#2D1406] to-[#4C2B00]">
                         <div className="text-left">
-                            <p className="font-semibold text-lg">Username: {profile?.displayName}</p>
-                            <p className="text-sm">User ID: {profile?.userId}</p>
-                            <p className="text-sm">Detail</p>
+                            <p className="font-semibold text-lg font-tiroGurmukhi">Username: {profile?.displayName}</p>
+                            <p className="text-sm font-tiroGurmukhi">User ID: {profile?.userId}</p>
+                            <p className="text-sm font-tiroGurmukhi">Detail</p>
                             {/* Booking */}
                             <button className="mt-2 bg-white text-gray-700 text-xs py-2 w-full rounded-b-2xl">View Booking</button>
                         </div>
@@ -97,17 +97,6 @@ function App() {
                             </button>
                         </li>
                     </ul>
-
-                    {/* show line id and user profile */}
-                    {/* {profile ? (
-          <>
-            <p>LINE ID: {profile.userId}</p>
-            <p>Name: {profile.displayName}</p>
-            <img src={profile.pictureUrl} alt="Profile" />
-          </>
-        ) : (
-          <p>Loading profile...</p>
-        )} */}
                 </div>
             </div>
         ) : (
