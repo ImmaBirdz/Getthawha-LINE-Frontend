@@ -9,6 +9,7 @@ type Profile = {
     userId: string
     displayName: string
     pictureUrl: string
+    email?: string
     statusMessage?: string
 }
 
@@ -37,11 +38,22 @@ const ProfileProvider = (props: React.PropsWithChildren<{}>) => {
                         console.log('ID Token:', idToken)
 
                         liff.getProfile().then(profile => {
+                            // Decode email from idToken (JWT)
+                            let email = '';
+                            if (idToken) {
+                                try {
+                                    const payload = JSON.parse(atob(idToken.split('.')[1]));
+                                    email = payload.email || '';
+                                } catch (e) {
+                                    console.error('Error decoding ID token:', e);
+                                }
+                            }
                             setProfile({
                                 userId: profile.userId,
                                 displayName: profile.displayName,
                                 pictureUrl: profile.pictureUrl ?? '',
                                 statusMessage: profile.statusMessage,
+                                email,
                             })
                             console.log('User profile:', profile)
                         }).catch(err => {

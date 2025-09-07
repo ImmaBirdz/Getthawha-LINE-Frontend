@@ -12,6 +12,7 @@ import edit from '../assets/edit.png'
 //     userId: string
 //     displayName: string
 //     pictureUrl: string
+//     email?: string
 //     statusMessage?: string
 //     phone?: string
 //     birthday?: string
@@ -70,6 +71,7 @@ function App() {
                             <img src={edit} alt="Edit" className="relative top-0 left-4 w-6 h-6 cursor-pointer" />
                         </div>
                         <p className="text-sm font-tiroTamil">User ID: {profile?.userId}</p>
+                        <p className="text-sm font-tiroTamil">Email: {profile?.email}</p>
                         <p className="text-sm font-tiroTamil">Phone:
                             {/* {profile?.phone} */}
                             </p>
