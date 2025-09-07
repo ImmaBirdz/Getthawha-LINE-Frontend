@@ -79,7 +79,8 @@ function App() {
 
                     </div>
                     {/* Booking */}
-                    <button className="mt-2 bg-white text-gray-700 text-xs w-full rounded-b-2xl font-tiroGurmukhi"> View Booking </button>
+                    <button className="mt-2 bg-white text-gray-700 text-xs w-full rounded-b-2xl font-tiroGurmukhi"
+                    onClick={() => { window.location.href = '/mybooking' }}> View Booking </button>
                 </div>
 
                 <div className="border-t-10 border-white"></div>
@@ -88,6 +89,18 @@ function App() {
                 {/* list of my coupon */}
                 {/* if not, show "no coupon available" */}
                 <ul className="flex flex-col gap-4 p-6 list-none">
+                    <li className="bg-rose-300 rounded-2xl shadow-md flex flex-col justify-center items-center h-32">
+                        <div className="flex">Sample Coupon</div>
+                        {/* <button className="bg-white text-gray-700 text-xs py-2 w-full rounded-b-2xl">
+                            use coupon
+                        </button> */}
+                    </li>
+                    <li className="bg-rose-300 rounded-2xl shadow-md flex flex-col justify-center items-center h-32">
+                        <div className="flex">Sample Coupon</div>
+                        {/* <button className="bg-white text-gray-700 text-xs py-2 w-full rounded-b-2xl">
+                            use coupon
+                        </button> */}
+                    </li>
                     <li className="bg-rose-300 rounded-2xl shadow-md flex flex-col justify-center items-center h-32">
                         <div className="flex">Sample Coupon</div>
                         {/* <button className="bg-white text-gray-700 text-xs py-2 w-full rounded-b-2xl">
