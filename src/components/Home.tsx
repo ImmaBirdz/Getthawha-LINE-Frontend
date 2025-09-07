@@ -18,7 +18,7 @@ import edit from '../assets/edit.png'
 // }
 
 function App() {
-    const { profile } = useContext(ProfileContext)
+    const { profile, isLiffLoaded } = useContext(ProfileContext)
 
     // const [profile, setProfile] = useState<Profile | null>(null);
 
@@ -54,6 +54,7 @@ function App() {
 
     return (
         // profile ? (
+        isLiffLoaded ? (
         <div className="App">
             <div className="m-0 w-[360px] min-h-screen bg-[linear-gradient(90deg,#4C2B00_0%,#2D1406_100%)] flex flex-col relative">
 
@@ -117,11 +118,11 @@ function App() {
                 </ul>
             </div>
         </div>
-        // ) : (
-        //     <div className="w-[360px] min-h-screen bg-gradient-to-b from-[#5c2500] to-[#d59700] flex flex-col items-center justify-center">
-        //         <p>Loading profile...</p>
-        //     </div>
-        // )
+        ) : (
+            <div className="w-[360px] min-h-screen bg-gradient-to-b from-[#5c2500] to-[#d59700] flex flex-col items-center justify-center">
+                <p>Loading profile...</p>
+            </div>
+        )
     );
 }
 export default App
