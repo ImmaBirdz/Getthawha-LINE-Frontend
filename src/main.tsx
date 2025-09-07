@@ -1,11 +1,14 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import './index.css'
-import App from './App.tsx'
-import '../global.css'
+import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
+import '../global.css';
+import App from './App.tsx';
+import { ProfileProvider } from './context/ProfileContext';
+import './index.css';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <App />
+    <ProfileProvider>
+      <App />
+    </ProfileProvider>
   </StrictMode>,
 )
