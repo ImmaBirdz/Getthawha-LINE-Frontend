@@ -7,15 +7,15 @@ import Home from './components/Home'
 function App() {
   // const profile = false; // or true, depending on your logic
 
-return (
-  <BrowserRouter>
-    <Routes>
-      <Route path="/" element={<Home />} />
-      {/* <Route path="/mybooking" element={<Booking />} /> */}
-      {/* <Route path="/mybooking/:{booking-id}" element={<Modal />} /> */}
-    </Routes>
+  return (
     // profile ? (
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          {/* <Route path="/mybooking" element={<Booking />} /> */}
           {/* <Route path="/mycoupon/:couponId" element={<CouponModal />} /> */}
+        </Routes>
+      </BrowserRouter>
 
       // wait for main website api to check if user is registered
     // ) : (
