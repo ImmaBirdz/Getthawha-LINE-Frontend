@@ -4,7 +4,7 @@ import {
   Route
 } from 'react-router-dom'
 import { useContext } from 'react'
-import { ProfileContext } from './context/ProfileContext'
+// import { ProfileContext } from './context/ProfileContext'
 import Header from './components/Header'
 import Home from './components/Home'
 // import Register from './components/Register'
@@ -12,12 +12,12 @@ import Booking from './components/Booking'
 // import CouponModal from './components/CouponModal'
 
 function App() {
-  // const profile = false; // for testing
-  const { profile, isLiffLoaded } = useContext(ProfileContext);
+  const profile = false; // for testing
+  // const { profile, isLiffLoaded } = useContext(ProfileContext);
 
   return (
     profile
-    && isLiffLoaded
+    // && isLiffLoaded
     ? (
       <BrowserRouter>
       <Header />
