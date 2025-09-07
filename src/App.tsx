@@ -1,14 +1,21 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import {
+  BrowserRouter,
+  Routes,
+  Route
+} from 'react-router-dom'
+import { useContext } from 'react'
+import { ProfileContext } from './context/ProfileContext'
 import Home from './components/Home'
 // import Register from './components/Register'
 // import Booking from './components/Booking'
 // import CouponModal from './components/CouponModal'
 
 function App() {
-  // const profile = false; // or true, depending on your logic
+  // const profile = false; // for testing
+  const { profile, isLiffLoaded } = useContext(ProfileContext);
 
   return (
-    // profile ? (
+    profile && isLiffLoaded ? (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />
@@ -18,13 +25,16 @@ function App() {
       </BrowserRouter>
 
       // wait for main website api to check if user is registered
-    // ) : (
-    //   <BrowserRouter>
-    //     <Routes>
-    //       <Route path="/" element={<Register />} />
-    //     </Routes>
-    //   </BrowserRouter>
-    // )
+    ) : (
+      <BrowserRouter>
+        <Routes>
+          {/* <Route path="/" element={<Register />} /> */}
+
+          {/* Temporary: direct to Home for testing */}
+          <Route path="/" element={<Home />} />
+        </Routes>
+      </BrowserRouter>
+    )
   );
 }
 export default App

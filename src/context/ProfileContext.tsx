@@ -15,13 +15,18 @@ type Profile = {
 const ProfileContext = createContext<{
     profile: Profile | null;
     setProfile: React.Dispatch<React.SetStateAction<Profile | null>>;
+    isLiffLoaded: boolean;
+    setIsLiffLoaded: React.Dispatch<React.SetStateAction<boolean>>;
 }>({
     profile: null,
     setProfile: () => {},
+    isLiffLoaded: false,
+    setIsLiffLoaded: () => {},
 });
 
 const ProfileProvider = (props: React.PropsWithChildren<{}>) => {
     const [profile, setProfile] = useState<Profile | null>(null)
+    const [isLiffLoaded, setIsLiffLoaded] = useState(false);
 
     useEffect(() => {
         const initLiff = async () => {
@@ -49,6 +54,7 @@ const ProfileProvider = (props: React.PropsWithChildren<{}>) => {
                 .catch(err => {
                     console.error('LIFF initialization failed:', err)
                 })
+            setIsLiffLoaded(true);
         }
         initLiff();
     }, [])
@@ -56,7 +62,9 @@ const ProfileProvider = (props: React.PropsWithChildren<{}>) => {
     return (
         <ProfileContext.Provider value={{
             profile,
-            setProfile
+            setProfile,
+            isLiffLoaded,
+            setIsLiffLoaded
         }}>
             {props.children}
         </ProfileContext.Provider>
