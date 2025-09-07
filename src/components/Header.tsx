@@ -3,7 +3,7 @@ import border2 from '../assets/border2.png';
 
 function Header() {
     return (
-        <div className="m-0 w-[360px] h-[10vh] bg-[linear-gradient(90deg,#4C2B00_0%,#2D1406_100%)] flex flex-col relative">
+        <div className="m-0 w-[360px] h-fit bg-[linear-gradient(90deg,#4C2B00_0%,#2D1406_100%)] flex flex-col relative">
             {/* Thai pattern at the top corner */}
             <img src={border1} alt="Left Top" className="absolute top-0 left-0 w-16 h-16" />
             <img src={border2} alt="Right Top" className="absolute top-0 right-0 w-16 h-16" />
