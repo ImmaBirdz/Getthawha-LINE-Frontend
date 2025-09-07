@@ -42,7 +42,17 @@ const ProfileProvider = (props: React.PropsWithChildren<{}>) => {
                             let email = '';
                             if (idToken) {
                                 try {
-                                    const payload = JSON.parse(atob(idToken.split('.')[1]));
+                                    // Decode JWT payload safely
+                                    const base64 = idToken.split('.')[1].replace(/-/g, '+').replace(/_/g, '/');
+                                    const jsonPayload = decodeURIComponent(
+                                        atob(base64)
+                                            .split('')
+                                            .map(function(c) {
+                                                return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+                                            })
+                                            .join('')
+                                    );
+                                    const payload = JSON.parse(jsonPayload);
                                     email = payload.email || '';
                                 } catch (e) {
                                     console.error('Error decoding ID token:', e);
@@ -53,7 +63,7 @@ const ProfileProvider = (props: React.PropsWithChildren<{}>) => {
                                 displayName: profile.displayName,
                                 pictureUrl: profile.pictureUrl ?? '',
                                 statusMessage: profile.statusMessage,
-                                email,
+                                email: email,
                             })
                             console.log('User profile:', profile)
                         }).catch(err => {
