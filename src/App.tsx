@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Home from './components/Home'
 // import Booking from './components/Booking'
-// import Modal from './components/Modal'
+// import CouponModal from './components/CouponModal'
 
 function App() {
 
@@ -12,6 +12,7 @@ return (
       {/* <Route path="/mybooking" element={<Booking />} /> */}
       {/* <Route path="/mybooking/:{booking-id}" element={<Modal />} /> */}
     </Routes>
+          {/* <Route path="/mycoupon/:couponId" element={<CouponModal />} /> */}
 
   </BrowserRouter>
 );
