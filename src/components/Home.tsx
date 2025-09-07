@@ -13,10 +13,15 @@ import edit from '../assets/edit.png'
 //     displayName: string
 //     pictureUrl: string
 //     statusMessage?: string
+//     phone?: string
+//     birthday?: string
 // }
 
 function App() {
-    const { profile, isLiffLoaded } = useContext(ProfileContext)
+    const {
+        profile,
+        isLiffLoaded
+    } = useContext(ProfileContext)
 
     // const [profile, setProfile] = useState<Profile | null>(null);
 
@@ -51,7 +56,9 @@ function App() {
     // }, [])
 
     return (
-        // profile ? (
+        profile
+        // ? (
+        &&
         isLiffLoaded ? (
         <div className="App">
             <div className="m-0 w-[360px] min-h-[90vh] bg-[linear-gradient(90deg,#4C2B00_0%,#2D1406_100%)] flex flex-col relative">
@@ -62,8 +69,13 @@ function App() {
                             <p className="font-semibold text-lg font-tiroGurmukhi"> Username: {profile?.displayName} </p>
                             <img src={edit} alt="Edit" className="relative top-0 left-4 w-6 h-6 cursor-pointer" />
                         </div>
-                        <p className="text-sm font-tiroGurmukhi">User ID: {profile?.userId}</p>
-                        <p className="text-sm font-tiroGurmukhi">Detail</p>
+                        <p className="text-sm font-tiroTamil">User ID: {profile?.userId}</p>
+                        <p className="text-sm font-tiroTamil">Phone:
+                            {/* {profile?.phone} */}
+                            </p>
+                        <p className="text-sm font-tiroTamil">BD:
+                            {/* {profile?.birthday} */}
+                            </p>
 
                     </div>
                     {/* Booking */}
