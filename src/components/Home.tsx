@@ -63,7 +63,7 @@ function App() {
         isLiffLoaded ? (
         <div className="App">
             <div className="m-0 w-[360px] min-h-[90vh] bg-[linear-gradient(90deg,#4C2B00_0%,#2D1406_100%)] flex flex-col relative">
-                <div className="px-6 py-4 text-[#D49F00] bg-[linear-gradient(90deg,#4C2B00_0%,#2D1406_100%)] justify-evenly">
+                <div className="px-6 py-4 text-[#D49F00] bg-[linear-gradient(90deg,#4C2B00_0%,#2D1406_100%)] justify-evenly ">
                     <div className="text-left pb-8">
                         {/* Username + Edit icon */}
                         <div className="flex items-center justify-between">
@@ -81,7 +81,7 @@ function App() {
 
                     </div>
                     {/* Booking */}
-                    <button className="mt-2 bg-white text-gray-700 text-xs w-full rounded-b-2xl font-tiroGurmukhi"
+                    <button className="mt-2 bg-white text-gray-700 text-xs rounded-b-2xl font-tiroGurmukhi w-auto self-start"
                     onClick={() => { window.location.href = '/mybooking' }}> View Booking </button>
                 </div>
 
@@ -91,38 +91,44 @@ function App() {
                 {/* list of my coupon */}
                 {/* if not, show "no coupon available" */}
                 <ul className="flex flex-col gap-4 p-6 list-none">
-                    <li className="bg-rose-300 rounded-2xl shadow-md flex flex-col justify-center items-center h-32">
-                        <div className="flex">Sample Coupon</div>
+                    <li className="bg-white rounded-2xl shadow-md flex flex-col justify-center items-center h-32">
+                        <div className="flex text-black">Sample Coupon</div>
                         {/* <button className="bg-white text-gray-700 text-xs py-2 w-full rounded-b-2xl">
                             use coupon
                         </button> */}
                     </li>
-                    <li className="bg-rose-300 rounded-2xl shadow-md flex flex-col justify-center items-center h-32">
-                        <div className="flex">Sample Coupon</div>
+                    <li className="bg-white rounded-2xl shadow-md flex flex-col justify-center items-center h-32">
+                        <div className="flex text-black">Sample Coupon</div>
                         {/* <button className="bg-white text-gray-700 text-xs py-2 w-full rounded-b-2xl">
                             use coupon
                         </button> */}
                     </li>
-                    <li className="bg-rose-300 rounded-2xl shadow-md flex flex-col justify-center items-center h-32">
-                        <div className="flex">Sample Coupon</div>
+                    <li className="bg-white rounded-2xl shadow-md flex flex-col justify-center items-center h-32">
+                        <div className="flex text-black">Sample Coupon</div>
                         {/* <button className="bg-white text-gray-700 text-xs py-2 w-full rounded-b-2xl">
                             use coupon
                         </button> */}
                     </li>
-                    <li className="bg-rose-300 rounded-2xl shadow-md flex flex-col justify-center items-center h-32">
-                        <div className="flex">Sample Coupon</div>
+                    <li className="bg-white rounded-2xl shadow-md flex flex-col justify-center items-center h-32">
+                        <div className="flex text-black">Sample Coupon</div>
                         {/* <button className="bg-white text-gray-700 text-xs py-2 w-full rounded-b-2xl">
                             use coupon
                         </button> */}
                     </li>
-                    <li className="bg-rose-300 rounded-2xl shadow-md flex flex-col justify-center items-center h-32">
-                        <div className="flex">Sample Coupon</div>
+                    <li className="bg-white rounded-2xl shadow-md flex flex-col justify-center items-center h-32">
+                        <div className="flex text-black">Sample Coupon</div>
                         {/* <button className="bg-white text-gray-700 text-xs py-2 w-full rounded-b-2xl">
                             use coupon
                         </button> */}
                     </li>
-                    <li className="bg-rose-300 rounded-2xl shadow-md flex flex-col justify-center items-center h-32">
-                        <div className="flex">Sample Coupon</div>
+                    <li className="bg-white rounded-2xl shadow-md flex flex-col justify-center items-center h-32">
+                        <div className="flex text-black">Sample Coupon</div>
+                        {/* <button className="bg-white text-gray-700 text-xs py-2 w-full rounded-b-2xl">
+                            use coupon
+                        </button> */}
+                    </li>
+                    <li className="bg-white rounded-2xl shadow-md flex flex-col justify-center items-center h-32">
+                        <div className="flex text-black">Sample Coupon</div>
                         {/* <button className="bg-white text-gray-700 text-xs py-2 w-full rounded-b-2xl">
                             use coupon
                         </button> */}

@@ -1,17 +1,21 @@
 import Calendar from '../assets/calendar.png';
 import Clock from '../assets/clock.png';
 import Location from '../assets/location.png';
+import Backtohomepage from '../assets/backhome.png';
 
 
 function Booking() {
   const hasBooking = true; // change to false to test no booking case
 
   return (
-    <div className="m-0 w-[360px] min-h-[90vh] bg-[linear-gradient(90deg,#4C2B00_0%,#2D1406_100%)] flex flex-col items-center justify-start p-4">
+    <div className="m-0 w-[360px] min-h-[90vh] bg-[linear-gradient(90deg,#4C2B00_0%,#2D1406_100%)] flex flex-col items-center justify-start px-4 pt-2 pb-4">
       {hasBooking ? (
         <div className="flex flex-col items-center gap-4 w-full">
-          {/* Title */}
-          <div className="text-[#FFD633] text-2xl font-tiroTamil mt-6">Your Bookings</div>
+          {/* Header with back button and title */}
+          <div className="flex items-center justify-center w-full relative mt-2">
+            <img  src={Backtohomepage} alt="Back to Home"  className="absolute left-0 w-6 h-6 cursor-pointer hover:scale-110 hover:opacity-80 transition-all duration-200"  onClick={() => { window.location.href = '/' }} />
+            <div className="text-[#FFD633] text-2xl font-tiroTamil">Your Bookings</div>
+          </div>
 
         {/* Booking list */}
         <ul className="flex flex-col gap-4 w-full px-4 list-none">
