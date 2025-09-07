@@ -5,6 +5,7 @@ import {
 } from 'react-router-dom'
 import { useContext } from 'react'
 import { ProfileContext } from './context/ProfileContext'
+import Header from './components/Header'
 import Home from './components/Home'
 // import Register from './components/Register'
 // import Booking from './components/Booking'
@@ -17,6 +18,7 @@ function App() {
   return (
     profile && isLiffLoaded ? (
       <BrowserRouter>
+      <Header />
         <Routes>
           <Route path="/" element={<Home />} />
           {/* <Route path="/mybooking" element={<Booking />} /> */}
@@ -27,6 +29,7 @@ function App() {
       // wait for main website api to check if user is registered
     ) : (
       <BrowserRouter>
+      <Header />
         <Routes>
           {/* <Route path="/" element={<Register />} /> */}
 
