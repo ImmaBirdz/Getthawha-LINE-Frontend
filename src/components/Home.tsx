@@ -6,8 +6,6 @@ import { useContext } from 'react'
 // import liff from '@line/liff'
 import '../App.css'
 import { ProfileContext } from '../context/ProfileContext'
-import border1 from '../assets/border1.png'
-import border2 from '../assets/border2.png'
 import edit from '../assets/edit.png'
 
 // type Profile = {
@@ -15,10 +13,15 @@ import edit from '../assets/edit.png'
 //     displayName: string
 //     pictureUrl: string
 //     statusMessage?: string
+//     phone?: string
+//     birthday?: string
 // }
 
 function App() {
-    const { profile, isLiffLoaded } = useContext(ProfileContext)
+    const {
+        profile,
+        isLiffLoaded
+    } = useContext(ProfileContext)
 
     // const [profile, setProfile] = useState<Profile | null>(null);
 
@@ -53,23 +56,12 @@ function App() {
     // }, [])
 
     return (
-        // profile ? (
+        profile
+        // ? (
+        &&
         isLiffLoaded ? (
         <div className="App">
-            <div className="m-0 w-[360px] min-h-screen bg-[linear-gradient(90deg,#4C2B00_0%,#2D1406_100%)] flex flex-col relative">
-
-                {/* Thai pattern at the top corner */}
-                <img src={border1} alt="Left Top" className="absolute top-0 left-0 w-16 h-16" />
-                <img src={border2} alt="Right Top" className="absolute top-0 right-0 w-16 h-16" />
-
-                {/* Header */}
-                <div className="p-2">
-                    <div className="text-[30px] text-[#DEC33A] font-artifika">GETTHAWHA</div>
-                    <div className="text-[20px] text-[#B9A43B] relative bottom-2 font-arya">THAI MASSAGE</div>
-                </div>
-
-                <div className="border-t-10 border-white"></div>
-
+            <div className="m-0 w-[360px] min-h-[90vh] bg-[linear-gradient(90deg,#4C2B00_0%,#2D1406_100%)] flex flex-col relative">
                 <div className="px-6 py-4 text-[#D49F00] bg-[linear-gradient(90deg,#4C2B00_0%,#2D1406_100%)] justify-evenly">
                     <div className="text-left pb-8">
                         {/* Username + Edit icon */}
@@ -77,12 +69,18 @@ function App() {
                             <p className="font-semibold text-lg font-tiroGurmukhi"> Username: {profile?.displayName} </p>
                             <img src={edit} alt="Edit" className="relative top-0 left-4 w-6 h-6 cursor-pointer" />
                         </div>
-                        <p className="text-sm font-tiroGurmukhi">User ID: {profile?.userId}</p>
-                        <p className="text-sm font-tiroGurmukhi">Detail</p>
+                        <p className="text-sm font-tiroTamil">User ID: {profile?.userId}</p>
+                        <p className="text-sm font-tiroTamil">Phone:
+                            {/* {profile?.phone} */}
+                            </p>
+                        <p className="text-sm font-tiroTamil">BD:
+                            {/* {profile?.birthday} */}
+                            </p>
 
                     </div>
                     {/* Booking */}
-                    <button className="mt-2 bg-white text-gray-700 text-xs w-full rounded-b-2xl font-tiroGurmukhi"> View Booking </button>
+                    <button className="mt-2 bg-white text-gray-700 text-xs w-full rounded-b-2xl font-tiroGurmukhi"
+                    onClick={() => { window.location.href = '/mybooking' }}> View Booking </button>
                 </div>
 
                 <div className="border-t-10 border-white"></div>
@@ -91,6 +89,18 @@ function App() {
                 {/* list of my coupon */}
                 {/* if not, show "no coupon available" */}
                 <ul className="flex flex-col gap-4 p-6 list-none">
+                    <li className="bg-rose-300 rounded-2xl shadow-md flex flex-col justify-center items-center h-32">
+                        <div className="flex">Sample Coupon</div>
+                        {/* <button className="bg-white text-gray-700 text-xs py-2 w-full rounded-b-2xl">
+                            use coupon
+                        </button> */}
+                    </li>
+                    <li className="bg-rose-300 rounded-2xl shadow-md flex flex-col justify-center items-center h-32">
+                        <div className="flex">Sample Coupon</div>
+                        {/* <button className="bg-white text-gray-700 text-xs py-2 w-full rounded-b-2xl">
+                            use coupon
+                        </button> */}
+                    </li>
                     <li className="bg-rose-300 rounded-2xl shadow-md flex flex-col justify-center items-center h-32">
                         <div className="flex">Sample Coupon</div>
                         {/* <button className="bg-white text-gray-700 text-xs py-2 w-full rounded-b-2xl">
