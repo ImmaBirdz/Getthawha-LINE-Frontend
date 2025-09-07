@@ -6,6 +6,7 @@ import '../App.css'
 import liff from '@line/liff'
 import border1 from '../assets/border1.png'
 import border2 from '../assets/border2.png'
+import edit from '../assets/edit.png'
 
 
 type Profile = {
@@ -49,7 +50,7 @@ function App() {
     return (
         profile ? (
             <div className="App">
-               <div className="m-0 w-[360px] min-h-screen bg-[linear-gradient(90deg,#2D1406_29%,#4C2B00_75%)] flex flex-col relative">
+               <div className="m-0 w-[360px] min-h-screen bg-[linear-gradient(90deg,#4C2B00_0%,#2D1406_100%)] flex flex-col relative">
 
 
             {/* img left top corner */}
@@ -66,15 +67,19 @@ function App() {
 
                     <div className="border-t-10 border-white"></div>
 
-                  <div className="px-6 py-4 pb-16 text-[#D49F00] bg-[linear-gradient(90deg,#2D1406_25%,#734B00_100%)]">
-
+                 <div className="px-6 py-4 pb-16 text-[#D49F00] bg-[linear-gradient(90deg,#4C2B00_0%,#2D1406_100%)]">
                         <div className="text-left">
-                            <p className="font-semibold text-lg font-tiroGurmukhi">Username: {profile?.displayName}</p>
-                            <p className="text-sm font-tiroGurmukhi">User ID: {profile?.userId}</p>
-                            <p className="text-sm font-tiroGurmukhi">Detail</p>
-                            {/* Booking */}
-                            <button className="mt-2 bg-white text-gray-700 text-xs py-2 w-full rounded-b-2xl">View Booking</button>
-                        </div>
+                {/* Username + Edit icon */}
+                 <div className="flex items-center justify-between">
+                    <p className="font-semibold text-lg font-tiroGurmukhi"> Username: {profile?.displayName} </p>
+                    <img src={edit} alt="Edit" className="relative top-0 left-4 w-6 h-6 cursor-pointer" />
+                </div>
+                    <p className="text-sm font-tiroGurmukhi">User ID: {profile?.userId}</p>
+                    <p className="text-sm font-tiroGurmukhi">Detail</p>
+
+                {/* Booking */}
+                <button className="mt-2 bg-white text-gray-700 text-xs py-2 w-full rounded-b-2xl"> View Booking </button>
+                    </div>
                     </div>
 
                     <div className="border-t-10 border-white"></div>
