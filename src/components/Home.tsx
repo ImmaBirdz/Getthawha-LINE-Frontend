@@ -1,30 +1,30 @@
 import { useContext } from 'react'
-import {
-    useState,
-    useEffect
-} from 'react'
+// import {
+//     useState,
+//     useEffect
+// } from 'react'
 // import liff from '@line/liff'
 import '../App.css'
-// import { ProfileContext } from '../context/ProfileContext'
+import { ProfileContext } from '../context/ProfileContext'
 import edit from '../assets/edit.png'
 
-type Profile = {
-    userId: string
-    displayName: string
-    pictureUrl: string
-    email?: string
-    statusMessage?: string
-    phone?: string
-    birthday?: string
-}
+// type Profile = {
+//     userId: string
+//     displayName: string
+//     pictureUrl: string
+//     email?: string
+//     statusMessage?: string
+//     phone?: string
+//     birthday?: string
+// }
 
 function App() {
-    // const {
-    //     profile,
-    //     isLiffLoaded
-    // } = useContext(ProfileContext)
+    const {
+        profile,
+        isLiffLoaded
+    } = useContext(ProfileContext)
 
-    const [profile, setProfile] = useState<Profile | null>(null);
+    // const [profile, setProfile] = useState<Profile | null>(null);
 
     // useEffect(() => {
     //     const initLiff = async () => {
@@ -57,13 +57,13 @@ function App() {
     // }, [])
 
     return (
-        // profile
+        profile
         // ? (
-        // // &&
-        // // isLiffLoaded ? (
+        &&
+        isLiffLoaded ? (
         <div className="App">
             <div className="m-0 w-[360px] min-h-[90vh] bg-[linear-gradient(90deg,#4C2B00_0%,#2D1406_100%)] flex flex-col relative">
-                <div className="px-6 py-4 text-[#D49F00] bg-[linear-gradient(90deg,#4C2B00_0%,#2D1406_100%)] justify-evenly">
+                <div className="px-6 py-4 text-[#D49F00] bg-[linear-gradient(90deg,#4C2B00_0%,#2D1406_100%)] justify-evenly ">
                     <div className="text-left pb-8">
                         {/* Username + Edit icon */}
                         <div className="flex items-center justify-between">
@@ -81,7 +81,7 @@ function App() {
 
                     </div>
                     {/* Booking */}
-                    <button className="mt-2 bg-white text-gray-700 text-xs w-full rounded-b-2xl font-tiroGurmukhi"
+                    <button className="mt-2 bg-white text-gray-700 text-xs rounded-b-2xl font-tiroGurmukhi w-auto self-start"
                     onClick={() => { window.location.href = '/mybooking' }}> View Booking </button>
                 </div>
 
@@ -136,11 +136,11 @@ function App() {
                 </ul>
             </div>
         </div>
-        // ) : (
-        //     <div className="w-[360px] min-h-screen bg-gradient-to-b from-[#5c2500] to-[#d59700] flex flex-col items-center justify-center">
-        //         <p>Loading profile...</p>
-        //     </div>
-        // )
+        ) : (
+            <div className="w-[360px] min-h-screen bg-gradient-to-b from-[#5c2500] to-[#d59700] flex flex-col items-center justify-center">
+                <p>Loading profile...</p>
+            </div>
+        )
     );
 }
 export default App
