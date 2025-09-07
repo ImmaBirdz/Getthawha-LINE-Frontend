@@ -9,8 +9,8 @@ type Profile = {
     userId: string
     displayName: string
     pictureUrl: string
-    email?: string
     statusMessage?: string
+    email?: string
 }
 
 const ProfileContext = createContext<{
@@ -38,32 +38,12 @@ const ProfileProvider = (props: React.PropsWithChildren<{}>) => {
                         console.log('ID Token:', idToken)
 
                         liff.getProfile().then(profile => {
-                            // Decode email from idToken (JWT)
-                            let email = '';
-                            if (idToken) {
-                                try {
-                                    // Decode JWT payload safely
-                                    const base64 = idToken.split('.')[1].replace(/-/g, '+').replace(/_/g, '/');
-                                    const jsonPayload = decodeURIComponent(
-                                        atob(base64)
-                                            .split('')
-                                            .map(function(c) {
-                                                return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-                                            })
-                                            .join('')
-                                    );
-                                    const payload = JSON.parse(jsonPayload);
-                                    email = payload.email || '';
-                                } catch (e) {
-                                    console.error('Error decoding ID token:', e);
-                                }
-                            }
                             setProfile({
                                 userId: profile.userId,
                                 displayName: profile.displayName,
                                 pictureUrl: profile.pictureUrl ?? '',
                                 statusMessage: profile.statusMessage,
-                                email: email,
+                                email: liff.getDecodedIDToken()?.email ?? 'no email',
                             })
                             console.log('User profile:', profile)
                         }).catch(err => {
