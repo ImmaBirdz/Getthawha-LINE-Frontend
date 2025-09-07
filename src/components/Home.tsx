@@ -53,78 +53,75 @@ function App() {
     // }, [])
 
     return (
-        profile ? (
-            <div className="App">
-               <div className="m-0 w-[360px] min-h-screen bg-[linear-gradient(90deg,#4C2B00_0%,#2D1406_100%)] flex flex-col relative">
+        // profile ? (
+        <div className="App">
+            <div className="m-0 w-[360px] min-h-screen bg-[linear-gradient(90deg,#4C2B00_0%,#2D1406_100%)] flex flex-col relative">
 
+                {/* Thai pattern at the top corner */}
+                <img src={border1} alt="Left Top" className="absolute top-0 left-0 w-16 h-16" />
+                <img src={border2} alt="Right Top" className="absolute top-0 right-0 w-16 h-16" />
 
-            {/* img left top corner */}
-            <img src={border1} alt="Left Top"  className="absolute top-0 left-0 w-16 h-16" />
-
-            {/* img right top corner */}
-            <img src={border2} alt="Right Top" className="absolute top-0 right-0 w-16 h-16" />
-
-                    {/* Header */}
-                    <div className="p-2">
-                        <div className="text-[30px] text-[#DEC33A] font-artifika">GETTHAWHA</div>
-                        <div className="text-[20px] text-[#B9A43B] relative bottom-2 font-arya">THAI MASSAGE</div>
-                    </div>
-
-                    <div className="border-t-10 border-white"></div>
-
-                 <div className="px-6 py-4 pb-16 text-[#D49F00] bg-[linear-gradient(90deg,#4C2B00_0%,#2D1406_100%)]">
-                        <div className="text-left">
-                {/* Username + Edit icon */}
-                 <div className="flex items-center justify-between">
-                    <p className="font-semibold text-lg font-tiroGurmukhi"> Username: {profile?.displayName} </p>
-                    <img src={edit} alt="Edit" className="relative top-0 left-4 w-6 h-6 cursor-pointer" />
+                {/* Header */}
+                <div className="p-2">
+                    <div className="text-[30px] text-[#DEC33A] font-artifika">GETTHAWHA</div>
+                    <div className="text-[20px] text-[#B9A43B] relative bottom-2 font-arya">THAI MASSAGE</div>
                 </div>
-                    <p className="text-sm font-tiroGurmukhi">User ID: {profile?.userId}</p>
-                    <p className="text-sm font-tiroGurmukhi">Detail</p>
 
-                {/* Booking */}
-                <button className="mt-2 bg-white text-gray-700 text-xs py-2 w-full rounded-b-2xl"> View Booking </button>
+                <div className="border-t-10 border-white"></div>
+
+                <div className="px-6 py-4 text-[#D49F00] bg-[linear-gradient(90deg,#4C2B00_0%,#2D1406_100%)] justify-evenly">
+                    <div className="text-left pb-8">
+                        {/* Username + Edit icon */}
+                        <div className="flex items-center justify-between">
+                            <p className="font-semibold text-lg font-tiroGurmukhi"> Username: {profile?.displayName} </p>
+                            <img src={edit} alt="Edit" className="relative top-0 left-4 w-6 h-6 cursor-pointer" />
+                        </div>
+                        <p className="text-sm font-tiroGurmukhi">User ID: {profile?.userId}</p>
+                        <p className="text-sm font-tiroGurmukhi">Detail</p>
+
                     </div>
-                    </div>
-
-                    <div className="border-t-10 border-white"></div>
-
-                    {/* Coupons */}
-                    {/* list of my coupon */}
-                    {/* if not, show "no coupon available" */}
-                    <ul className="grid grid-cols-2 gap-4 p-6 list-none">
-                        <li className="bg-rose-300 rounded-2xl shadow-md flex flex-col justify-between h-32">
-                            <div className="flex-1"></div>
-                            <button className="bg-white text-gray-700 text-xs py-2 w-full rounded-b-2xl">
-                                use coupon
-                            </button>
-                        </li>
-                        <li className="bg-rose-300 rounded-2xl shadow-md flex flex-col justify-between h-32">
-                            <div className="flex-1"></div>
-                            <button className="bg-white text-gray-700 text-xs py-2 w-full rounded-b-2xl">
-                                use coupon
-                            </button>
-                        </li>
-                        <li className="bg-rose-300 rounded-2xl shadow-md flex flex-col justify-between h-32">
-                            <div className="flex-1"></div>
-                            <button className="bg-white text-gray-700 text-xs py-2 w-full rounded-b-2xl">
-                                use coupon
-                            </button>
-                        </li>
-                        <li className="bg-rose-300 rounded-2xl shadow-md flex flex-col justify-between h-32">
-                            <div className="flex-1"></div>
-                            <button className="bg-white text-gray-700 text-xs py-2 w-full rounded-b-2xl">
-                                use coupon
-                            </button>
-                        </li>
-                    </ul>
+                    {/* Booking */}
+                    <button className="mt-2 bg-white text-gray-700 text-xs w-full rounded-b-2xl font-tiroGurmukhi"> View Booking </button>
                 </div>
+
+                <div className="border-t-10 border-white"></div>
+
+                {/* Coupons */}
+                {/* list of my coupon */}
+                {/* if not, show "no coupon available" */}
+                <ul className="flex flex-col gap-4 p-6 list-none">
+                    <li className="bg-rose-300 rounded-2xl shadow-md flex flex-col justify-center items-center h-32">
+                        <div className="flex">Sample Coupon</div>
+                        {/* <button className="bg-white text-gray-700 text-xs py-2 w-full rounded-b-2xl">
+                            use coupon
+                        </button> */}
+                    </li>
+                    <li className="bg-rose-300 rounded-2xl shadow-md flex flex-col justify-center items-center h-32">
+                        <div className="flex">Sample Coupon</div>
+                        {/* <button className="bg-white text-gray-700 text-xs py-2 w-full rounded-b-2xl">
+                            use coupon
+                        </button> */}
+                    </li>
+                    <li className="bg-rose-300 rounded-2xl shadow-md flex flex-col justify-center items-center h-32">
+                        <div className="flex">Sample Coupon</div>
+                        {/* <button className="bg-white text-gray-700 text-xs py-2 w-full rounded-b-2xl">
+                            use coupon
+                        </button> */}
+                    </li>
+                    <li className="bg-rose-300 rounded-2xl shadow-md flex flex-col justify-center items-center h-32">
+                        <div className="flex">Sample Coupon</div>
+                        {/* <button className="bg-white text-gray-700 text-xs py-2 w-full rounded-b-2xl">
+                            use coupon
+                        </button> */}
+                    </li>
+                </ul>
             </div>
-        ) : (
-            <div className="w-[360px] min-h-screen bg-gradient-to-b from-[#5c2500] to-[#d59700] flex flex-col items-center justify-center">
-                <p>Loading profile...</p>
-            </div>
-        )
+        </div>
+        // ) : (
+        //     <div className="w-[360px] min-h-screen bg-gradient-to-b from-[#5c2500] to-[#d59700] flex flex-col items-center justify-center">
+        //         <p>Loading profile...</p>
+        //     </div>
+        // )
     );
 }
 export default App
