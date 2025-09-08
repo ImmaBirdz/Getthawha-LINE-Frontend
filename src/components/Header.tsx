@@ -14,7 +14,7 @@ function Header() {
                 <div className="text-[20px] text-[#B9A43B] relative bottom-2 font-arya">THAI MASSAGE</div>
             </div>
 
-            <div className="h-0.5 bg-gradient-to-r from-[#B9A43B] via-transparent to-[#B9A43B]"></div>
+           
         </div>
     );
 }
