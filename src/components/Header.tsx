@@ -5,8 +5,8 @@ function Header() {
     return (
         <div className="m-0 w-[360px] h-fit bg-[linear-gradient(90deg,#4C2B00_0%,#2D1406_100%)] flex flex-col relative">
             {/* Thai pattern at the top corner */}
-            <img src={border1} alt="Left Top" className="absolute top-0 left-0 w-16 h-16" />
-            <img src={border2} alt="Right Top" className="absolute top-0 right-0 w-16 h-16" />
+            <img src={border1} alt="Left Top" className="absolute top-0 left-0 w-22 h-22" />
+            <img src={border2} alt="Right Top" className="absolute top-0 right-0 w-22 h-22" />
 
             {/* Header */}
             <div className="p-2">
