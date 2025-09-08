@@ -80,10 +80,9 @@ function App() {
                                 )}
                             </div>
                             <div className="flex-1">
-                                <h2 className="font-bold text-[24px] font-tiroGurmukhi text-[#673F00]">{profile?.displayName}</h2>
-                                <p className="text-[12px] font-tiroGurmukhi text-[#000000]">User ID: {profile?.userId}</p>
+                                <h2 className="font-bold text-[24px] font-tiroGurmukhi text-[#673F00] mt-2">{profile?.displayName}</h2>
                             </div>
-                            <img src={edit} alt="Edit" className="w-6 h-6 cursor-pointer" />
+                            <img src={edit} alt="Edit" className="w-6 h-6 cursor-pointer mt-[-8px]" />
                         </div>
                         
                         {/* User details */}
