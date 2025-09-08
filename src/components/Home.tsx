@@ -82,7 +82,7 @@ function App() {
                             <div className="flex-1">
                                 <h2 className="font-bold text-[24px] font-tiroGurmukhi text-[#673F00] mt-2">{profile?.displayName}</h2>
                             </div>
-                            <img src={edit} alt="Edit" className="w-6 h-6 cursor-pointer mt-[-8px]" />
+                            <img src={edit} alt="Edit" className="w-6 h-6 cursor-pointer mt-[-8px] hover:scale-110 hover:opacity-80 transition-all" />
                         </div>
                         
                         {/* User details */}
@@ -94,7 +94,7 @@ function App() {
 
                     </div>
                     {/* Booking */}
-                    <button className="mt-2 !bg-[#DCA900] text-white text-xs font-tiroTamil self-start cursor-pointer py-1 px-2 rounded border-none"
+                    <button className="mt-2 !bg-[#DCA900] text-white text-xs font-tiroTamil self-start cursor-pointer py-1 px-2 rounded border-none hover:scale-110 hover:opacity-80 transition-all"
                     onClick={() => { window.location.href = '/mybooking' }}>View Booking</button>
                 </div>
 
