@@ -21,11 +21,11 @@ function Booking() {
         <ul className="flex flex-col gap-4 w-full px-4 list-none">
           {/* Booking Card 1 */}
           <li className="relative rounded-xl p-4 bg-[linear-gradient(90deg,#4C2B00_0%,#2D1406_100%)]">
-            {/* Border lines */}
-            <div className="absolute top-0 left-4 right-4 h-0.5 bg-[#B9A43B]"></div>
-            <div className="absolute bottom-0 left-4 right-4 h-0.5 bg-[#B9A43B]"></div>
-            <div className="absolute left-0 top-4 bottom-4 w-0.5 bg-[#B9A43B]"></div>
-            <div className="absolute right-0 top-4 bottom-4 w-0.5 bg-[#B9A43B]"></div>
+            {/* Border lines with fading corners */}
+            <div className="absolute top-0 left-4 right-4 h-0.5 bg-gradient-to-r from-transparent via-[#B9A43B] to-transparent"></div>
+            <div className="absolute bottom-0 left-4 right-4 h-0.5 bg-gradient-to-r from-transparent via-[#B9A43B] to-transparent"></div>
+            <div className="absolute left-0 top-4 bottom-4 w-0.5 bg-gradient-to-b from-transparent via-[#B9A43B] to-transparent"></div>
+            <div className="absolute right-0 top-4 bottom-4 w-0.5 bg-gradient-to-b from-transparent via-[#B9A43B] to-transparent"></div>
             
             <div className="flex items-center gap-4">
               <div className="w-20 h-20 bg-gray-300 rounded-md"></div>
@@ -48,11 +48,11 @@ function Booking() {
 
           {/* Booking Card 2 */}
           <li className="relative rounded-xl p-4 bg-[linear-gradient(90deg,#4C2B00_0%,#2D1406_100%)]">
-            {/* Border lines */}
-            <div className="absolute top-0 left-4 right-4 h-0.5 bg-[#B9A43B]"></div>
-            <div className="absolute bottom-0 left-4 right-4 h-0.5 bg-[#B9A43B]"></div>
-            <div className="absolute left-0 top-4 bottom-4 w-0.5 bg-[#B9A43B]"></div>
-            <div className="absolute right-0 top-4 bottom-4 w-0.5 bg-[#B9A43B]"></div>
+            {/* Border lines with fading corners */}
+            <div className="absolute top-0 left-4 right-4 h-0.5 bg-gradient-to-r from-transparent via-[#B9A43B] to-transparent"></div>
+            <div className="absolute bottom-0 left-4 right-4 h-0.5 bg-gradient-to-r from-transparent via-[#B9A43B] to-transparent"></div>
+            <div className="absolute left-0 top-4 bottom-4 w-0.5 bg-gradient-to-b from-transparent via-[#B9A43B] to-transparent"></div>
+            <div className="absolute right-0 top-4 bottom-4 w-0.5 bg-gradient-to-b from-transparent via-[#B9A43B] to-transparent"></div>
             
             <div className="flex items-center gap-4">
               <div className="w-20 h-20 bg-gray-300 rounded-md"></div>
