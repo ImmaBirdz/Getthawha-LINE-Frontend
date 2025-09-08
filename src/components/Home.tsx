@@ -68,7 +68,7 @@ function App() {
                         {/* Username + Edit icon */}
                         <div className="flex items-center justify-between">
                             <p className="font-semibold text-lg font-tiroGurmukhi"> Username: {profile?.displayName} </p>
-                            <img src={edit} alt="Edit" className="relative top-0 left-4 w-6 h-6 cursor-pointer" />
+                            <img src={edit} alt="Edit" className="relative top-0 left-4 w-5 h-5 cursor-pointer" />
                         </div>
                         <p className="text-sm font-tiroTamil">User ID: {profile?.userId}</p>
                         <p className="text-sm font-tiroTamil">Email: {profile?.email}</p>
@@ -81,11 +81,11 @@ function App() {
 
                     </div>
                     {/* Booking */}
-                    <button className="mt-2 bg-white text-gray-700 text-xs rounded-b-2xl font-tiroGurmukhi w-auto self-start"
-                    onClick={() => { window.location.href = '/mybooking' }}> View Booking </button>
+                   <div  className="mt-2 text-[#FFD633] text-[14px] font-tiroGurmukhi self-start cursor-pointer hover:[text-shadow:0_0_8px_#FFD633]"
+                    onClick={() => { window.location.href = '/mybooking' }}>  View Booking </div>
                 </div>
 
-                <div className="border-t-10 border-white"></div>
+                <div className="h-0.5 bg-gradient-to-r from-[#B9A43B] via-transparent to-[#B9A43B]"></div>
 
                 {/* Coupons */}
                 {/* list of my coupon */}
