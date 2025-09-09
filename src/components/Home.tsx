@@ -115,8 +115,8 @@ function App() {
             </div>
         </div>
         ) : (
-            <div className="w-[360px] min-h-screen bg-gradient-to-b from-[#5c2500] to-[#d59700] flex flex-col items-center justify-center">
-                <p>Loading profile...</p>
+            <div className="m-0 w-[360px] min-h-[90vh] bg-white flex flex-col relative">
+                <p className="text-[#7E4300] text-center mt-10 font-tiroTamil">Loading profile...</p>
             </div>
         )
     );
