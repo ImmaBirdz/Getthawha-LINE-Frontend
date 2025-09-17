@@ -3,14 +3,57 @@ import Clock from '../assets/clock.png';
 import Location from '../assets/location.png';
 import Backtohomepage from '../assets/backhome.png';
 import { getBookings } from '../services/backendApi';
+import {
+    useState,
+    useEffect
+} from 'react'
+
+type Booking = {
+  id: string;
+  date: string;
+  duration: number;
+  totalPrice: string;
+  user: {
+    id: string;
+    displayName: string;
+    pictureUrl: string;
+  };
+  branch: {
+    id: string;
+    name: string;
+  };
+  package: {
+    id: string;
+    title: string;
+  };
+  voucher?: {
+    id: string;
+    code: string;
+  };
+};
 
 
 function Booking() {
-  const hasBooking = true; // change to false to test no booking case
+  //const hasBooking = true; // change to false to test no booking case
+
+  const [bookings, setBookings] = useState<Booking>()
+  
+  useEffect(() => {
+          const fetchBookings = async () => {
+              try {
+                  const data = await getBookings();
+                  setBookings(data);
+                  console.log('Fetched bookings:', bookings);
+              } catch (error) {
+                  console.error('Failed to fetch bookings:', error);
+              }
+          };
+          fetchBookings();
+      }, []);
 
   return (
     <div className="m-0 w-[360px] min-h-[90vh] bg-white flex flex-col items-center justify-start px-4 pt-2 pb-4">
-      {hasBooking ? (
+      {bookings ? (
         <div className="flex flex-col items-center gap-4 w-full">
           {/* Header with back button and title */}
           <div className="flex items-center justify-center w-full relative mt-2">
@@ -72,7 +115,7 @@ function Booking() {
         </ul>
 
           {/* Make a booking button */}
-          <button className="mt-2 !bg-[#DCA900] text-white text-xs font-tiroTamil self-center cursor-pointer py-1 px-2 rounded border-none hover:scale-110 hover:opacity-80 transition-all"> Make a Booking</button>
+          <button className="mt-2 !bg-[#DCA900] text-white text-xs font-tiroTamil self-center cursor-pointer py-1 px-2 rounded border-none hover:scale-110 hover:opacity-80 transition-all" onClick={() => { window.location.href = 'https://client-getthawha.yungying.com/booking' }}> Make a Booking</button>
         </div>
       ) : (
         <div className="flex flex-col items-center gap-4 justify-start p-4">
@@ -83,7 +126,7 @@ function Booking() {
           </div>
 
           {/* Make a booking button */}
-          <button className="mt-2 !bg-[#DCA900] text-white text-xs font-tiroTamil self-center cursor-pointer py-1 px-2 rounded border-none hover:scale-110 hover:opacity-80 transition-all"> Make a Booking</button>
+          <button className="mt-2 !bg-[#DCA900] text-white text-xs font-tiroTamil self-center cursor-pointer py-1 px-2 rounded border-none hover:scale-110 hover:opacity-80 transition-all" onClick={() => { window.location.href = 'https://client-getthawha.yungying.com/booking' }}> Make a Booking</button>
         </div>
       )}
     </div>
