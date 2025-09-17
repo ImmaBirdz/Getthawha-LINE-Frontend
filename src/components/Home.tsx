@@ -1,8 +1,8 @@
 import { useContext } from 'react'
-// import {
-//     useState,
-//     useEffect
-// } from 'react'
+import {
+    useState,
+    useEffect
+} from 'react'
 // import liff from '@line/liff'
 import '../App.css'
 import { ProfileContext } from '../context/ProfileContext'
@@ -12,6 +12,7 @@ import coupon2 from '../assets/coupon2.png'
 import coupon3 from '../assets/coupon3.png' 
 import coupon4 from '../assets/coupon4.png'
 import Coupon from './Coupon'
+import { getPackages } from '../services/backendApi'
 
 // type Profile = {
 //     userId: string
@@ -23,12 +24,38 @@ import Coupon from './Coupon'
 //     birthday?: string
 // }
 
+type Package = {
+  id: string;
+  title: string;
+  description: string;
+  price: number;
+  duration: number;
+  pictureUrl: string;
+  note?: string;
+  type: string;
+  isActive: boolean;
+};
+
 function App() {
     const {
         profile,
         isLiffLoaded
     } = useContext(ProfileContext)
 
+    const [packages, setPackages] = useState<Package>()
+
+    useEffect(() => {
+        const fetchPackages = async () => {
+            try {
+                const data = await getPackages();
+                setPackages(data);
+                console.log('Fetched packages:', packages);
+            } catch (error) {
+                console.error('Failed to fetch packages:', error);
+            }
+        };
+        fetchPackages();
+    }, []);
     // const [profile, setProfile] = useState<Profile | null>(null);
 
     // useEffect(() => {
