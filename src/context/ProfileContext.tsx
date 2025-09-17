@@ -4,6 +4,7 @@ import {
     useEffect
 } from 'react'
 import liff from '@line/liff'
+import { authorizeWithLine } from '../services/backendApi';
 
 type Profile = {
     userId: string
@@ -34,8 +35,8 @@ const ProfileProvider = (props: React.PropsWithChildren<{}>) => {
             await liff.init({ liffId: '2007750755-nv6wlyNZ' })
                 .then(() => {
                     if (liff.isLoggedIn()) {
-                        const idToken = liff.getIDToken()
-                        console.log('ID Token:', idToken)
+                        const idToken = liff.getIDToken() ?? ''
+                        console.log('ID Token:(', idToken)
 
                         liff.getProfile().then(profile => {
                             setProfile({
@@ -46,6 +47,9 @@ const ProfileProvider = (props: React.PropsWithChildren<{}>) => {
                                 email: liff.getDecodedIDToken()?.email ?? 'no email',
                             })
                             console.log('User profile:', profile)
+
+                            authorizeWithLine(idToken);
+
                         }).catch(err => {
                             console.error('Error getting profile:', err)
                         })
