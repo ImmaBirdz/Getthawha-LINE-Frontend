@@ -49,21 +49,14 @@ const ProfileProvider = (props: React.PropsWithChildren<{}>) => {
                 .then(() => {
                     if (liff.isLoggedIn()) {
                         const idToken = liff.getIDToken() ?? ''
-                        console.log('ID Token:(', idToken)
+                        alert('ID Token: ' + idToken)
 
-                        liff.getProfile().then(async profile => {
-                            console.log('User profile:', profile)
-
-                            try {
-                                await authorizeWithLine(idToken);
-                                setIsLogin(true);
-                            } catch (error) {
-                                console.error('Authorization failed:', error);
-                            }
-
-                        }).catch(err => {
-                            console.error('Error getting profile:', err)
-                        })
+                                authorizeWithLine(idToken).then(() => {
+                                    setIsLogin(true);
+                                }).catch(error => {
+                                    alert('Authorization failed:' + error);
+                                });
+                        
                     } else {
                         liff.login()
                     }
