@@ -4,7 +4,10 @@ import {
     useEffect
 } from 'react'
 import liff from '@line/liff'
-import { authorizeWithLine } from '../services/backendApi';
+import {
+    authorizeWithLine,
+    getProfile
+} from '../services/backendApi';
 
 type Profile = {
     userId: string
@@ -27,7 +30,14 @@ const ProfileContext = createContext<{
 });
 
 const ProfileProvider = (props: React.PropsWithChildren<{}>) => {
-    const [profile, setProfile] = useState<Profile | null>(null)
+    // const [profile, setProfile] = useState<Profile | null>(null)
+    const [profile, setProfile] = useState<Profile | null>({
+        userId: 'U1234567890abcdef1234567890abcdef',
+        displayName: 'John Doe',
+        pictureUrl: 'https://example.com/profile.jpg',
+        statusMessage: 'Hello, world!',
+        email: 'john.doe@example.com'
+    });
     const [isLiffLoaded, setIsLiffLoaded] = useState(false);
 
     useEffect(() => {
@@ -40,13 +50,13 @@ const ProfileProvider = (props: React.PropsWithChildren<{}>) => {
                         console.log('ID Token:(', idToken)
 
                         liff.getProfile().then(profile => {
-                            setProfile({
-                                userId: profile.userId,
-                                displayName: profile.displayName,
-                                pictureUrl: profile.pictureUrl ?? '',
-                                statusMessage: profile.statusMessage,
-                                email: liff.getDecodedIDToken()?.email ?? 'no email',
-                            })
+                            // setProfile({
+                            //     userId: profile.userId,
+                            //     displayName: profile.displayName,
+                            //     pictureUrl: profile.pictureUrl ?? '',
+                            //     statusMessage: profile.statusMessage,
+                            //     email: liff.getDecodedIDToken()?.email ?? 'no email',
+                            // })
                             console.log('User profile:', profile)
 
                             authorizeWithLine(idToken);
@@ -65,6 +75,26 @@ const ProfileProvider = (props: React.PropsWithChildren<{}>) => {
         }
         initLiff();
     }, [])
+
+    // fetch profile from backend
+    useEffect(() => {
+        const fetchProfile = async () => {
+            try {
+                const data = await getProfile();
+                const mappedData: Profile = {
+                    userId: data.user.id,
+                    displayName: data.user.displayName,
+                    pictureUrl: data.user.pictureUrl,
+                    email: data.user.email ?? 'no email',
+                };
+                setProfile(mappedData);
+                console.log('Fetched profile:', mappedData);
+            } catch (error) {
+                console.error('Failed to fetch profile:', error);
+            }
+        };
+        fetchProfile();
+    }, []);
 
     return (
         <ProfileContext.Provider value={{

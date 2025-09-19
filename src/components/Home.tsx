@@ -12,7 +12,10 @@ import coupon2 from '../assets/coupon2.png'
 import coupon3 from '../assets/coupon3.png' 
 import coupon4 from '../assets/coupon4.png'
 import Coupon from './Coupon'
-import { getPackages } from '../services/backendApi'
+import {
+    getPackages,
+    // getProfile 
+} from '../services/backendApi'
 
 // type Profile = {
 //     userId: string
@@ -36,13 +39,22 @@ type Package = {
   isActive: boolean;
 };
 
+// type Profile = {
+//     userId: string
+//     displayName: string
+//     pictureUrl: string
+//     email?: string
+// }
+
 function App() {
     const {
         profile,
+        // setProfile,
         isLiffLoaded
     } = useContext(ProfileContext)
 
     const [packages, setPackages] = useState<Package>()
+    // const [profile, setProfile] = useState<Profile>();
 
     useEffect(() => {
         const fetchPackages = async () => {
@@ -71,6 +83,7 @@ function App() {
         };
         fetchPackages();
     }, []);
+
     // const [profile, setProfile] = useState<Profile | null>(null);
 
     // useEffect(() => {
