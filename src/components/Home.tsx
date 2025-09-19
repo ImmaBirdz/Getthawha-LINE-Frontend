@@ -49,7 +49,20 @@ function App() {
             try {
                 const data = await getPackages();
                 setPackages(data);
-                console.log('Fetched packages (package):', packages);
+                // map packages
+                const mappedPackages = data.map((pkg: Package) => ({
+                    id: pkg.id,
+                    title: pkg.title,
+                    description: pkg.description,
+                    price: pkg.price,
+                    duration: pkg.duration,
+                    pictureUrl: pkg.pictureUrl,
+                    note: pkg.note,
+                    type: pkg.type,
+                    isActive: pkg.isActive,
+                }));
+                setPackages(mappedPackages);
+                console.log('Fetched packages (package):', mappedPackages);
                 console.log('Fetched packages (data):', data);
             } catch (error) {
                 console.error('Failed to fetch packages:', error);
