@@ -1,9 +1,12 @@
+// import libraries
 import {
     createContext,
     useState,
     useEffect
 } from 'react'
 import liff from '@line/liff'
+
+// import API
 import {
     authorizeWithLine,
     getProfile
@@ -26,11 +29,11 @@ const ProfileContext = createContext<{
     setIsLogin: React.Dispatch<React.SetStateAction<boolean>>;
 }>({
     profile: null,
-    setProfile: () => {},
+    setProfile: () => { },
     isLiffLoaded: false,
-    setIsLiffLoaded: () => {},
+    setIsLiffLoaded: () => { },
     isLogin: false,
-    setIsLogin: () => {}
+    setIsLogin: () => { }
 });
 
 const ProfileProvider = (props: React.PropsWithChildren<{}>) => {
@@ -38,6 +41,7 @@ const ProfileProvider = (props: React.PropsWithChildren<{}>) => {
     const [isLiffLoaded, setIsLiffLoaded] = useState(false);
     const [isLogin, setIsLogin] = useState(false);
 
+    // initialize LIFF
     useEffect(() => {
         const initLiff = async () => {
             // await liff.init({ liffId: '2007750755-nv6wlyNZ' }) // old
@@ -48,13 +52,6 @@ const ProfileProvider = (props: React.PropsWithChildren<{}>) => {
                         console.log('ID Token:(', idToken)
 
                         liff.getProfile().then(async profile => {
-                            // setProfile({
-                            //     userId: profile.userId,
-                            //     displayName: profile.displayName,
-                            //     pictureUrl: profile.pictureUrl ?? '',
-                            //     statusMessage: profile.statusMessage,
-                            //     email: liff.getDecodedIDToken()?.email ?? 'no email',
-                            // })
                             console.log('User profile:', profile)
 
                             try {

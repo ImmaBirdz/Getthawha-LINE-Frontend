@@ -1,3 +1,4 @@
+// import assets
 import border1 from '../assets/border1.png';
 import border2 from '../assets/border2.png';
 
@@ -13,8 +14,6 @@ function Header() {
                 <div className="text-[30px] text-[#DEC33A] font-artifika">GETTHAWHA</div>
                 <div className="text-[20px] text-[#B9A43B] relative bottom-2 font-arya">THAI MASSAGE</div>
             </div>
-
-           
         </div>
     );
 }
