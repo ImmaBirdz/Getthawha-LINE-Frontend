@@ -4,7 +4,10 @@ import {
     useEffect
 } from 'react'
 import liff from '@line/liff'
-import { authorizeWithLine } from '../services/backendApi';
+import {
+    authorizeWithLine,
+    getProfile
+} from '../services/backendApi';
 
 type Profile = {
     userId: string
@@ -19,37 +22,47 @@ const ProfileContext = createContext<{
     setProfile: React.Dispatch<React.SetStateAction<Profile | null>>;
     isLiffLoaded: boolean;
     setIsLiffLoaded: React.Dispatch<React.SetStateAction<boolean>>;
+    isLogin: boolean;
+    setIsLogin: React.Dispatch<React.SetStateAction<boolean>>;
 }>({
     profile: null,
     setProfile: () => {},
     isLiffLoaded: false,
     setIsLiffLoaded: () => {},
+    isLogin: false,
+    setIsLogin: () => {}
 });
 
 const ProfileProvider = (props: React.PropsWithChildren<{}>) => {
     const [profile, setProfile] = useState<Profile | null>(null)
     const [isLiffLoaded, setIsLiffLoaded] = useState(false);
+    const [isLogin, setIsLogin] = useState(false);
 
     useEffect(() => {
         const initLiff = async () => {
-            await liff.init({ liffId: '2007750755-nv6wlyNZ' }) // old
-            // await liff.init({ liffId: '2007725317-GXv8QvO3' }) // yung's
+            // await liff.init({ liffId: '2007750755-nv6wlyNZ' }) // old
+            await liff.init({ liffId: '2007725317-GXv8QvO3' }) // yung's
                 .then(() => {
                     if (liff.isLoggedIn()) {
                         const idToken = liff.getIDToken() ?? ''
                         console.log('ID Token:(', idToken)
 
-                        liff.getProfile().then(profile => {
-                            setProfile({
-                                userId: profile.userId,
-                                displayName: profile.displayName,
-                                pictureUrl: profile.pictureUrl ?? '',
-                                statusMessage: profile.statusMessage,
-                                email: liff.getDecodedIDToken()?.email ?? 'no email',
-                            })
+                        liff.getProfile().then(async profile => {
+                            // setProfile({
+                            //     userId: profile.userId,
+                            //     displayName: profile.displayName,
+                            //     pictureUrl: profile.pictureUrl ?? '',
+                            //     statusMessage: profile.statusMessage,
+                            //     email: liff.getDecodedIDToken()?.email ?? 'no email',
+                            // })
                             console.log('User profile:', profile)
 
-                            authorizeWithLine(idToken);
+                            try {
+                                await authorizeWithLine(idToken);
+                                setIsLogin(true);
+                            } catch (error) {
+                                console.error('Authorization failed:', error);
+                            }
 
                         }).catch(err => {
                             console.error('Error getting profile:', err)
@@ -66,12 +79,34 @@ const ProfileProvider = (props: React.PropsWithChildren<{}>) => {
         initLiff();
     }, [])
 
+    // fetch profile from backend
+    useEffect(() => {
+        const fetchProfile = async () => {
+            try {
+                const data = await getProfile();
+                const mappedData: Profile = {
+                    userId: data.user.id,
+                    displayName: data.user.displayName,
+                    pictureUrl: data.user.pictureUrl,
+                    email: data.user.email ?? 'no email',
+                };
+                setProfile(mappedData);
+                console.log('Fetched profile:', mappedData);
+            } catch (error) {
+                console.error('Failed to fetch profile:', error);
+            }
+        };
+        fetchProfile();
+    }, [isLogin]);
+
     return (
         <ProfileContext.Provider value={{
             profile,
             setProfile,
             isLiffLoaded,
-            setIsLiffLoaded
+            setIsLiffLoaded,
+            isLogin,
+            setIsLogin
         }}>
             {props.children}
         </ProfileContext.Provider>

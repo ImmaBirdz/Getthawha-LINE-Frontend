@@ -1,7 +1,7 @@
-import { useContext } from 'react'
 import {
     useState,
-    useEffect
+    useEffect,
+    useContext
 } from 'react'
 // import liff from '@line/liff'
 import '../App.css'
@@ -12,7 +12,10 @@ import coupon2 from '../assets/coupon2.png'
 import coupon3 from '../assets/coupon3.png' 
 import coupon4 from '../assets/coupon4.png'
 import Coupon from './Coupon'
-import { getPackages } from '../services/backendApi'
+import {
+    getPackages,
+    // getProfile 
+} from '../services/backendApi'
 
 // type Profile = {
 //     userId: string
@@ -36,26 +39,51 @@ type Package = {
   isActive: boolean;
 };
 
+// type Profile = {
+//     userId: string
+//     displayName: string
+//     pictureUrl: string
+//     email?: string
+// }
+
 function App() {
     const {
         profile,
+        // setProfile,
         isLiffLoaded
     } = useContext(ProfileContext)
 
     const [packages, setPackages] = useState<Package>()
+    // const [profile, setProfile] = useState<Profile>();
 
     useEffect(() => {
         const fetchPackages = async () => {
             try {
                 const data = await getPackages();
                 setPackages(data);
-                console.log('Fetched packages:', packages);
+                // map packages
+                const mappedPackages = data.map((pkg: Package) => ({
+                    id: pkg.id,
+                    title: pkg.title,
+                    description: pkg.description,
+                    price: pkg.price,
+                    duration: pkg.duration,
+                    pictureUrl: pkg.pictureUrl,
+                    note: pkg.note,
+                    type: pkg.type,
+                    isActive: pkg.isActive,
+                }));
+                setPackages(mappedPackages);
+                console.log('Fetched packages (package):', packages);
+                console.log('Fetched packages (mappedPackage):', mappedPackages);
+                console.log('Fetched packages (data):', data);
             } catch (error) {
                 console.error('Failed to fetch packages:', error);
             }
         };
         fetchPackages();
     }, []);
+
     // const [profile, setProfile] = useState<Profile | null>(null);
 
     // useEffect(() => {
