@@ -94,7 +94,7 @@ const ProfileProvider = (props: React.PropsWithChildren<{}>) => {
             }
         };
         fetchProfile();
-    }, []);
+    }, [isLogin]);
 
     return (
         <ProfileContext.Provider value={{
