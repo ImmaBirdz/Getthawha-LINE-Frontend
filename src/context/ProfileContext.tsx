@@ -19,16 +19,21 @@ const ProfileContext = createContext<{
     setProfile: React.Dispatch<React.SetStateAction<Profile | null>>;
     isLiffLoaded: boolean;
     setIsLiffLoaded: React.Dispatch<React.SetStateAction<boolean>>;
+    isLogin: boolean;
+    setIsLogin: React.Dispatch<React.SetStateAction<boolean>>;
 }>({
     profile: null,
     setProfile: () => {},
     isLiffLoaded: false,
     setIsLiffLoaded: () => {},
+    isLogin: false,
+    setIsLogin: () => {}
 });
 
 const ProfileProvider = (props: React.PropsWithChildren<{}>) => {
     const [profile, setProfile] = useState<Profile | null>(null)
     const [isLiffLoaded, setIsLiffLoaded] = useState(false);
+    const [isLogin, setIsLogin] = useState(false);
 
     useEffect(() => {
         const initLiff = async () => {
@@ -39,17 +44,22 @@ const ProfileProvider = (props: React.PropsWithChildren<{}>) => {
                         const idToken = liff.getIDToken() ?? ''
                         console.log('ID Token:(', idToken)
 
-                        liff.getProfile().then(profile => {
-                            setProfile({
-                                userId: profile.userId,
-                                displayName: profile.displayName,
-                                pictureUrl: profile.pictureUrl ?? '',
-                                statusMessage: profile.statusMessage,
-                                email: liff.getDecodedIDToken()?.email ?? 'no email',
-                            })
+                        liff.getProfile().then(async profile => {
+                            // setProfile({
+                            //     userId: profile.userId,
+                            //     displayName: profile.displayName,
+                            //     pictureUrl: profile.pictureUrl ?? '',
+                            //     statusMessage: profile.statusMessage,
+                            //     email: liff.getDecodedIDToken()?.email ?? 'no email',
+                            // })
                             console.log('User profile:', profile)
 
-                            authorizeWithLine(idToken);
+                            try {
+                                await authorizeWithLine(idToken);
+                                setIsLogin(true);
+                            } catch (error) {
+                                console.error('Authorization failed:', error);
+                            }
 
                         }).catch(err => {
                             console.error('Error getting profile:', err)
@@ -71,7 +81,9 @@ const ProfileProvider = (props: React.PropsWithChildren<{}>) => {
             profile,
             setProfile,
             isLiffLoaded,
-            setIsLiffLoaded
+            setIsLiffLoaded,
+            isLogin,
+            setIsLogin
         }}>
             {props.children}
         </ProfileContext.Provider>
