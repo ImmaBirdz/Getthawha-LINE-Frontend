@@ -1,5 +1,7 @@
+// Base URL for the backend API
 const BASE_URL = "https://api.yungying.com/getthawha";
 
+// Helper function to make API requests
 async function apiFetch(endpoint: string, options: RequestInit = {}) {
   const res = await fetch(`${BASE_URL}${endpoint}`, {
     ...options,
