@@ -42,20 +42,20 @@ function Booking() {
           const fetchBookings = async () => {
               try {
                   const data = await getBookings();
-                  // const mappedData = data.map((booking: Booking) => ({
-                  //     id: booking.id,
-                  //     date: booking.date,
-                  //     duration: booking.duration,
-                  //     totalPrice: booking.totalPrice,
-                  //     user: booking.user,
-                  //     branch: booking.branch,
-                  //     package: booking.package,
-                  //     voucher: booking.voucher,
-                  // }));
-                  // console.log('Mapped bookings:', mappedData);
-                  setBookings(data);
+                  const mappedData = data.map((booking: Booking) => ({
+                      id: booking.id,
+                      date: booking.date,
+                      duration: booking.duration,
+                      totalPrice: booking.totalPrice,
+                      user: booking.user,
+                      branch: booking.branch,
+                      package: booking.package,
+                      voucher: booking.voucher,
+                  }));
+                  console.log('Mapped bookings:', mappedData);
+                  setBookings(mappedData);
                   console.log('Fetched bookings:', data);
-                  console.log('Fetched bookings:', bookings);
+                  console.log('Fetched bookings (bookings):', bookings);
               } catch (error) {
                   console.error('Failed to fetch bookings:', error);
               }
