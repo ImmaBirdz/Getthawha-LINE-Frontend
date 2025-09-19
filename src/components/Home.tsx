@@ -4,6 +4,7 @@ import {
     useEffect,
     useContext
 } from 'react'
+import { Link } from 'react-router-dom'
 
 // import context
 import { ProfileContext } from '../context/ProfileContext'
@@ -98,8 +99,9 @@ function App() {
 
                         </div>
                         {/* Booking */}
-                        <button className="mt-2 !bg-[#DCA900] text-white text-xs font-tiroTamil self-start cursor-pointer py-1 px-2 rounded border-none hover:scale-110 hover:opacity-80 transition-all"
-                            onClick={() => { window.location.href = '/mybooking' }}>View Booking</button>
+                        <Link to="/mybooking" className="mt-2 !bg-[#DCA900] text-white text-xs font-tiroTamil self-start cursor-pointer py-1 px-2 rounded border-none hover:scale-110 hover:opacity-80 transition-all">
+                            View Booking
+                        </Link>
                     </div>
 
                     <div className="mx-2 h-1 bg-[#DEC33A]"></div>
