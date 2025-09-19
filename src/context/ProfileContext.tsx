@@ -4,7 +4,10 @@ import {
     useEffect
 } from 'react'
 import liff from '@line/liff'
-import { authorizeWithLine } from '../services/backendApi';
+import {
+    authorizeWithLine,
+    getProfile
+} from '../services/backendApi';
 
 type Profile = {
     userId: string
@@ -37,8 +40,8 @@ const ProfileProvider = (props: React.PropsWithChildren<{}>) => {
 
     useEffect(() => {
         const initLiff = async () => {
-            await liff.init({ liffId: '2007750755-nv6wlyNZ' }) // old
-            // await liff.init({ liffId: '2007725317-GXv8QvO3' }) // yung's
+            // await liff.init({ liffId: '2007750755-nv6wlyNZ' }) // old
+            await liff.init({ liffId: '2007725317-GXv8QvO3' }) // yung's
                 .then(() => {
                     if (liff.isLoggedIn()) {
                         const idToken = liff.getIDToken() ?? ''
@@ -75,6 +78,26 @@ const ProfileProvider = (props: React.PropsWithChildren<{}>) => {
         }
         initLiff();
     }, [])
+
+    // fetch profile from backend
+    useEffect(() => {
+        const fetchProfile = async () => {
+            try {
+                const data = await getProfile();
+                const mappedData: Profile = {
+                    userId: data.user.id,
+                    displayName: data.user.displayName,
+                    pictureUrl: data.user.pictureUrl,
+                    email: data.user.email ?? 'no email',
+                };
+                setProfile(mappedData);
+                console.log('Fetched profile:', mappedData);
+            } catch (error) {
+                console.error('Failed to fetch profile:', error);
+            }
+        };
+        fetchProfile();
+    }, [isLogin]);
 
     return (
         <ProfileContext.Provider value={{
