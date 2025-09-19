@@ -47,13 +47,12 @@ const ProfileProvider = (props: React.PropsWithChildren<{}>) => {
             liff.init({ liffId: '2007725317-GXv8QvO3' }) // yung's
                 .then(() => {
                     if (liff.isLoggedIn()) {
-                        const idToken = liff.getIDToken() ?? ''
-                        alert('ID Token: ' + idToken)
+                        const idToken = liff.getIDToken() ?? '';
 
                                 authorizeWithLine(idToken).then(() => {
                                     setIsLogin(true);
                                 }).catch(error => {
-                                    alert('Authorization failed:' + error);
+                                    console.error('Authorization failed:', error);
                                 });
                         
                     } else {
@@ -78,7 +77,6 @@ const ProfileProvider = (props: React.PropsWithChildren<{}>) => {
                     email: data.user.email ?? 'no email',
                 };
                 setProfile(mappedData);
-                console.log('Fetched profile:', mappedData);
             } catch (error) {
                 console.error('Failed to fetch profile:', error);
             }
