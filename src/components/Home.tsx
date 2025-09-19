@@ -13,6 +13,9 @@ import {
     getPackages,
 } from '../services/backendApi'
 
+// import styles
+import '../App.css'
+
 // import assets
 import edit from '../assets/edit.png'
 import coupon1 from '../assets/coupon1.png'

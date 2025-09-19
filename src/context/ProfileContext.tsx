@@ -74,9 +74,9 @@ const ProfileProvider = (props: React.PropsWithChildren<{}>) => {
             setIsLiffLoaded(true);
         }
         initLiff();
-    }, [])
+    }, [profile])
 
-    // fetch profile from backend
+    // Fetch profile from API
     useEffect(() => {
         const fetchProfile = async () => {
             try {
