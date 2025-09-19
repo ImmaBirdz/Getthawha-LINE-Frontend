@@ -43,27 +43,18 @@ const ProfileProvider = (props: React.PropsWithChildren<{}>) => {
 
     // initialize LIFF
     useEffect(() => {
-        const initLiff = async () => {
             // await liff.init({ liffId: '2007750755-nv6wlyNZ' }) // old
-            await liff.init({ liffId: '2007725317-GXv8QvO3' }) // yung's
+            liff.init({ liffId: '2007725317-GXv8QvO3' }) // yung's
                 .then(() => {
                     if (liff.isLoggedIn()) {
-                        const idToken = liff.getIDToken() ?? ''
-                        console.log('ID Token:(', idToken)
+                        const idToken = liff.getIDToken() ?? '';
 
-                        liff.getProfile().then(async profile => {
-                            console.log('User profile:', profile)
-
-                            try {
-                                await authorizeWithLine(idToken);
-                                setIsLogin(true);
-                            } catch (error) {
-                                console.error('Authorization failed:', error);
-                            }
-
-                        }).catch(err => {
-                            console.error('Error getting profile:', err)
-                        })
+                                authorizeWithLine(idToken).then(() => {
+                                    setIsLogin(true);
+                                }).catch(error => {
+                                    console.error('Authorization failed:', error);
+                                });
+                        
                     } else {
                         liff.login()
                     }
@@ -72,9 +63,7 @@ const ProfileProvider = (props: React.PropsWithChildren<{}>) => {
                     console.error('LIFF initialization failed:', err)
                 })
             setIsLiffLoaded(true);
-        }
-        initLiff();
-    }, [profile])
+    }, [])
 
     // Fetch profile from API
     useEffect(() => {
@@ -88,7 +77,6 @@ const ProfileProvider = (props: React.PropsWithChildren<{}>) => {
                     email: data.user.email ?? 'no email',
                 };
                 setProfile(mappedData);
-                console.log('Fetched profile:', mappedData);
             } catch (error) {
                 console.error('Failed to fetch profile:', error);
             }
