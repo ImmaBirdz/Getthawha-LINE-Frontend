@@ -22,11 +22,15 @@ const ProfileContext = createContext<{
     setProfile: React.Dispatch<React.SetStateAction<Profile | null>>;
     isLiffLoaded: boolean;
     setIsLiffLoaded: React.Dispatch<React.SetStateAction<boolean>>;
+    isLogin: boolean;
+    setIsLogin: React.Dispatch<React.SetStateAction<boolean>>;
 }>({
     profile: null,
     setProfile: () => {},
     isLiffLoaded: false,
     setIsLiffLoaded: () => {},
+    isLogin: false,
+    setIsLogin: () => {}
 });
 
 const ProfileProvider = (props: React.PropsWithChildren<{}>) => {
@@ -39,6 +43,7 @@ const ProfileProvider = (props: React.PropsWithChildren<{}>) => {
         email: 'john.doe@example.com'
     });
     const [isLiffLoaded, setIsLiffLoaded] = useState(false);
+    const [isLogin, setIsLogin] = useState(false);
 
     useEffect(() => {
         const initLiff = async () => {
@@ -72,6 +77,7 @@ const ProfileProvider = (props: React.PropsWithChildren<{}>) => {
                     console.error('LIFF initialization failed:', err)
                 })
             setIsLiffLoaded(true);
+            setIsLogin(true);
         }
         initLiff();
     }, [])
@@ -94,14 +100,16 @@ const ProfileProvider = (props: React.PropsWithChildren<{}>) => {
             }
         };
         fetchProfile();
-    }, []);
+    }, [isLogin]);
 
     return (
         <ProfileContext.Provider value={{
             profile,
             setProfile,
             isLiffLoaded,
-            setIsLiffLoaded
+            setIsLiffLoaded,
+            isLogin,
+            setIsLogin
         }}>
             {props.children}
         </ProfileContext.Provider>
