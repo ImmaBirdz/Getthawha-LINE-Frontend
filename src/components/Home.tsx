@@ -49,7 +49,8 @@ function App() {
             try {
                 const data = await getPackages();
                 setPackages(data);
-                console.log('Fetched packages:', packages);
+                console.log('Fetched packages (package):', packages);
+                console.log('Fetched packages (data):', data);
             } catch (error) {
                 console.error('Failed to fetch packages:', error);
             }
