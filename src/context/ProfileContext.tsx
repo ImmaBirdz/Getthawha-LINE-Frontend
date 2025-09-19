@@ -35,13 +35,6 @@ const ProfileContext = createContext<{
 
 const ProfileProvider = (props: React.PropsWithChildren<{}>) => {
     const [profile, setProfile] = useState<Profile | null>(null)
-    // const [profile, setProfile] = useState<Profile | null>({
-    //     userId: 'U1234567890abcdef1234567890abcdef',
-    //     displayName: 'John Doe',
-    //     pictureUrl: 'https://example.com/profile.jpg',
-    //     statusMessage: 'Hello, world!',
-    //     email: 'john.doe@example.com'
-    // });
     const [isLiffLoaded, setIsLiffLoaded] = useState(false);
     const [isLogin, setIsLogin] = useState(false);
 
