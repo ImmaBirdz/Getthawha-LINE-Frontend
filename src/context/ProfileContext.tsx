@@ -72,6 +72,7 @@ const ProfileProvider = (props: React.PropsWithChildren<{}>) => {
                         })
                     } else {
                         liff.login()
+                        setIsLogin(true);
                     }
                 })
                 .catch(err => {
