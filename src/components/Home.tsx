@@ -62,7 +62,8 @@ function App() {
                     isActive: pkg.isActive,
                 }));
                 setPackages(mappedPackages);
-                console.log('Fetched packages (package):', mappedPackages);
+                console.log('Fetched packages (package):', packages);
+                console.log('Fetched packages (mappedPackage):', mappedPackages);
                 console.log('Fetched packages (data):', data);
             } catch (error) {
                 console.error('Failed to fetch packages:', error);
