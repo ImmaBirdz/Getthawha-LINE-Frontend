@@ -65,6 +65,7 @@ const ProfileProvider = (props: React.PropsWithChildren<{}>) => {
                             console.log('User profile:', profile)
 
                             authorizeWithLine(idToken);
+                            setIsLogin(true);
 
                         }).catch(err => {
                             console.error('Error getting profile:', err)
@@ -77,7 +78,6 @@ const ProfileProvider = (props: React.PropsWithChildren<{}>) => {
                     console.error('LIFF initialization failed:', err)
                 })
             setIsLiffLoaded(true);
-            setIsLogin(true);
         }
         initLiff();
     }, [])
