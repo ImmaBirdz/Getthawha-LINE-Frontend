@@ -99,9 +99,9 @@ function App() {
 
                         </div>
                         {/* Booking */}
-                        <Link to="/mybooking" className="mt-2 !bg-[#DCA900] text-white text-xs font-tiroTamil self-start cursor-pointer py-1 px-2 rounded border-none hover:scale-110 hover:opacity-80 transition-all">
-                            View Booking
-                        </Link>
+                        <button className="mt-2 !bg-[#DCA900] text-white text-xs font-tiroTamil self-start cursor-pointer py-1 px-2 rounded border-none hover:scale-110 hover:opacity-80 transition-all">
+                            <Link to="/mybooking">View Booking</Link>
+                        </button>
                     </div>
 
                     <div className="mx-2 h-1 bg-[#DEC33A]"></div>
