@@ -23,6 +23,11 @@ export async function authorizeWithLine(idToken: string) {
   });
 }
 
+// ---------- PROFILE ----------
+export async function getProfile() {
+  return apiFetch("/userinfo/me");
+}
+
 // ---------- PACKAGE ----------
 export async function getPackages() {
   return apiFetch("/package");
@@ -57,4 +62,3 @@ export async function deleteBooking(id: string) {
     method: "DELETE",
   });
 }
-
