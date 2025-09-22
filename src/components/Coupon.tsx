@@ -27,7 +27,7 @@ function Coupon({ backgroundImage, altText = "Coupon Background", title, descrip
             {/* Price section - top left */}
             <div className="absolute top-3 left-4">
                 {price && (
-                    <div className="text-[#FFD700] text-3xl font-bold font-trebuchet tracking-wide" style={{textShadow: '2px 2px 4px rgba(0,0,0,0.8)'}}>
+                    <div className="text-[#FFD700] text-3xl font-bold font-trebuchet tracking-wide drop-shadow-lg">
                         {price.toLocaleString()}.-
                     </div>
                 )}
@@ -36,17 +36,17 @@ function Coupon({ backgroundImage, altText = "Coupon Background", title, descrip
             {/* Content section - left side */}
             <div className="absolute left-4 bottom-4 right-20">
                 {title && (
-                    <div className="text-white font-bold text-lg font-trebuchet mb-1 text-left" style={{textShadow: '2px 2px 4px rgba(0,0,0,0.8)'}}>
+                    <div className="text-white font-bold text-lg font-trebuchet mb-1 text-left drop-shadow-lg">
                         {title}
                     </div>
                 )}
                 {description && (
-                    <div className="text-white/90 text-sm text-left mb-1" style={{textShadow: '1px 1px 3px rgba(0,0,0,0.7)'}}>
+                    <div className="text-white/90 text-sm text-left mb-1 drop-shadow-md">
                         {description}
                     </div>
                 )}
                 {note && (
-                    <div className="text-[#FFD700] text-xs font-medium text-left" style={{textShadow: '1px 1px 2px rgba(0,0,0,0.8)'}}>
+                    <div className="text-[#FFD700] text-xs font-medium text-left drop-shadow-md">
                         {note}
                     </div>
                 )}
