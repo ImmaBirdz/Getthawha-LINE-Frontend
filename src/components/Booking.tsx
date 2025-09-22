@@ -84,22 +84,18 @@ function Booking() {
           {/* Dynamic Booking list from Backend API */}
           <ul className="flex flex-col gap-4 w-full px-4 list-none">
             {bookings.map((booking) => (
-              <li key={booking.id} className="relative rounded-xl p-4 bg-[#6B4423] text-white">
-                {/* Top and bottom border lines */}
-                <div className="absolute top-0 left-[-24px] right-[-24px] h-0.5 bg-[#DEC33A]"></div>
-                <div className="absolute bottom-0 left-[-24px] right-[-24px] h-0.5 bg-[#DEC33A]"></div>
-
-                <div className="flex justify-between items-start">
+              <li key={booking.id} className="rounded-xl p-4 bg-white border-2 border-[#6B4423]">
+                <div className="flex justify-between items-start text-left">
                   {/* Left side - Package and Branch info */}
-                  <div className="flex flex-col gap-1">
-                    <div className="text-white font-medium">
-                      Package: <span className="text-[#FFD633]">{booking.package.title}</span>
+                  <div className="flex flex-col gap-1 text-left">
+                    <div className="text-[#6B4423] font-medium text-left">
+                      Package: <span className="text-[#D49F00]">{booking.package.title}</span>
                     </div>
-                    <div className="text-white font-medium">
-                      Branch: <span className="text-[#FFD633]">{booking.branch.name}</span>
+                    <div className="text-[#6B4423] font-medium text-left">
+                      Branch: <span className="text-[#D49F00]">{booking.branch.name}</span>
                     </div>
-                    <div className="text-white font-medium">
-                      Date: <span className="text-[#FFD633]">
+                    <div className="text-[#6B4423] font-medium text-left">
+                      Date: <span className="text-[#D49F00]">
                         {new Date(booking.date).toLocaleDateString('en-US', { 
                           month: 'numeric', 
                           day: 'numeric', 
@@ -113,16 +109,13 @@ function Booking() {
                     </div>
                   </div>
 
-                  {/* Right side - Price and Booking ID */}
+                  {/* Right side - Price only */}
                   <div className="flex flex-col items-end gap-1">
-                    <div className="text-[#FFD700] font-bold text-lg">
+                    <div className="text-[#D49F00] font-bold text-lg">
                       ฿{booking.totalPrice}
                     </div>
-                    <div className="text-[#FFD633] text-xs">
-                      #{booking.id.substring(0, 8)}...
-                    </div>
                     {booking.voucher && (
-                      <div className="text-[#D49F00] text-xs">
+                      <div className="text-[#6B4423] text-xs">
                         Code: {booking.voucher.code}
                       </div>
                     )}
@@ -133,7 +126,7 @@ function Booking() {
           </ul>
 
           {/* Make a booking button */}
-          <button className="mt-2 !bg-[#DCA900] text-white text-xs font-tiroTamil self-center cursor-pointer py-1 px-2 rounded border-none hover:scale-110 hover:opacity-80 transition-all" onClick={() => { window.location.href = 'https://client-getthawha.yungying.com/booking' }}> Make Another Booking</button>
+          <button className="mt-2 !bg-[#DCA900] text-white text-xs font-tiroTamil self-center cursor-pointer py-1 px-2 rounded border-none hover:scale-110 hover:opacity-80 transition-all" onClick={() => { window.location.href = 'https://client-getthawha.yungying.com/booking' }}> Make Booking</button>
         </div>
       ) : (
         <div className="flex flex-col items-center gap-4 justify-start p-4">
