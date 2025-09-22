@@ -8,9 +8,9 @@ import {
 import { getBookings } from '../services/backendApi';
 
 // import assets
-import Calendar from '../assets/calendar.png';
-import Clock from '../assets/clock.png';
-import Location from '../assets/location.png';
+// import Calendar from '../assets/calendar.png';
+// import Clock from '../assets/clock.png';
+// import Location from '../assets/location.png';
 import Backtohomepage from '../assets/backhome.png';
 
 type Booking = {
@@ -84,44 +84,48 @@ function Booking() {
           {/* Dynamic Booking list from Backend API */}
           <ul className="flex flex-col gap-4 w-full px-4 list-none">
             {bookings.map((booking) => (
-              <li key={booking.id} className="relative rounded-xl p-4 bg-white">
+              <li key={booking.id} className="relative rounded-xl p-4 bg-[#6B4423] text-white">
                 {/* Top and bottom border lines */}
                 <div className="absolute top-0 left-[-24px] right-[-24px] h-0.5 bg-[#DEC33A]"></div>
                 <div className="absolute bottom-0 left-[-24px] right-[-24px] h-0.5 bg-[#DEC33A]"></div>
 
-                <div className="flex justify-center gap-4">
-                  <div className="w-22 h-25 bg-[#D9D9D9] rounded flex items-center justify-center overflow-hidden">
-                    {booking.user.pictureUrl ? (
-                      <img src={booking.user.pictureUrl} alt={booking.user.displayName} className="w-full h-full object-cover" />
-                    ) : (
-                      <div className="text-[#7E4300] text-xs text-center p-2">{booking.package.title.substring(0, 20)}</div>
-                    )}
+                <div className="flex justify-between items-start">
+                  {/* Left side - Package and Branch info */}
+                  <div className="flex flex-col gap-1">
+                    <div className="text-white font-medium">
+                      Package: <span className="text-[#FFD633]">{booking.package.title}</span>
+                    </div>
+                    <div className="text-white font-medium">
+                      Branch: <span className="text-[#FFD633]">{booking.branch.name}</span>
+                    </div>
+                    <div className="text-white font-medium">
+                      Date: <span className="text-[#FFD633]">
+                        {new Date(booking.date).toLocaleDateString('en-US', { 
+                          month: 'numeric', 
+                          day: 'numeric', 
+                          year: 'numeric'
+                        })}, {new Date(booking.date).toLocaleTimeString('en-US', { 
+                          hour: 'numeric', 
+                          minute: '2-digit',
+                          hour12: true
+                        })}
+                      </span>
+                    </div>
                   </div>
-                  <div className="flex flex-col gap-2 text-base">
-                    <div className="flex items-center gap-2">
-                      <img src={Calendar} alt="Calendar" className="w-4 h-4" />
-                      <span className="text-[#FFD633] font-medium">
-                        {new Date(booking.date).toLocaleDateString('en-GB')}
-                      </span>
+
+                  {/* Right side - Price and Booking ID */}
+                  <div className="flex flex-col items-end gap-1">
+                    <div className="text-[#FFD700] font-bold text-lg">
+                      ฿{booking.totalPrice}
                     </div>
-                    <div className="flex items-center gap-2">
-                      <img src={Clock} alt="Clock" className="w-4 h-4" />
-                      <span className="text-[#FFD633] font-medium">
-                        {booking.duration}h - {booking.package.title}
-                      </span>
+                    <div className="text-[#FFD633] text-xs">
+                      #{booking.id.substring(0, 8)}...
                     </div>
-                    <div className="flex items-center gap-2">
-                      <img src={Location} alt="Location" className="w-4 h-4" />
-                      <span className="text-[#FFD633] font-medium">{booking.branch.name}</span>
-                    </div>
-                    <div className="text-[#7E4300] font-bold text-sm">
-                      Total: {booking.totalPrice} THB
-                      {booking.voucher && (
-                        <div className="text-[#D49F00] text-xs">
-                          Voucher: {booking.voucher.code}
-                        </div>
-                      )}
-                    </div>
+                    {booking.voucher && (
+                      <div className="text-[#D49F00] text-xs">
+                        Code: {booking.voucher.code}
+                      </div>
+                    )}
                   </div>
                 </div>
               </li>
