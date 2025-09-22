@@ -6,6 +6,8 @@ import {
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 
+
+
 // import API
 import { getBookings, deleteBooking } from '../services/backendApi';
 
@@ -46,14 +48,18 @@ function Booking() {
 
   const handleDeleteBooking = async (bookingId: string) => {
     MySwal.fire({
-      title: <div className="font-tiroTamil text-[#7E4300]">Are you sure?</div>,
-      html: <div className="font-tiroTamil text-[#6B4423]">You won't be able to revert this booking cancellation!</div>,
-      icon: "warning",
+      title: <div className="font-tiroTamil text-[#7E4300]">Are you sure to delete the booking?</div>,
+      html: <div className="font-tiroTamil text-[#6B4423]">You can't change your decision later.</div>,
+      icon: "error",
       showCancelButton: true,
-      confirmButtonColor: "#D49F00",
-      cancelButtonColor: "#d33",
-      confirmButtonText: <span className="font-tiroTamil">Yes, cancel it!</span>,
-      cancelButtonText: <span className="font-tiroTamil">Cancel</span>
+      showConfirmButton: true,
+      confirmButtonText: "Yes",
+      cancelButtonText: "No",
+      buttonsStyling: false,
+      customClass: {
+        confirmButton: 'font-tiroTamil border-2 border-[#6B4423] bg-white text-[#6B4423] px-6 py-2 rounded hover:bg-green-500 hover:text-white hover:border-green-500 focus:bg-green-600 focus:border-green-600 transition-all duration-200',
+        cancelButton: 'font-tiroTamil border-2 border-[#6B4423] bg-white text-[#6B4423] px-6 py-2 rounded hover:bg-red-500 hover:text-white hover:border-red-500 focus:bg-red-600 focus:border-red-600 transition-all duration-200 mr-3'
+      }
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
