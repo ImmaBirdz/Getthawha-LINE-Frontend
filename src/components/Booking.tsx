@@ -140,13 +140,12 @@ function Booking() {
                   </div>
 
                   {/* Delete icon - bottom right corner */}
-                  <button
+                  <img 
+                    src={bin} 
+                    alt="Delete booking" 
                     onClick={() => handleDeleteBooking(booking.id)}
-                    disabled={deleting === booking.id}
-                    className="absolute bottom-2 right-2 w-8 h-8 rounded-lg bg-red-50 hover:bg-red-100 flex items-center justify-center transition-colors duration-200 disabled:opacity-50"
-                  >
-                    <img src={bin} alt="Delete booking" className="w-4 h-4 filter brightness-0 invert sepia saturate-200 hue-rotate-0" />
-                  </button>
+                    className={`absolute bottom-2 right-2 w-6 h-6 cursor-pointer hover:scale-110 transition-transform duration-200 ${deleting === booking.id ? 'opacity-50 cursor-not-allowed' : 'hover:opacity-80'}`}
+                  />
                 </div>
               </li>
             ))}
