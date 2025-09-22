@@ -84,17 +84,17 @@ function Booking() {
           {/* Dynamic Booking list from Backend API */}
           <ul className="flex flex-col gap-4 w-full px-4 list-none">
             {bookings.map((booking) => (
-              <li key={booking.id} className="rounded-xl p-4 bg-white border-2 border-[#6B4423] min-h-[100px] w-full">
-                <div className="grid grid-cols-[1fr_auto] gap-4 items-start w-full">
+              <li key={booking.id} className="rounded-xl p-4 bg-white border-2 border-[#6B4423]">
+                <div className="flex justify-between items-start text-left">
                   {/* Left side - Package and Branch info */}
-                  <div className="flex flex-col gap-1 min-w-0">
-                    <div className="text-[#6B4423] font-medium whitespace-nowrap overflow-hidden">
+                  <div className="flex flex-col gap-1 text-left">
+                    <div className="text-[#6B4423] font-medium text-left">
                       Package: <span className="text-[#D49F00]">{booking.package.title}</span>
                     </div>
-                    <div className="text-[#6B4423] font-medium whitespace-nowrap overflow-hidden">
+                    <div className="text-[#6B4423] font-medium text-left">
                       Branch: <span className="text-[#D49F00]">{booking.branch.name}</span>
                     </div>
-                    <div className="text-[#6B4423] font-medium whitespace-nowrap overflow-hidden">
+                    <div className="text-[#6B4423] font-medium text-left">
                       Date: <span className="text-[#D49F00]">
                         {new Date(booking.date).toLocaleDateString('en-US', { 
                           month: 'numeric', 
@@ -110,12 +110,12 @@ function Booking() {
                   </div>
 
                   {/* Right side - Price only */}
-                  <div className="flex flex-col items-end gap-1 flex-shrink-0">
-                    <div className="text-[#D49F00] text-lg font-bold whitespace-nowrap">
+                  <div className="flex flex-col items-end gap-1">
+                    <div className="text-[#D49F00] text-lg">
                       ฿{booking.totalPrice}
                     </div>
                     {booking.voucher && (
-                      <div className="text-[#6B4423] text-xs whitespace-nowrap">
+                      <div className="text-[#6B4423] text-xs">
                         Code: {booking.voucher.code}
                       </div>
                     )}
