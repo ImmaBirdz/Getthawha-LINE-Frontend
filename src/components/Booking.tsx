@@ -5,10 +5,11 @@ import {
 } from 'react'
 
 // import API
-import { getBookings } from '../services/backendApi';
+import { getBookings, deleteBooking } from '../services/backendApi';
 
 // import assets
 import Backtohomepage from '../assets/backhome.png';
+import bin from '../assets/bin.png';
 
 type Booking = {
   id: string;
@@ -37,6 +38,26 @@ type Booking = {
 function Booking() {
   const [bookings, setBookings] = useState<Booking[]>([])
   const [loading, setLoading] = useState(true)
+  const [deleting, setDeleting] = useState<string | null>(null)
+
+  const handleDeleteBooking = async (bookingId: string) => {
+    if (!confirm('Are you sure you want to cancel this booking?')) {
+      return;
+    }
+
+    try {
+      setDeleting(bookingId);
+      await deleteBooking(bookingId);
+      // Remove the deleted booking from the list
+      setBookings(bookings.filter(booking => booking.id !== bookingId));
+      alert('Booking cancelled successfully!');
+    } catch (error) {
+      console.error('Failed to delete booking:', error);
+      alert('Failed to cancel booking. Please try again.');
+    } finally {
+      setDeleting(null);
+    }
+  };
 
   useEffect(() => {
     const fetchBookings = async () => {
@@ -82,7 +103,7 @@ function Booking() {
           <ul className="flex flex-col gap-4 w-full px-4 list-none">
             {bookings.map((booking) => (
               <li key={booking.id} className="rounded-xl p-4 bg-white border-2 border-[#6B4423]">
-                <div className="flex justify-between items-start text-left">
+                <div className="flex justify-between items-start text-left relative">
                   {/* Left side - Package and Branch info */}
                   <div className="flex flex-col gap-1 text-left">
                     <div className="text-[#6B4423] font-medium text-left text-sm">
@@ -106,7 +127,7 @@ function Booking() {
                     </div>
                   </div>
 
-                  {/* Right side - Price only */}
+                  {/* Right side - Price */}
                   <div className="flex flex-col items-end gap-1 -mt-1">
                     <div className="text-[#D49F00] text-lg">
                       ฿{booking.totalPrice}
@@ -117,6 +138,19 @@ function Booking() {
                       </div>
                     )}
                   </div>
+
+                  {/* Delete icon - bottom right corner */}
+                  <button
+                    onClick={() => handleDeleteBooking(booking.id)}
+                    disabled={deleting === booking.id}
+                    className="absolute bottom-2 right-2 w-10 h-10 bg-red-100 hover:bg-red-200 rounded-full flex items-center justify-center transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    <img 
+                      src={bin} 
+                      alt="Delete booking" 
+                      className="w-5 h-5 opacity-75"
+                    />
+                  </button>
                 </div>
               </li>
             ))}
