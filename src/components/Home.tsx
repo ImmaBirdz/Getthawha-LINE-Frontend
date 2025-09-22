@@ -101,8 +101,6 @@ function App() {
                             {/* User details */}
                             <div className="space-y-1">
                                 <p className="text-[16px] font-tiroTamil text-[#280A00]">Email: {profile?.email}</p>
-                                <p className="text-[16px] font-tiroTamil text-[#280A00]">Phone: {/* {profile?.phone} */}</p>
-                                <p className="text-[16px] font-tiroTamil text-[#280A00]">BD: {/* {profile?.birthday} */}</p>
                             </div>
 
                         </div>

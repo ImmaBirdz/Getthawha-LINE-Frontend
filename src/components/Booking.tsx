@@ -46,7 +46,7 @@ function Booking() {
 
   const handleDeleteBooking = async (bookingId: string) => {
     MySwal.fire({
-      title: <div className="font-tiroTamil text-[#7E4300] text-lg ">Are you sure to delete the bookings?</div>,
+      title: <div className="font-tiroTamil text-[#7E4300] text-xl ">Are you sure to delete the bookings?</div>,
       html: <div className="font-tiroTamil text-[#6B4423] text-sm ">You can't change your decision later.</div>,
       icon: "warning",
       showCancelButton: true,
@@ -63,7 +63,7 @@ function Booking() {
           setBookings(bookings.filter(booking => booking.id !== bookingId));
           
           MySwal.fire({
-            title: <div className="font-tiroTamil text-[#7E4300] text-lg">Cancelled!</div>,
+            title: <div className="font-tiroTamil text-[#7E4300] text-xl">Cancelled!</div>,
             html: <div className="font-tiroTamil text-[#6B4423] text-sm">Your booking has been cancelled.</div>,
             icon: "success",
             confirmButtonColor: "#7E4300",
