@@ -39,24 +39,36 @@ function Booking() {
   const [bookings, setBookings] = useState<Booking[]>([])
   const [loading, setLoading] = useState(true)
   const [deleting, setDeleting] = useState<string | null>(null)
+  const [showDeleteModal, setShowDeleteModal] = useState(false)
+  const [bookingToDelete, setBookingToDelete] = useState<string | null>(null)
 
-  const handleDeleteBooking = async (bookingId: string) => {
-    if (!confirm('Are you sure you want to cancel this booking?')) {
-      return;
-    }
+  const handleDeleteBooking = (bookingId: string) => {
+    setBookingToDelete(bookingId);
+    setShowDeleteModal(true);
+  };
+
+  const confirmDeleteBooking = async () => {
+    if (!bookingToDelete) return;
 
     try {
-      setDeleting(bookingId);
-      await deleteBooking(bookingId);
+      setDeleting(bookingToDelete);
+      await deleteBooking(bookingToDelete);
       // Remove the deleted booking from the list
-      setBookings(bookings.filter(booking => booking.id !== bookingId));
-      alert('Booking cancelled successfully!');
+      setBookings(bookings.filter(booking => booking.id !== bookingToDelete));
+      setShowDeleteModal(false);
+      setBookingToDelete(null);
+      // You can add a success toast here instead of alert
     } catch (error) {
       console.error('Failed to delete booking:', error);
       alert('Failed to cancel booking. Please try again.');
     } finally {
       setDeleting(null);
     }
+  };
+
+  const cancelDeleteBooking = () => {
+    setShowDeleteModal(false);
+    setBookingToDelete(null);
   };
 
   useEffect(() => {
@@ -159,6 +171,37 @@ function Booking() {
 
           {/* Make a booking button */}
           <button className="mt-2 !bg-[#DCA900] text-white text-xs font-tiroTamil self-center cursor-pointer py-1 px-2 rounded border-none hover:scale-110 hover:opacity-80 transition-all" onClick={() => { window.location.href = 'https://client-getthawha.yungying.com/booking' }}> Make Booking</button>
+        </div>
+      )}
+
+      {/* Delete Confirmation Modal */}
+      {showDeleteModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg p-6 mx-4 max-w-sm w-full">
+            <div className="text-center">
+              <div className="text-[#7E4300] text-lg font-tiroTamil mb-4">
+                Cancel Booking
+              </div>
+              <div className="text-[#6B4423] text-sm mb-6">
+                Are you sure you want to cancel this booking? This action cannot be undone.
+              </div>
+              <div className="flex gap-3 justify-center">
+                <button
+                  onClick={cancelDeleteBooking}
+                  className="px-4 py-2 bg-gray-200 text-gray-700 rounded hover:bg-gray-300 transition-colors font-tiroTamil"
+                >
+                  No, Keep It
+                </button>
+                <button
+                  onClick={confirmDeleteBooking}
+                  disabled={deleting === bookingToDelete}
+                  className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition-colors disabled:opacity-50 font-tiroTamil"
+                >
+                  {deleting === bookingToDelete ? 'Canceling...' : 'Yes, Cancel'}
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       )}
     </div>
