@@ -20,7 +20,7 @@ import '../App.css'
 // import assets
 import edit from '../assets/edit.png'
 
-import Coupon from './Coupon'
+import Coupon from './Package'
 
 type Package = {
     id: string;
