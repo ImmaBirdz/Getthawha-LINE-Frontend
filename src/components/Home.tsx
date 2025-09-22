@@ -19,7 +19,7 @@ import '../App.css'
 
 // import assets
 import edit from '../assets/edit.png'
-import coupon1 from '../assets/coupon1.png'
+
 import Coupon from './Coupon'
 
 type Package = {
@@ -123,7 +123,7 @@ function App() {
                                 {packages.filter(pkg => pkg.type === 'service').map((pkg) => (
                                     <Coupon
                                         key={pkg.id}
-                                        backgroundImage={pkg.pictureUrl || coupon1}
+                                        backgroundImage={pkg.pictureUrl}
                                         altText={pkg.title}
                                         title={pkg.title}
                                         description={pkg.description}
@@ -146,7 +146,7 @@ function App() {
                                 {packages.filter(pkg => pkg.type === 'promotion').map((pkg) => (
                                     <Coupon
                                         key={pkg.id}
-                                        backgroundImage={pkg.pictureUrl || coupon1}
+                                        backgroundImage={pkg.pictureUrl}
                                         altText={pkg.title}
                                         title={pkg.title}
                                         description={pkg.description}
