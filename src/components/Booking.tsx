@@ -176,28 +176,31 @@ function Booking() {
 
       {/* Delete Confirmation Modal */}
       {showDeleteModal && (
-        <div className="fixed inset-0 bg-gray-400 bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg p-6 mx-4 max-w-xs w-full shadow-lg">
+        <div className="fixed inset-0 bg-gray-500 bg-opacity-70 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg p-8 mx-4 max-w-sm w-full shadow-lg">
             <div className="text-center">
-              <div className="text-[#7E4300] text-lg font-tiroTamil mb-4">
-                Cancel Booking?
+              <div className="text-[#7E4300] text-xl font-tiroTamil mb-4 font-bold">
+                Cancel Booking
               </div>
-              <div className="text-[#6B4423] text-sm mb-6">
-                Are you sure you want to cancel this booking? This action cannot be undone.
+              <div className="text-[#6B4423] text-base mb-6 leading-relaxed">
+                Are you sure you want to cancel this booking?
               </div>
-              <div className="flex gap-3 justify-center">
+              <div className="text-red-600 text-sm mb-8 font-medium">
+                This action cannot be undone.
+              </div>
+              <div className="flex gap-4 justify-center">
                 <button
                   onClick={cancelDeleteBooking}
-                  className="px-4 py-2 bg-gray-200 text-gray-700 rounded font-tiroTamil text-sm"
+                  className="px-6 py-3 bg-gray-200 text-gray-700 rounded-lg font-tiroTamil hover:bg-gray-300 transition-colors"
                 >
-                  Cancel
+                  Keep Booking
                 </button>
                 <button
                   onClick={confirmDeleteBooking}
                   disabled={deleting === bookingToDelete}
-                  className="px-4 py-2 bg-red-500 text-white rounded font-tiroTamil text-sm disabled:opacity-50"
+                  className="px-6 py-3 bg-red-500 text-white rounded-lg font-tiroTamil hover:bg-red-600 transition-colors disabled:opacity-50"
                 >
-                  {deleting === bookingToDelete ? 'Deleting...' : 'Delete'}
+                  {deleting === bookingToDelete ? 'Canceling...' : 'Yes, Cancel'}
                 </button>
               </div>
             </div>
