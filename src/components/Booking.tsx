@@ -9,7 +9,7 @@ import { getBookings, deleteBooking } from '../services/backendApi';
 
 // import assets
 import Backtohomepage from '../assets/backhome.png';
-import bin from '../assets/bin.png';
+// import bin from '../assets/bin.png';
 
 type Booking = {
   id: string;
@@ -145,7 +145,7 @@ function Booking() {
                     disabled={deleting === booking.id}
                     className="absolute bottom-2 right-2 w-8 h-8 rounded-lg "
                   >
-                    <img src={bin} alt="Delete booking" className="w-4 h-4" />
+                    <img src={Backtohomepage} alt="Delete booking" className="w-4 h-4" />
                   </button>
                 </div>
               </li>
