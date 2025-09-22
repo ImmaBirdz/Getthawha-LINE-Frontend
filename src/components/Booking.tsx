@@ -102,7 +102,7 @@ function Booking() {
           {/* Dynamic Booking list from Backend API */}
           <ul className="flex flex-col gap-4 w-full px-4 list-none">
             {bookings.map((booking) => (
-              <li key={booking.id} className="rounded-xl px-4 pt-4 pb-8 bg-white border-2 border-[#6B4423]">
+              <li key={booking.id} className="rounded-xl p-4 bg-white border-2 border-[#6B4423]">
                 <div className="flex justify-between items-start text-left relative">
                   {/* Left side - Package and Branch info */}
                   <div className="flex flex-col gap-1 text-left">
@@ -140,7 +140,7 @@ function Booking() {
                   </div>
 
                   {/* Delete icon - bottom right corner */}
-                  <img src={bin} alt="Delete booking" onClick={() => handleDeleteBooking(booking.id)} className={`absolute bottom-2 right-2 w-6 h-6 cursor-pointer hover:scale-110 transition-transform duration-200 ${deleting === booking.id ? 'opacity-50 cursor-not-allowed' : 'hover:opacity-80'}`} />
+                  <img src={bin} alt="Delete booking" onClick={() => handleDeleteBooking(booking.id)} className={`absolute -bottom-2 right-2 w-6 h-6 cursor-pointer hover:scale-110 transition-transform duration-200 ${deleting === booking.id ? 'opacity-50 cursor-not-allowed' : 'hover:opacity-80'}`} />
                 </div>
               </li>
             ))}
