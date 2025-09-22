@@ -88,14 +88,14 @@ function Booking() {
                 <div className="flex justify-between items-start text-left">
                   {/* Left side - Package and Branch info */}
                   <div className="flex flex-col gap-1 text-left">
-                    <div className="text-[#6B4423] font-bold text-left">
-                      Package: <span className="text-[#D49F00] font-semibold">{booking.package.title}</span>
+                    <div className="text-[#6B4423] font-medium text-left">
+                      Package: <span className="text-[#D49F00]">{booking.package.title}</span>
                     </div>
-                    <div className="text-[#6B4423] font-bold text-left">
-                      Branch: <span className="text-[#D49F00] font-semibold">{booking.branch.name}</span>
+                    <div className="text-[#6B4423] font-medium text-left">
+                      Branch: <span className="text-[#D49F00]">{booking.branch.name}</span>
                     </div>
-                    <div className="text-[#6B4423] font-bold text-left">
-                      Date: <span className="text-[#D49F00] font-semibold">
+                    <div className="text-[#6B4423] font-medium text-left">
+                      Date: <span className="text-[#D49F00]">
                         {new Date(booking.date).toLocaleDateString('en-US', { 
                           month: 'numeric', 
                           day: 'numeric', 
@@ -111,11 +111,11 @@ function Booking() {
 
                   {/* Right side - Price only */}
                   <div className="flex flex-col items-end gap-1">
-                    <div className="text-[#D49F00] font-black text-lg tracking-tight">
+                    <div className="text-[#D49F00] text-lg">
                       ฿{booking.totalPrice}
                     </div>
                     {booking.voucher && (
-                      <div className="text-[#6B4423] text-xs font-bold">
+                      <div className="text-[#6B4423] text-xs">
                         Code: {booking.voucher.code}
                       </div>
                     )}
