@@ -39,24 +39,47 @@ function Booking() {
   const [bookings, setBookings] = useState<Booking[]>([])
   const [loading, setLoading] = useState(true)
   const [deleting, setDeleting] = useState<string | null>(null)
+  const [showAlert, setShowAlert] = useState(false)
+  const [alertMessage, setAlertMessage] = useState('')
+  const [showConfirm, setShowConfirm] = useState(false)
+  const [bookingToDelete, setBookingToDelete] = useState<string | null>(null)
 
-  const handleDeleteBooking = async (bookingId: string) => {
-    if (!confirm('Are you sure you want to cancel this booking?')) {
-      return;
-    }
+  const showCustomAlert = (message: string) => {
+    setAlertMessage(message);
+    setShowAlert(true);
+  };
+
+  const closeAlert = () => {
+    setShowAlert(false);
+  };
+
+  const handleDeleteBooking = (bookingId: string) => {
+    setBookingToDelete(bookingId);
+    setShowConfirm(true);
+  };
+
+  const confirmDelete = async () => {
+    if (!bookingToDelete) return;
 
     try {
-      setDeleting(bookingId);
-      await deleteBooking(bookingId);
+      setDeleting(bookingToDelete);
+      setShowConfirm(false);
+      await deleteBooking(bookingToDelete);
       // Remove the deleted booking from the list
-      setBookings(bookings.filter(booking => booking.id !== bookingId));
-      alert('Booking cancelled successfully!');
+      setBookings(bookings.filter(booking => booking.id !== bookingToDelete));
+      showCustomAlert('Booking cancelled successfully!');
     } catch (error) {
       console.error('Failed to delete booking:', error);
-      alert('Failed to cancel booking. Please try again.');
+      showCustomAlert('Failed to cancel booking. Please try again.');
     } finally {
       setDeleting(null);
+      setBookingToDelete(null);
     }
+  };
+
+  const cancelDelete = () => {
+    setShowConfirm(false);
+    setBookingToDelete(null);
   };
 
   useEffect(() => {
@@ -162,7 +185,51 @@ function Booking() {
         </div>
       )}
 
+      {/* Confirmation Popup */}
+      {showConfirm && (
+        <div className="fixed inset-0 bg-gray-500 bg-opacity-70 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg px-8 py-6 mx-4 max-w-sm w-full shadow-lg">
+            <div className="text-center">
+              <div className="text-[#7E4300] text-lg font-tiroTamil mb-6">
+                Are you sure you want to cancel this booking?
+              </div>
+              <div className="flex gap-4 justify-center">
+                <button
+                  onClick={confirmDelete}
+                  className="px-6 py-3 bg-red-500 text-white rounded font-tiroTamil hover:bg-red-600 transition-colors"
+                >
+                  yes
+                </button>
+                <button
+                  onClick={cancelDelete}
+                  className="px-6 py-3 bg-gray-400 text-white rounded font-tiroTamil hover:bg-gray-500 transition-colors"
+                >
+                  no
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
+      {/* Custom Alert Popup */}
+      {showAlert && (
+        <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg px-8 py-6 mx-4 max-w-sm w-full shadow-lg border border-[#6B4423]">
+            <div className="text-center">
+              <div className="text-[#7E4300] text-lg font-tiroTamil mb-4">
+                {alertMessage}
+              </div>
+              <button
+                onClick={closeAlert}
+                className="px-4 py-2 bg-[#DCA900] text-white rounded font-tiroTamil hover:bg-[#B8940A] transition-colors"
+              >
+                OK
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
