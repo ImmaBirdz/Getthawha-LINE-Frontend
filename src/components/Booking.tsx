@@ -88,13 +88,13 @@ function Booking() {
                 <div className="flex justify-between items-start text-left">
                   {/* Left side - Package and Branch info */}
                   <div className="flex flex-col gap-1 text-left">
-                    <div className="text-[#6B4423] font-medium text-left">
+                    <div className="text-[#6B4423] font-medium text-left drop-shadow-md">
                       Package: <span className="text-[#D49F00]">{booking.package.title}</span>
                     </div>
-                    <div className="text-[#6B4423] font-medium text-left">
+                    <div className="text-[#6B4423] font-medium text-left drop-shadow-md">
                       Branch: <span className="text-[#D49F00]">{booking.branch.name}</span>
                     </div>
-                    <div className="text-[#6B4423] font-medium text-left">
+                    <div className="text-[#6B4423] font-medium text-left drop-shadow-md">
                       Date: <span className="text-[#D49F00]">
                         {new Date(booking.date).toLocaleDateString('en-US', { 
                           month: 'numeric', 
@@ -111,11 +111,11 @@ function Booking() {
 
                   {/* Right side - Price only */}
                   <div className="flex flex-col items-end gap-1">
-                    <div className="text-[#D49F00] font-bold text-lg">
+                    <div className="text-[#D49F00] font-bold text-lg drop-shadow-lg">
                       ฿{booking.totalPrice}
                     </div>
                     {booking.voucher && (
-                      <div className="text-[#6B4423] text-xs">
+                      <div className="text-[#6B4423] text-xs drop-shadow-sm">
                         Code: {booking.voucher.code}
                       </div>
                     )}
