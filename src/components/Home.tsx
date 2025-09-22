@@ -19,10 +19,7 @@ import '../App.css'
 
 // import assets
 import edit from '../assets/edit.png'
-import coupon1 from '../assets/coupon1.png'
-import coupon2 from '../assets/coupon2.png'
-import coupon3 from '../assets/coupon3.png'
-import coupon4 from '../assets/coupon4.png'
+
 import Coupon from './Coupon'
 
 type Package = {
@@ -43,6 +40,14 @@ function App() {
         isLiffLoaded
     } = useContext(ProfileContext)
     const navigate = useNavigate();
+
+    // // Dummy profile data for demonstration purposes
+    // const [profile] = useState({
+    //     userId: 'U1234567890abcdef',
+    //     displayName: 'John Doe',
+    //     pictureUrl: 'https://via.placeholder.com/150',
+    //     email: 'john.doe@example.com'
+    // });
 
     const [packages, setPackages] = useState<Package[]>([])
 
@@ -71,7 +76,9 @@ function App() {
     }, []);
 
     return (
-        profile && isLiffLoaded ? (
+        profile 
+        && isLiffLoaded 
+        ? (
             <div className="App">
                 <div className="m-0 w-[360px] min-h-[90vh] bg-white flex flex-col relative">
                     <div className="px-6 py-4 text-[#D49F00] bg-white justify-evenly ">
@@ -106,35 +113,51 @@ function App() {
 
                     <div className="mx-2 h-1 bg-[#DEC33A]"></div>
 
-                    {/* Coupons */}
-                    {/* list of my coupon */}
-                    {/* if not, show "no coupon available" */}
-                    <ul className="flex flex-col gap-4 p-6 list-none">
-                        <Coupon backgroundImage={coupon1} altText="Coupon 1" />
-                        <Coupon backgroundImage={coupon2} altText="Coupon 2" />
-                        <Coupon backgroundImage={coupon3} altText="Coupon 3" />
-                        <Coupon backgroundImage={coupon4} altText="Coupon 4" />
-                        <Coupon backgroundImage={coupon1} altText="Coupon 1" />
-                        <Coupon backgroundImage={coupon2} altText="Coupon 2" />
-                        <Coupon backgroundImage={coupon3} altText="Coupon 3" />
-                    </ul>
-                    {/* Packages */}
-                    <div className="px-6 pt-4 pb-2 w-full">
-                        <div className="text-[#7E4300] text-xl font-tiroTamil mb-2">Our Packages</div>
-                    </div>
-                    {/* list of packages */}
-                    <ul>
-                        {packages.length > 0 ? (
-                            packages.map((pkg) => (
-                                <li key={pkg.id} className="border-b border-[#eee] py-2">
-                                    <div className="font-bold text-[#673F00]">{pkg.title}</div>
-                                    <div className="text-sm text-[#280A00]">{pkg.description}</div>
-                                </li>
-                            ))
-                        ) : (
-                            <li className="text-[#280A00]">No package available</li>
-                        )}
-                    </ul>
+                    {/* Services - Only show if there are services */}
+                    {packages.filter(pkg => pkg.type === 'service').length > 0 && (
+                        <>
+                            <div className="px-4 pt-2 pb-1 w-full">
+                                <div className="text-[#7E4300] text-xl font-tiroTamil mb-1">Services</div>
+                            </div>
+                            <ul className="flex flex-col gap-3 px-4 pb-2 list-none">
+                                {packages.filter(pkg => pkg.type === 'service').map((pkg) => (
+                                    <Coupon
+                                        key={pkg.id}
+                                        backgroundImage={pkg.pictureUrl}
+                                        altText={pkg.title}
+                                        title={pkg.title}
+                                        description={pkg.description}
+                                        price={pkg.price}
+                                        duration={pkg.duration}
+                                        note={pkg.note}
+                                    />
+                                ))}
+                            </ul>
+                        </>
+                    )}
+
+                    {/* Promotions - Only show if there are promotions */}
+                    {packages.filter(pkg => pkg.type === 'promotion').length > 0 && (
+                        <>
+                            <div className="px-4 pt-2 pb-1 w-full">
+                                <div className="text-[#7E4300] text-xl font-tiroTamil mb-1">Promotions</div>
+                            </div>
+                            <ul className="flex flex-col gap-3 px-4 pb-2 list-none">
+                                {packages.filter(pkg => pkg.type === 'promotion').map((pkg) => (
+                                    <Coupon
+                                        key={pkg.id}
+                                        backgroundImage={pkg.pictureUrl}
+                                        altText={pkg.title}
+                                        title={pkg.title}
+                                        description={pkg.description}
+                                        price={pkg.price}
+                                        duration={pkg.duration}
+                                        note={pkg.note}
+                                    />
+                                ))}
+                            </ul>
+                        </>
+                    )}
 
                 </div>
             </div>
