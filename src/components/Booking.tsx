@@ -3,6 +3,8 @@ import {
   useState,
   useEffect
 } from 'react'
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
 
 // import API
 import { getBookings, deleteBooking } from '../services/backendApi';
@@ -40,23 +42,47 @@ function Booking() {
   const [loading, setLoading] = useState(true)
   const [deleting, setDeleting] = useState<string | null>(null)
 
-  const handleDeleteBooking = async (bookingId: string) => {
-    if (!confirm('Are you sure you want to cancel this booking?')) {
-      return;
-    }
+  const MySwal = withReactContent(Swal)
 
-    try {
-      setDeleting(bookingId);
-      await deleteBooking(bookingId);
-      // Remove the deleted booking from the list
-      setBookings(bookings.filter(booking => booking.id !== bookingId));
-      alert('Booking cancelled successfully!');
-    } catch (error) {
-      console.error('Failed to delete booking:', error);
-      alert('Failed to cancel booking. Please try again.');
-    } finally {
-      setDeleting(null);
-    }
+  const handleDeleteBooking = async (bookingId: string) => {
+    MySwal.fire({
+      title: <div className="font-tiroTamil text-[#7E4300]">Are you sure?</div>,
+      html: <div className="font-tiroTamil text-[#6B4423]">You won't be able to revert this booking cancellation!</div>,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#D49F00",
+      cancelButtonColor: "#d33",
+      confirmButtonText: <span className="font-tiroTamil">Yes, cancel it!</span>,
+      cancelButtonText: <span className="font-tiroTamil">Cancel</span>
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          setDeleting(bookingId);
+          await deleteBooking(bookingId);
+          // Remove the deleted booking from the list
+          setBookings(bookings.filter(booking => booking.id !== bookingId));
+          
+          MySwal.fire({
+            title: <div className="font-tiroTamil text-[#7E4300]">Cancelled!</div>,
+            html: <div className="font-tiroTamil text-[#6B4423]">Your booking has been cancelled successfully.</div>,
+            icon: "success",
+            confirmButtonColor: "#D49F00",
+            confirmButtonText: <span className="font-tiroTamil">OK</span>
+          });
+        } catch (error) {
+          console.error('Failed to delete booking:', error);
+          MySwal.fire({
+            title: <div className="font-tiroTamil text-[#7E4300]">Error!</div>,
+            html: <div className="font-tiroTamil text-[#6B4423]">Failed to cancel booking. Please try again.</div>,
+            icon: "error",
+            confirmButtonColor: "#D49F00",
+            confirmButtonText: <span className="font-tiroTamil">OK</span>
+          });
+        } finally {
+          setDeleting(null);
+        }
+      }
+    });
   };
 
   useEffect(() => {
