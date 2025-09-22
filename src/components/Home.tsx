@@ -2,12 +2,12 @@
 import {
     useState,
     useEffect,
-    useContext
+    // useContext
 } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 // import context
-import { ProfileContext } from '../context/ProfileContext'
+// import { ProfileContext } from '../context/ProfileContext'
 
 // import API
 import {
@@ -38,11 +38,19 @@ type Package = {
 };
 
 function App() {
-    const {
-        profile,
-        isLiffLoaded
-    } = useContext(ProfileContext)
+    // const {
+    //     profile,
+    //     isLiffLoaded
+    // } = useContext(ProfileContext)
     const navigate = useNavigate();
+
+    // Dummy profile data for demonstration purposes
+    const [profile] = useState({
+        userId: 'U1234567890abcdef',
+        displayName: 'John Doe',
+        pictureUrl: 'https://via.placeholder.com/150',
+        email: 'john.doe@example.com'
+    });
 
     const [packages, setPackages] = useState<Package[]>([])
 
@@ -71,7 +79,9 @@ function App() {
     }, []);
 
     return (
-        profile && isLiffLoaded ? (
+        profile 
+        // && isLiffLoaded 
+        ? (
             <div className="App">
                 <div className="m-0 w-[360px] min-h-[90vh] bg-white flex flex-col relative">
                     <div className="px-6 py-4 text-[#D49F00] bg-white justify-evenly ">
