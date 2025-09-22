@@ -111,7 +111,7 @@ function Booking() {
 
                   {/* Right side - Price only */}
                   <div className="flex flex-col items-end gap-1">
-                    <div className="text-[#D49F00] text-lg">
+                    <div className="text-[#D49F00] text-2xl">
                       ฿{booking.totalPrice}
                     </div>
                     {booking.voucher && (
