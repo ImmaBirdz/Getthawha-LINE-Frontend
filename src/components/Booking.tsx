@@ -46,14 +46,14 @@ function Booking() {
 
   const handleDeleteBooking = async (bookingId: string) => {
     MySwal.fire({
-      title: <div className="font-tiroTamil text-[#7E4300]">Are you sure to delete the bookings?</div>,
-      html: <div className="font-tiroTamil text-[#6B4423]">You can't change your decision later.</div>,
+      title: <div className="font-tiroTamil text-[#7E4300] text-lg ">Are you sure to delete the bookings?</div>,
+      html: <div className="font-tiroTamil text-[#6B4423] text-sm ">You can't change your decision later.</div>,
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: "#D49F00",
-      cancelButtonColor: "#d33",
-      confirmButtonText: <span className="font-tiroTamil">Yes</span>,
-      cancelButtonText: <span className="font-tiroTamil">No</span>
+      confirmButtonColor: "#7E4300",
+      cancelButtonColor: "#7E4300",
+      confirmButtonText: <span className="font-tiroTamil">Yes, delete it!</span>,
+      cancelButtonText: <span className="font-tiroTamil">No, keep it</span>
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
@@ -63,19 +63,19 @@ function Booking() {
           setBookings(bookings.filter(booking => booking.id !== bookingId));
           
           MySwal.fire({
-            title: <div className="font-tiroTamil text-[#7E4300]">Cancelled!</div>,
-            html: <div className="font-tiroTamil text-[#6B4423]">Your booking has been cancelled successfully.</div>,
+            title: <div className="font-tiroTamil text-[#7E4300] text-lg">Cancelled!</div>,
+            html: <div className="font-tiroTamil text-[#6B4423] text-sm">Your booking has been cancelled.</div>,
             icon: "success",
-            confirmButtonColor: "#D49F00",
+            confirmButtonColor: "#7E4300",
             confirmButtonText: <span className="font-tiroTamil">OK</span>
           });
         } catch (error) {
           console.error('Failed to delete booking:', error);
           MySwal.fire({
-            title: <div className="font-tiroTamil text-[#7E4300]">Error!</div>,
-            html: <div className="font-tiroTamil text-[#6B4423]">Failed to cancel booking. Please try again.</div>,
+            title: <div className="font-tiroTamil text-[#7E4300] text-lg">Error!</div>,
+            html: <div className="font-tiroTamil text-[#6B4423] text-sm">Failed to cancel booking. Please try again.</div>,
             icon: "error",
-            confirmButtonColor: "#D49F00",
+            confirmButtonColor: "#7E4300",
             confirmButtonText: <span className="font-tiroTamil">OK</span>
           });
         } finally {
