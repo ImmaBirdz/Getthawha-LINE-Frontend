@@ -88,13 +88,13 @@ function Booking() {
                 <div className="flex justify-between items-start text-left">
                   {/* Left side - Package and Branch info */}
                   <div className="flex flex-col gap-1 text-left">
-                    <div className="text-[#6B4423] font-medium text-left">
+                    <div className="text-[#6B4423] font-medium text-left text-sm">
                       Package: <span className="text-[#D49F00]">{booking.package.title}</span>
                     </div>
-                    <div className="text-[#6B4423] font-medium text-left">
+                    <div className="text-[#6B4423] font-medium text-left text-sm">
                       Branch: <span className="text-[#D49F00]">{booking.branch.name}</span>
                     </div>
-                    <div className="text-[#6B4423] font-medium text-left">
+                    <div className="text-[#6B4423] font-medium text-left text-sm">
                       Date: <span className="text-[#D49F00]">
                         {new Date(booking.date).toLocaleDateString('en-US', { 
                           month: 'numeric', 
