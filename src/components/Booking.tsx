@@ -8,9 +8,6 @@ import {
 import { getBookings } from '../services/backendApi';
 
 // import assets
-// import Calendar from '../assets/calendar.png';
-// import Clock from '../assets/clock.png';
-// import Location from '../assets/location.png';
 import Backtohomepage from '../assets/backhome.png';
 
 type Booking = {
