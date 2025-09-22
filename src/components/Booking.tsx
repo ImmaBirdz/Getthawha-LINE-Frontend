@@ -143,12 +143,12 @@ function Booking() {
                   <button
                     onClick={() => handleDeleteBooking(booking.id)}
                     disabled={deleting === booking.id}
-                    className="absolute bottom-2 right-2 w-10 h-10 bg-red-100 hover:bg-red-200 rounded-full flex items-center justify-center transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="absolute bottom-2 right-2 w-8 h-8 bg-red-100 hover:bg-red-200 rounded-lg flex items-center justify-center transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     <img 
                       src={bin} 
                       alt="Delete booking" 
-                      className="w-5 h-5 opacity-75"
+                      className="w-4 h-4"
                     />
                   </button>
                 </div>
