@@ -72,7 +72,7 @@ function Booking() {
         } catch (error) {
           console.error('Failed to delete booking:', error);
           MySwal.fire({
-            title: <div className="font-tiroTamil text-[#7E4300] text-lg">Error!</div>,
+            title: <div className="font-tiroTamil text-[#7E4300] text-xl">Error!</div>,
             html: <div className="font-tiroTamil text-[#6B4423] text-sm">Failed to cancel booking. Please try again.</div>,
             icon: "error",
             confirmButtonColor: "#7E4300",
