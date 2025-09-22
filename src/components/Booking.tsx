@@ -70,8 +70,8 @@ function Booking() {
   return (
     <div className="m-0 w-[360px] min-h-[90vh] bg-white flex flex-col items-center justify-start px-4 pt-2 pb-4">
       {loading ? (
-        <div className="flex flex-col items-center gap-4 justify-center h-full">
-          <div className="text-[#7E4300] text-lg font-tiroTamil">Loading your bookings...</div>
+        <div className="m-0 w-[360px] min-h-[90vh] bg-white flex flex-col relative">
+          <p className="text-[#7E4300] text-center mt-10 font-tiroTamil">Loading bookings...</p>
         </div>
       ) : bookings && bookings.length > 0 ? (
         <div className="flex flex-col items-center gap-4 w-full">
