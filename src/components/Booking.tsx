@@ -174,28 +174,34 @@ function Booking() {
         </div>
       )}
 
-      {/* Delete Confirmation Modal */}
+      {/* Delete Confirmation Modal - Game Pause Style */}
       {showDeleteModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
-          <div className="bg-white rounded-xl p-6 mx-4 max-w-sm w-full shadow-2xl">
+        <div className="fixed inset-0 bg-black bg-opacity-60 backdrop-blur-[1px] flex items-center justify-center z-50 animate-in fade-in duration-200">
+          <div className="bg-white rounded-2xl p-8 mx-4 max-w-sm w-full shadow-[0_20px_50px_rgba(0,0,0,0.5)] border border-gray-200 transform animate-in zoom-in duration-300">
             <div className="text-center">
-              <div className="text-[#7E4300] text-lg font-tiroTamil mb-4 font-bold">
-                Cancel Booking?
+              <div className="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg className="w-6 h-6 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                </svg>
               </div>
-              <div className="text-[#6B4423] text-sm mb-6">
-                Are you sure you want to cancel this booking? This action cannot be undone.
+              <div className="text-[#7E4300] text-xl font-tiroTamil mb-3 font-bold">
+                Cancel Booking
               </div>
-              <div className="flex gap-3 justify-center">
+              <div className="text-[#6B4423] text-sm mb-8 leading-relaxed">
+                Are you sure you want to cancel this booking?<br/>
+                <span className="text-red-500 font-medium">This action cannot be undone.</span>
+              </div>
+              <div className="flex gap-4 justify-center">
                 <button
                   onClick={cancelDeleteBooking}
-                  className="px-4 py-2 bg-gray-200 text-gray-700 rounded hover:bg-gray-300 transition-colors font-tiroTamil"
+                  className="px-6 py-3 bg-gray-100 text-[#6B4423] rounded-lg hover:bg-gray-200 transition-all font-tiroTamil font-medium shadow-md hover:shadow-lg transform hover:scale-105"
                 >
-                  No, Keep It
+                  Keep Booking
                 </button>
                 <button
                   onClick={confirmDeleteBooking}
                   disabled={deleting === bookingToDelete}
-                  className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition-colors disabled:opacity-50 font-tiroTamil"
+                  className="px-6 py-3 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-all disabled:opacity-50 font-tiroTamil font-medium shadow-md hover:shadow-lg transform hover:scale-105"
                 >
                   {deleting === bookingToDelete ? 'Canceling...' : 'Yes, Cancel'}
                 </button>
