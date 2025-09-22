@@ -9,7 +9,7 @@ import { getBookings, deleteBooking } from '../services/backendApi';
 
 // import assets
 import Backtohomepage from '../assets/backhome.png';
-// import bin from '../assets/bin.png';
+import bin from '../assets/bin.png';
 
 type Booking = {
   id: string;
@@ -143,9 +143,9 @@ function Booking() {
                   <button
                     onClick={() => handleDeleteBooking(booking.id)}
                     disabled={deleting === booking.id}
-                    className="absolute bottom-2 right-2 w-8 h-8 rounded-lg "
+                    className="absolute bottom-2 right-2 w-8 h-8 rounded-lg bg-red-50 hover:bg-red-100 flex items-center justify-center transition-colors duration-200 disabled:opacity-50"
                   >
-                    <img src={Backtohomepage} alt="Delete booking" className="w-4 h-4" />
+                    <img src={bin} alt="Delete booking" className="w-4 h-4 filter brightness-0 invert sepia saturate-200 hue-rotate-0" />
                   </button>
                 </div>
               </li>
