@@ -34,7 +34,7 @@ type Package = {
     isActive: boolean;
 };
 
-function App() {
+function Home() {
     const {
         profile,
         isLiffLoaded
@@ -166,4 +166,4 @@ function App() {
         )
     );
 }
-export default App
+export default Home;
