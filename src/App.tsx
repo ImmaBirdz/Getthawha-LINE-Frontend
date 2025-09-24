@@ -8,7 +8,7 @@ import {
 // import UI Components
 import Header from './components/Header'
 import Home from './components/Home'
-import Booking from './components/Booking'
+import ViewBooking from './components/ViewBooking'
 
 function App() {
   return (
@@ -16,7 +16,7 @@ function App() {
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/mybooking" element={<Booking />} />
+        <Route path="/mybooking" element={<ViewBooking />} />
       </Routes>
     </BrowserRouter>
   );

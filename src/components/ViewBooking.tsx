@@ -37,7 +37,7 @@ type Booking = {
   };
 };
 
-function Booking() {
+function ViewBooking() {
   const [bookings, setBookings] = useState<Booking[]>([])
   const [loading, setLoading] = useState(true)
   const [deleting, setDeleting] = useState<string | null>(null)
@@ -191,5 +191,5 @@ function Booking() {
   );
 }
 
-export default Booking;
+export default ViewBooking;
 
