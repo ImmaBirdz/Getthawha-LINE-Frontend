@@ -102,7 +102,7 @@ function Home() {
 
                         </div>
                         {/* Booking Buttons */}
-                        <div className="flex justify-between w-full mt-2 gap-8">
+                        <div className="flex justify-between w-full mt-2 gap-6">
                             <button className="flex-1 !bg-[#DCA900] text-white text-sm font-tiroTamil cursor-pointer py-2 px-4 rounded-lg border-none hover:scale-105 hover:opacity-90 transition-all"
                                 onClick={() => { navigate('/viewbooking') }}>View Booking</button>
                             <button className="flex-1 !bg-[#DCA900] text-white text-sm font-tiroTamil cursor-pointer py-2 px-4 rounded-lg border-none hover:scale-105 hover:opacity-90 transition-all"
