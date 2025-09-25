@@ -156,7 +156,7 @@ function ViewBooking() {
                   <div className="flex flex-col gap-1 text-left">
                     {/* Status - Pending */}
                     <div className="text-[#818181] font-medium text-sm mb-1 flex items-center gap-1">
-                      <div className="w-2 h-2 bg-[#818181] rounded-full animate-pulse shadow-[0_0_4px_#E7E7E7]"></div>
+                      <div className="w-2 h-2 bg-[#FFA600] rounded-full animate-pulse shadow-[0_0_4px_#FFD381]"></div>
                       <span className="animate-pulse">Pending</span>
                     </div>
                     <div className="text-[#6B4423] font-medium text-left text-sm">
