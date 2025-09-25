@@ -31,7 +31,7 @@ function MakeBooking() {
       {/* Header with back arrow and title */}
       <div className="flex items-center justify-center px-4 py-3 relative">
         <img src={backhome} alt="Back"  className="w-10 h-10 cursor-pointer hover:scale-110 hover:opacity-80 transition-all duration-200 absolute left-2" onClick={() => navigate('/viewbooking')}/>
-        <div className="text-2xl font-tiroTamil text-[#7E4300]">Booking</div>
+        <div className="text-xl font-tiroTamil text-[#7E4300]">Booking</div>
       </div>
       
       {/* border line */}

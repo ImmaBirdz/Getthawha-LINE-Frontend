@@ -127,6 +127,11 @@ function ViewBooking() {
             <div className="text-[#7E4300] text-xl font-tiroTamil">Your Bookings</div>
           </div>
 
+          {/* border line */}
+          <div className="w-100 px-7">
+            <div className="h-1 bg-[#DEC33A] w-full"></div>
+          </div>
+
           {/* Dynamic Booking list from Backend API */}
           <ul className="flex flex-col gap-4 w-full px-4 list-none">
             {bookings.map((booking) => (
@@ -178,15 +183,25 @@ function ViewBooking() {
           <button className="mt-2 !bg-[#DCA900] text-white text-xs font-tiroTamil self-center cursor-pointer py-1 px-2 rounded border-none hover:scale-110 hover:opacity-80 transition-all" onClick={() => navigate('/makebooking')}> Make Booking</button>
         </div>
       ) : (
-        <div className="flex flex-col items-center gap-4 justify-start p-4">
-          {/* Header with back button for no booking */}
-          <div className="flex items-center justify-center w-full relative mt-0">
-            <img src={Backtohomepage} alt="Back to Home" className="absolute left-[-76px] w-10 h-10 cursor-pointer hover:scale-110 hover:opacity-80 transition-all duration-200" onClick={() => { window.location.href = '/' }} />
-            <div className="text-[#7E4300] text-xl font-tiroTamil">You have no bookings</div>
+        <div className="flex flex-col items-center gap-4 w-full">
+          {/* Header with back button and title */}
+          <div className="flex items-center justify-center w-full relative mt-2">
+            <img src={Backtohomepage} alt="Back to Home" className="absolute left-[-10px] w-10 h-10 cursor-pointer hover:scale-110 hover:opacity-80 transition-all duration-200" onClick={() => { window.location.href = '/' }} />
+            <div className="text-[#7E4300] text-xl font-tiroTamil">Your Bookings</div>
           </div>
 
-          {/* Make a booking button */}
-          <button className="mt-2 !bg-[#DCA900] text-white text-xs font-tiroTamil self-center cursor-pointer py-1 px-2 rounded border-none hover:scale-110 hover:opacity-80 transition-all" onClick={() => navigate('/makebooking')}> Make Booking</button>
+          {/* border line */}
+          <div className="w-100 px-7">
+            <div className="h-1 bg-[#DEC33A] w-full"></div>
+          </div>
+
+          {/* No bookings message */}
+          <div className="flex flex-col items-center gap-4 justify-start p-4">
+            <div className="text-[#7E4300] text-lg font-tiroTamil">You have no bookings</div>
+
+            {/* Make a booking button */}
+            <button className="mt-2 !bg-[#DCA900] text-white text-xs font-tiroTamil self-center cursor-pointer py-1 px-2 rounded border-none hover:scale-110 hover:opacity-80 transition-all" onClick={() => navigate('/makebooking')}> Make Booking</button>
+          </div>
         </div>
       )}
     </div>
