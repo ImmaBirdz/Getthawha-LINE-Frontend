@@ -36,6 +36,7 @@ type Booking = {
     id: string;
     code: string;
   };
+  status?: string; // Add status field for API
 };
 
 function ViewBooking() {
@@ -92,7 +93,20 @@ function ViewBooking() {
       try {
         setLoading(true);
         const data = await getBookings();
-        const mappedData = data.map((booking: Booking) => ({
+        
+        // Filter for pending bookings only - similar to History but opposite filter
+        const pendingBookings = data.filter((booking: Booking) => {
+          // Only include pending bookings
+          if (booking.status) {
+            return booking.status.toLowerCase().includes('pending');
+          }
+          // For bookings without status, use date logic - only future bookings (upcoming)
+          const now = new Date();
+          const bookingDateTime = new Date(booking.date);
+          return bookingDateTime >= now;
+        });
+        
+        const mappedData = pendingBookings.map((booking: Booking) => ({
           id: booking.id,
           date: booking.date,
           duration: booking.duration,
@@ -101,6 +115,7 @@ function ViewBooking() {
           branch: booking.branch,
           package: booking.package,
           voucher: booking.voucher,
+          status: booking.status,
         }));
         setBookings(mappedData);
       } catch (error) {
@@ -137,8 +152,13 @@ function ViewBooking() {
             {bookings.map((booking) => (
               <li key={booking.id} className="rounded-xl p-4 bg-white border-2 border-[#6B4423]">
                 <div className="flex justify-between items-start text-left relative">
-                  {/* Left side - Package and Branch info */}
+                  {/* Left side - Status, Package and Branch info */}
                   <div className="flex flex-col gap-1 text-left">
+                    {/* Status - Pending */}
+                    <div className="text-[#818181] font-medium text-sm mb-1 flex items-center gap-1">
+                      <div className="w-2 h-2 bg-[#FFA600] rounded-full animate-pulse shadow-[0_0_4px_#FFD381]"></div>
+                      <span className="animate-pulse">Pending</span>
+                    </div>
                     <div className="text-[#6B4423] font-medium text-left text-sm">
                       Package: <span className="text-[#D49F00]">{booking.package.title}</span>
                     </div>
@@ -148,8 +168,8 @@ function ViewBooking() {
                     <div className="text-[#6B4423] font-medium text-left text-sm">
                       Date: <span className="text-[#D49F00]">
                         {new Date(booking.date).toLocaleDateString('en-US', { 
-                          month: 'numeric', 
-                          day: 'numeric', 
+                          day: 'numeric',
+                          month: 'numeric',  
                           year: 'numeric'
                         })}, {new Date(booking.date).toLocaleTimeString('en-US', { 
                           hour: 'numeric', 
