@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 //import assets
 import backhome from '../assets/backhome.png';
-import edit2 from '../assets/edit2.png';
+import edit from '../assets/edit.png';
 import arrow1 from '../assets/arrow1.png';
 import arrow2 from '../assets/arrow2.png';
 import clock from '../assets/clock.png';
@@ -290,7 +290,7 @@ function MakeBooking() {
               placeholder="Enter voucher code"
             />
             <div className="absolute inset-y-0 right-0 flex items-center pr-3">
-              <img src={edit2} alt="Edit" className="w-4 h-4" />
+              <img src={edit} alt="Edit" className="w-4 h-4" />
             </div>
           </div>
         </div>

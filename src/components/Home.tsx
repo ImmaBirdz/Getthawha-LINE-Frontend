@@ -18,8 +18,6 @@ import {
 import '../App.css'
 
 // import assets
-import edit from '../assets/edit.png'
-
 import Coupon from './Package'
 
 type Package = {
@@ -95,7 +93,6 @@ function Home() {
                                 <div className="flex-1">
                                     <h2 className="font-bold text-[24px] font-tiroGurmukhi text-[#673F00] mt-2">{profile?.displayName}</h2>
                                 </div>
-                                <img src={edit} alt="Edit" className="w-6 h-6 cursor-pointer mt-[-8px] hover:scale-110 hover:opacity-80 transition-all" />
                             </div>
 
                             {/* User details */}
