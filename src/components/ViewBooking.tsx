@@ -128,7 +128,7 @@ function ViewBooking() {
           </div>
 
           {/* border line */}
-          <div className="w-40 px-2">
+          <div className="w-100 px-7">
             <div className="h-1 bg-[#DEC33A] w-full"></div>
           </div>
 
