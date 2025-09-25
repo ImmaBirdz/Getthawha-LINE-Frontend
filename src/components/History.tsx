@@ -46,7 +46,13 @@ function History() {
         // Fetch real booking data from API
         const apiBookings: Booking[] = await getBookings();
         
-        setBookings(apiBookings);
+        // Filter out pending bookings - only show Succeeded and Cancelled
+        const historyBookings = apiBookings.filter(booking => {
+          const status = getStatus(booking);
+          return status !== 'Pending';
+        });
+        
+        setBookings(historyBookings);
         
       } catch (error) {
         console.error('Failed to fetch booking history:', error);
@@ -152,10 +158,10 @@ function History() {
 
                       {/* Right side - Status and Price */}
                       <div className="flex flex-col items-end gap-1">
-                        <div className={`text-sm font-medium ${getStatusColor(status)}`}>
+                        <div className={`text-xl font-medium ${getStatusColor(status)}`}>
                           {status}
                         </div>
-                        <div className="text-xs text-[#6B4423]">
+                        <div className="text-xs text-[#D49F00]">
                           ฿{booking.totalPrice}
                         </div>
                       </div>
