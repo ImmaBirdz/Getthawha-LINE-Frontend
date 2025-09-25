@@ -127,8 +127,10 @@ function ViewBooking() {
             <div className="text-[#7E4300] text-xl font-tiroTamil">Your Bookings</div>
           </div>
 
-      {/* border line */}
-        <div className="mx-2 h-1 !bg-[#DEC33A]"></div>
+          {/* border line */}
+          <div className="w-full px-4">
+            <div className="h-1 bg-[#DEC33A]"></div>
+          </div>
 
           {/* Dynamic Booking list from Backend API */}
           <ul className="flex flex-col gap-4 w-full px-4 list-none">
