@@ -297,8 +297,8 @@ function MakeBooking() {
 
         {/* Booking Button */}
         <div className="pt-4 flex justify-center">
-          <div 
-            className="w-40 py-2 bg-[#DEC33A] text-[#000000] font-tiroTamil text-base rounded-full cursor-pointer hover:scale-110 hover:opacity-80 transition-all text-center"
+          <button 
+            className="mt-2 !bg-[#DCA900] text-white text-xs font-tiroTamil self-center cursor-pointer py-1 px-2 rounded border-none hover:scale-110 hover:opacity-80 transition-all"
             onClick={() => {
               // Validate required fields
               if (selectedBranch === 'Choose your branch' || 
@@ -327,8 +327,8 @@ function MakeBooking() {
               navigate('/viewbooking', { state: { booking: bookingData } });
             }}
           >
-            Booking
-          </div>
+            Confirm Booking
+          </button>
         </div>
       </div>
     </div>
