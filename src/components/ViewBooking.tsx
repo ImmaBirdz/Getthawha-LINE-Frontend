@@ -148,8 +148,8 @@ function ViewBooking() {
                     <div className="text-[#6B4423] font-medium text-left text-sm">
                       Date: <span className="text-[#D49F00]">
                         {new Date(booking.date).toLocaleDateString('en-US', { 
-                          month: 'numeric', 
-                          day: 'numeric', 
+                          day: 'numeric',
+                          month: 'numeric',  
                           year: 'numeric'
                         })}, {new Date(booking.date).toLocaleTimeString('en-US', { 
                           hour: 'numeric', 
