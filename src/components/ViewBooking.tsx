@@ -128,7 +128,9 @@ function ViewBooking() {
           </div>
 
           {/* border line */}
-          <div className="mx-2 h-1 bg-[#DEC33A]"></div>
+          <div className="w-full px-2">
+            <div className="h-1 bg-[#DEC33A] w-full"></div>
+          </div>
 
           {/* Dynamic Booking list from Backend API */}
           <ul className="flex flex-col gap-4 w-full px-4 list-none">
