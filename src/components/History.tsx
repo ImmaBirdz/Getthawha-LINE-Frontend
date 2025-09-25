@@ -46,10 +46,16 @@ function History() {
         // Fetch real booking data from API
         const apiBookings: Booking[] = await getBookings();
         
-        // Filter out pending bookings - only show Succeeded and Cancelled
+        // Since getStatus now only returns these two, we can show all results
         const historyBookings = apiBookings.filter(booking => {
-          const status = getStatus(booking);
-          return status !== 'Pending';
+          // Only include bookings that have a definitive status (not pending)
+          if (booking.status) {
+            return !booking.status.toLowerCase().includes('pending');
+          }
+          // For bookings without status, use date logic - only past bookings
+          const now = new Date();
+          const bookingDateTime = new Date(booking.date);
+          return bookingDateTime < now;
         });
         
         setBookings(historyBookings);
@@ -86,22 +92,19 @@ function History() {
     });
   };
 
-  const getStatus = (booking: Booking): 'Succeeded' | 'Cancelled' | 'Pending' => {
+  const getStatus = (booking: Booking): 'Succeeded' | 'Cancelled' => {
     if (booking.status) {
       // If API provides status, use it
       if (booking.status.toLowerCase().includes('cancel')) {
         return 'Cancelled';
-      } else if (booking.status.toLowerCase().includes('pending')) {
-        return 'Pending';
-      } else if (booking.status.toLowerCase().includes('success') || booking.status.toLowerCase().includes('complete')) {
+      } else {
+        // Default to Succeeded for history (since we filter out pending)
         return 'Succeeded';
       }
     }
     
-    // Default logic if no status from API
-    const now = new Date();
-    const bookingDateTime = new Date(booking.date);
-    return bookingDateTime < now ? 'Succeeded' : 'Pending';
+    // Default logic if no status from API - assume completed bookings are successful
+    return 'Succeeded';
   };
 
   const getStatusColor = (status: string) => {
