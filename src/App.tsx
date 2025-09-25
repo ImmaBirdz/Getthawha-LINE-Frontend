@@ -9,6 +9,7 @@ import {
 import Header from './components/Header'
 import Home from './components/Home'
 import ViewBooking from './components/ViewBooking'
+import MakeBooking from './components/MakeBooking'
 
 function App() {
   return (
@@ -16,7 +17,8 @@ function App() {
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/mybooking" element={<ViewBooking />} />
+        <Route path="/viewbooking" element={<ViewBooking />} />
+        <Route path="/makebooking" element={<MakeBooking />} />
       </Routes>
     </BrowserRouter>
   );

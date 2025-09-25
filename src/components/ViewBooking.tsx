@@ -3,6 +3,7 @@ import {
   useState,
   useEffect
 } from 'react'
+import { useNavigate } from 'react-router-dom'
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 
@@ -41,6 +42,7 @@ function ViewBooking() {
   const [bookings, setBookings] = useState<Booking[]>([])
   const [loading, setLoading] = useState(true)
   const [deleting, setDeleting] = useState<string | null>(null)
+  const navigate = useNavigate()
 
   const MySwal = withReactContent(Swal)
 
@@ -173,7 +175,7 @@ function ViewBooking() {
           </ul>
 
           {/* Make a booking button */}
-          <button className="mt-2 !bg-[#DCA900] text-white text-xs font-tiroTamil self-center cursor-pointer py-1 px-2 rounded border-none hover:scale-110 hover:opacity-80 transition-all" onClick={() => { window.location.href = 'https://client-getthawha.yungying.com/booking' }}> Make Booking</button>
+          <button className="mt-2 !bg-[#DCA900] text-white text-xs font-tiroTamil self-center cursor-pointer py-1 px-2 rounded border-none hover:scale-110 hover:opacity-80 transition-all" onClick={() => navigate('/makebooking')}> Make Booking</button>
         </div>
       ) : (
         <div className="flex flex-col items-center gap-4 justify-start p-4">
@@ -184,7 +186,7 @@ function ViewBooking() {
           </div>
 
           {/* Make a booking button */}
-          <button className="mt-2 !bg-[#DCA900] text-white text-xs font-tiroTamil self-center cursor-pointer py-1 px-2 rounded border-none hover:scale-110 hover:opacity-80 transition-all" onClick={() => { window.location.href = 'https://client-getthawha.yungying.com/booking' }}> Make Booking</button>
+          <button className="mt-2 !bg-[#DCA900] text-white text-xs font-tiroTamil self-center cursor-pointer py-1 px-2 rounded border-none hover:scale-110 hover:opacity-80 transition-all" onClick={() => navigate('/makebooking')}> Make Booking</button>
         </div>
       )}
     </div>
