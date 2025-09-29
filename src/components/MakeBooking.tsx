@@ -50,7 +50,6 @@ function MakeBooking() {
   const [dropdownOpen, setDropdownOpen] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [submitting, setSubmitting] = useState(false);
-  const [bookingType, setBookingType] = useState<'service' | 'promotion' | null>(null);
 
   // API data
   const [branches, setBranches] = useState<Branch[]>([]);
@@ -191,7 +190,6 @@ function MakeBooking() {
                   onClick={() => {
                     setSelectedService(t.chooseService);
                     setSelectedPromotion(t.choosePromotion);
-                    setBookingType(null);
                     setDropdownOpen(null);
                   }}
                   className="px-3 py-2 font-tiroTamil text-[#999999] text-base cursor-pointer rounded-full mx-2 my-1 text-left hover:bg-red-100 hover:text-red-600 italic"
@@ -204,7 +202,6 @@ function MakeBooking() {
                     onClick={() => {
                       setSelectedService(option);
                       setSelectedPromotion(t.choosePromotion); // Reset promotion
-                      setBookingType('service');
                       setDropdownOpen(null);
                     }}
                     className={`px-3 py-2 font-tiroTamil text-[#000000] text-base cursor-pointer rounded-full mx-2 my-1 text-left ${
@@ -250,7 +247,6 @@ function MakeBooking() {
                   onClick={() => {
                     setSelectedPromotion(t.choosePromotion);
                     setSelectedService(t.chooseService);
-                    setBookingType(null);
                     setDropdownOpen(null);
                   }}
                   className="px-3 py-2 font-tiroTamil text-[#999999] text-base cursor-pointer rounded-full mx-2 my-1 text-left hover:bg-red-100 hover:text-red-600 italic"
@@ -263,7 +259,6 @@ function MakeBooking() {
                     onClick={() => {
                       setSelectedPromotion(option);
                       setSelectedService(t.chooseService); // Reset service  
-                      setBookingType('promotion');
                       setDropdownOpen(null);
                     }}
                     className={`px-3 py-2 font-tiroTamil text-[#000000] text-base cursor-pointer rounded-full mx-2 my-1 text-left ${
@@ -391,51 +386,36 @@ function MakeBooking() {
 
                 // Find selected items from API data
                 const selectedBranchData = branches.find(b => b.name === selectedBranch);
-                
                 let selectedPackageData = null;
-                let packagePrice = 0;
-                let packageDuration = 60;
-                
                 if (selectedService !== t.chooseService) {
-                  // Service selected
                   selectedPackageData = services.find(s => `${s.title} (${s.duration}min)` === selectedService);
-                  packagePrice = selectedPackageData?.price || 0;
-                  packageDuration = selectedPackageData?.duration || 60;
                 } else if (selectedPromotion !== t.choosePromotion) {
-                  // Promotion selected
                   selectedPackageData = promotions.find(p => p.title === selectedPromotion);
-                  packagePrice = selectedPackageData?.price || 0;
-                  packageDuration = selectedPackageData?.duration || 60;
                 }
 
-                // Validate voucher if provided (optional)
+                // Get voucherId if voucherCode is provided and valid
+                let voucherId = null;
                 if (voucherCode) {
                   try {
-                    await getVoucher(voucherCode);
-                    // Voucher is valid, continue with booking
-                    console.log('Valid voucher applied:', voucherCode);
+                    const voucher = await getVoucher(voucherCode);
+                    voucherId = voucher?.id || null;
                   } catch (error) {
                     console.warn('Invalid voucher code:', error);
-                    // Ask user if they want to continue without voucher
                     const continueWithoutVoucher = confirm('Invalid voucher code. Do you want to continue booking without voucher?');
                     if (!continueWithoutVoucher) {
                       setSubmitting(false);
                       return;
                     }
-                    // Clear invalid voucher and continue
                     setVoucherCode('');
                   }
                 }
 
-                // Create booking data for API
+                // Create booking data for API (only branchId, packageId, voucherId, date)
                 const bookingData = {
                   branchId: selectedBranchData?.id,
                   packageId: selectedPackageData?.id,
-                  promotionId: bookingType === 'promotion' ? selectedPackageData?.id : null,
-                  date: `${selectedDate}T${selectedTime}:00.000Z`, // Convert to ISO format
-                  duration: packageDuration,
-                  voucherCode: voucherCode || null,
-                  totalPrice: packagePrice,
+                  voucherId: voucherId,
+                  date: `${selectedDate}T${selectedTime}:00.000Z`,
                 };
 
                 // Submit booking to API
