@@ -164,13 +164,13 @@ function ViewBooking() {
                       <span className={language === 'TH' ? 'animate-pulse font-athiti font-black' : 'animate-pulse'}>{t.pending}</span>
                     </div>
                     <div className={language === 'TH' ? 'text-[#6B4423] font-medium text-left text-sm font-athiti font-bold' : 'text-[#6B4423] font-medium text-left text-sm'}>
-                      {t.package}: <span className="font-medium text-[#6B4423] text-sm">{booking.package.title}</span>
+                      {t.package}: <span className="font-medium text-[#D49F00]">{booking.package.title}</span>
                     </div>
                     <div className={language === 'TH' ? 'text-[#6B4423] font-medium text-left text-sm font-athiti font-bold' : 'text-[#6B4423] font-medium text-left text-sm'}>
-                      {t.branch}: <span className="font-medium text-[#6B4423] text-sm">{booking.branch.name}</span>
+                      {t.branch}: <span className="font-medium text-[#D49F00]">{booking.branch.name}</span>
                     </div>
                     <div className={language === 'TH' ? 'text-[#6B4423] font-medium text-left text-sm font-athiti font-bold' : 'text-[#6B4423] font-medium text-left text-sm'}>
-                      {t.date}: <span className="font-medium text-[#6B4423] text-sm">
+                      {t.date}: <span className="font-medium text-[#D49F00]">
                         {new Date(booking.date).toLocaleDateString('en-US', { 
                           day: 'numeric',
                           month: 'numeric',  
@@ -186,7 +186,7 @@ function ViewBooking() {
 
                   {/* Right side - Price */}
                   <div className="flex flex-col items-end gap-1 -mt-1">
-                    <div className="text-[#6B4423] text-lg font-medium">
+                    <div className="text-[#D49F00] text-lg font-medium">
                       ฿{booking.totalPrice}
                     </div>
                     {booking.voucher && (

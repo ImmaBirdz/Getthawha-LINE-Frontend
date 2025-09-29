@@ -155,13 +155,13 @@ function History() {
                       {/* Left side - Package info */}
                       <div className="flex flex-col gap-1 text-left">
                         <div className={language === 'TH' ? 'text-[#6B4423] font-medium text-sm text-left font-athiti font-bold' : 'text-[#6B4423] font-medium text-sm text-left'}>
-                          {t.package}: <span className="font-medium text-[#6B4423] text-sm">{booking.package.title}</span>
+                          {t.package}: <span className="font-medium text-[#D49F00]">{booking.package.title}</span>
                         </div>
                         <div className={language === 'TH' ? 'text-[#6B4423] font-medium text-sm text-left font-athiti font-bold' : 'text-[#6B4423] font-medium text-sm text-left'}>
-                          {t.branch}: <span className="font-medium text-[#6B4423] text-sm">{booking.branch.name}</span>
+                          {t.branch}: <span className="font-medium text-[#D49F00]">{booking.branch.name}</span>
                         </div>
                         <div className={language === 'TH' ? 'text-[#6B4423] font-medium text-sm text-left font-athiti font-bold' : 'text-[#6B4423] font-medium text-sm text-left'}>
-                          {t.date}: <span className="font-medium text-[#6B4423] text-sm">{getFormattedDate(booking.date)}, {getFormattedTime(booking.date)}</span>
+                          {t.date}: <span className="font-medium text-[#D49F00]">{getFormattedDate(booking.date)}, {getFormattedTime(booking.date)}</span>
                         </div>
                       </div>
 
@@ -170,7 +170,7 @@ function History() {
                         <div className={`text-xl font-medium ${getStatusColor(status)} ${language === 'TH' ? 'font-athiti font-bold' : ''}`}>
                           <span className="font-medium">{status === 'Completed' ? t.completed : status === 'Cancelled' ? t.cancelled : status}</span>
                         </div>
-                        <div className="text-xs text-[#6B4423] font-medium">
+                        <div className="text-xs text-[#D49F00] font-medium">
                           ฿{booking.totalPrice}
                         </div>
                       </div>
