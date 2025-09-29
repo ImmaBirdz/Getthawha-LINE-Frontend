@@ -1,9 +1,12 @@
 //import libraries
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 // import translation
 import { useTranslation } from '../context/TranslationContext'
+
+// import API
+import { getBranches, getPackages, createBooking, getVoucher } from '../services/backendApi';
 
 //import assets
 import backhome from '../assets/backhome.png';
@@ -12,6 +15,25 @@ import arrow1 from '../assets/arrow1.png';
 import arrow2 from '../assets/arrow2.png';
 import clock from '../assets/clock.png';
 import calendar from '../assets/calendar.png';
+
+// Types
+type Branch = {
+  id: string;
+  name: string;
+  address?: string;
+};
+
+type Package = {
+  id: string;
+  title: string;
+  description: string;
+  price: number;
+  duration: number;
+  pictureUrl: string;
+  note?: string;
+  type: string;
+  isActive: boolean;
+};
 
 
 
@@ -26,10 +48,47 @@ function MakeBooking() {
   const [selectedTime, setSelectedTime] = useState('');
   const [voucherCode, setVoucherCode] = useState('');
   const [dropdownOpen, setDropdownOpen] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [bookingType, setBookingType] = useState<'service' | 'promotion' | null>(null);
 
-  const branchOptions = ['Rimping', 'Prasing', 'Rimsing2', 'Location'];
-  const serviceOptions = ['Thai massage (60min)', 'Thai massage (90min)', 'Thai massage (120min)'];
-  const promotionOptions = ['Thai massage (60min)', 'Special promotion', 'No promotion'];
+  // API data
+  const [branches, setBranches] = useState<Branch[]>([]);
+  const [services, setServices] = useState<Package[]>([]);
+  const [promotions, setPromotions] = useState<Package[]>([]);
+
+  // Load data from API
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+        setLoading(true);
+        const [branchData, packageData] = await Promise.all([
+          getBranches(),
+          getPackages()
+        ]);
+
+        setBranches(branchData);
+
+        // Separate services and promotions
+        const servicePackages = packageData.filter((pkg: Package) => pkg.type === 'service');
+        const promotionPackages = packageData.filter((pkg: Package) => pkg.type === 'promotion');
+        
+        setServices(servicePackages);
+        setPromotions(promotionPackages);
+
+      } catch (error) {
+        console.error('Failed to load data:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadData();
+  }, []);
+
+  const branchOptions = branches.map(branch => branch.name);
+  const serviceOptions = services.map(service => `${service.title} (${service.duration}min)`);
+  const promotionOptions = promotions.map(promotion => promotion.title);
 
   return (
     <div className="w-[360px] min-h-screen bg-white flex flex-col">
@@ -42,8 +101,12 @@ function MakeBooking() {
       {/* border line */}
       <div className="mx-2 h-1 bg-[#DEC33A]"></div>
 
-      {/* Form */}
-      <div className="flex-1 px-4 py-4 space-y-4">
+      {loading ? (
+        <div className="flex-1 flex items-center justify-center">
+          <div className="text-[#7E4300] text-lg font-tiroTamil">{t.loading}</div>
+        </div>
+      ) : (
+        <div className="flex-1 px-4 py-4 space-y-4">
         {/* Select Branch */}
         <div>
           <label className="block text-base font-tiroTamil text-[#000000] text-left mb-1">
@@ -100,7 +163,7 @@ function MakeBooking() {
         </div>
 
         {/* Select Service */}
-        <div>
+        <div className={selectedPromotion !== t.choosePromotion ? 'opacity-50 pointer-events-none' : ''}>
           <label className="block text-base font-tiroTamil text-[#000000] text-left mb-1">
             {t.selectService}<span className="text-red-500">*</span>
           </label>
@@ -127,6 +190,8 @@ function MakeBooking() {
                 <div
                   onClick={() => {
                     setSelectedService(t.chooseService);
+                    setSelectedPromotion(t.choosePromotion);
+                    setBookingType(null);
                     setDropdownOpen(null);
                   }}
                   className="px-3 py-2 font-tiroTamil text-[#999999] text-base cursor-pointer rounded-full mx-2 my-1 text-left hover:bg-red-100 hover:text-red-600 italic"
@@ -138,6 +203,8 @@ function MakeBooking() {
                     key={option}
                     onClick={() => {
                       setSelectedService(option);
+                      setSelectedPromotion(t.choosePromotion); // Reset promotion
+                      setBookingType('service');
                       setDropdownOpen(null);
                     }}
                     className={`px-3 py-2 font-tiroTamil text-[#000000] text-base cursor-pointer rounded-full mx-2 my-1 text-left ${
@@ -155,7 +222,7 @@ function MakeBooking() {
         </div>
 
         {/* Select Promotion */}
-        <div>
+        <div className={selectedService !== t.chooseService ? 'opacity-50 pointer-events-none' : ''}>
           <label className="block text-base font-tiroTamil text-[#000000] text-left mb-1">
             {t.selectPromotion}<span className="text-red-500">*</span>
           </label>
@@ -182,6 +249,8 @@ function MakeBooking() {
                 <div
                   onClick={() => {
                     setSelectedPromotion(t.choosePromotion);
+                    setSelectedService(t.chooseService);
+                    setBookingType(null);
                     setDropdownOpen(null);
                   }}
                   className="px-3 py-2 font-tiroTamil text-[#999999] text-base cursor-pointer rounded-full mx-2 my-1 text-left hover:bg-red-100 hover:text-red-600 italic"
@@ -193,6 +262,8 @@ function MakeBooking() {
                     key={option}
                     onClick={() => {
                       setSelectedPromotion(option);
+                      setSelectedService(t.chooseService); // Reset service  
+                      setBookingType('promotion');
                       setDropdownOpen(null);
                     }}
                     className={`px-3 py-2 font-tiroTamil text-[#000000] text-base cursor-pointer rounded-full mx-2 my-1 text-left ${
@@ -303,39 +374,81 @@ function MakeBooking() {
         {/* Booking Button */}
         <div className="pt-4 flex justify-center">
           <button 
-            className="mt-2 !bg-[#DCA900] text-white text-xs font-tiroTamil self-center cursor-pointer py-1 px-2 rounded border-none hover:scale-110 hover:opacity-80 transition-all"
-            onClick={() => {
-              // Validate required fields
-              if (selectedBranch === t.chooseBranch || 
-                  selectedService === t.chooseService || 
-                  selectedPromotion === t.choosePromotion || 
-                  !selectedDate || 
-                  !selectedTime) {
-                alert('Please fill in all required fields');
-                return;
+            className="mt-2 !bg-[#DCA900] text-white text-xs font-tiroTamil self-center cursor-pointer py-1 px-2 rounded border-none hover:scale-110 hover:opacity-80 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+            disabled={submitting}
+            onClick={async () => {
+              try {
+                // Validate required fields
+                if (selectedBranch === t.chooseBranch || 
+                    (selectedService === t.chooseService && selectedPromotion === t.choosePromotion) ||
+                    !selectedDate || 
+                    !selectedTime) {
+                  alert('Please fill in all required fields. Choose either a service or promotion.');
+                  return;
+                }
+
+                setSubmitting(true);
+
+                // Find selected items from API data
+                const selectedBranchData = branches.find(b => b.name === selectedBranch);
+                
+                let selectedPackageData = null;
+                let packagePrice = 0;
+                let packageDuration = 60;
+                
+                if (selectedService !== t.chooseService) {
+                  // Service selected
+                  selectedPackageData = services.find(s => `${s.title} (${s.duration}min)` === selectedService);
+                  packagePrice = selectedPackageData?.price || 0;
+                  packageDuration = selectedPackageData?.duration || 60;
+                } else if (selectedPromotion !== t.choosePromotion) {
+                  // Promotion selected
+                  selectedPackageData = promotions.find(p => p.title === selectedPromotion);
+                  packagePrice = selectedPackageData?.price || 0;
+                  packageDuration = selectedPackageData?.duration || 60;
+                }
+
+                // Validate voucher if provided
+                if (voucherCode) {
+                  try {
+                    await getVoucher(voucherCode);
+                    // Voucher is valid, continue with booking
+                  } catch (error) {
+                    console.warn('Invalid voucher code:', error);
+                    // Continue without voucher
+                  }
+                }
+
+                // Create booking data for API
+                const bookingData = {
+                  branchId: selectedBranchData?.id,
+                  packageId: selectedPackageData?.id,
+                  promotionId: bookingType === 'promotion' ? selectedPackageData?.id : null,
+                  date: `${selectedDate}T${selectedTime}:00.000Z`, // Convert to ISO format
+                  duration: packageDuration,
+                  voucherCode: voucherCode || null,
+                  totalPrice: packagePrice,
+                };
+
+                // Submit booking to API
+                await createBooking(bookingData);
+
+                // Navigate to view booking page
+                navigate('/viewbooking');
+
+              } catch (error) {
+                console.error('Failed to create booking:', error);
+                alert('Failed to create booking. Please try again.');
+              } finally {
+                setSubmitting(false);
               }
-
-              // Create booking object
-              const bookingData = {
-                id: Date.now(), // Simple ID generation
-                branch: selectedBranch,
-                service: selectedService,
-                promotion: selectedPromotion,
-                date: selectedDate,
-                time: selectedTime,
-                voucherCode: voucherCode || 'None',
-                status: 'Confirmed',
-                bookingDate: new Date().toLocaleDateString('en-GB')
-              };
-
-              // Navigate to view booking page with booking data
-              navigate('/viewbooking', { state: { booking: bookingData } });
             }}
           >
-            {t.confirmBooking}
+            {submitting ? t.creating : t.confirmBooking}
           </button>
         </div>
-      </div>
+        </div>
+      )}
     </div>
   );
 }
