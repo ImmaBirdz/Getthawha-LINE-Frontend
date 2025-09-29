@@ -89,28 +89,18 @@ function Home() {
                             <div className="flex items-center gap-4 mb-4 relative">
                                 {/* Language selector - positioned at top right */}
                                 <div className="absolute top-0 -right-4 text-sm text-[#673F00] font-tiroTamil">
-                                    <span className="relative mx-1">
-                                        <span
-                                            className={`cursor-pointer hover:text-[#DCA900] transition-colors z-10 relative ${language === 'TH' ? 'text-[#DCA900] font-bold' : ''}`}
-                                            onClick={() => setLanguage('TH')}
-                                        >
-                                            TH
-                                        </span>
-                                        {language === 'TH' && (
-                                            <span className="absolute inset-0 rounded-full bg-[#F6E7C1] shadow-lg -z-0" style={{boxShadow:'0 0 0 8px #f6e7c1, 0 2px 8px 0 #dca90033'}}></span>
-                                        )}
+                                    <span 
+                                        className={`cursor-pointer hover:text-[#DCA900] transition-colors ${language === 'TH' ? 'text-[#DCA900] font-bold' : ''}`}
+                                        onClick={() => setLanguage('TH')}
+                                    >
+                                        TH
                                     </span>
                                     <span className="mx-1">|</span>
-                                    <span className="relative mx-1">
-                                        <span
-                                            className={`cursor-pointer hover:text-[#DCA900] transition-colors z-10 relative ${language === 'EN' ? 'text-[#DCA900] font-bold' : ''}`}
-                                            onClick={() => setLanguage('EN')}
-                                        >
-                                            EN
-                                        </span>
-                                        {language === 'EN' && (
-                                            <span className="absolute inset-0 rounded-full bg-[#F6E7C1] shadow-lg -z-0" style={{boxShadow:'0 0 0 8px #f6e7c1, 0 2px 8px 0 #dca90033'}}></span>
-                                        )}
+                                    <span 
+                                        className={`cursor-pointer hover:text-[#DCA900] transition-colors ${language === 'EN' ? 'text-[#DCA900] font-bold' : ''}`}
+                                        onClick={() => setLanguage('EN')}
+                                    >
+                                        EN
                                     </span>
                                 </div>
                                 
