@@ -168,7 +168,7 @@ function History() {
                       {/* Right side - Status and Price */}
                       <div className="flex flex-col items-end gap-1">
                         <div className={`text-xl font-medium ${getStatusColor(status)}`}>
-                          {status}
+                          {status === 'Completed' ? t.completed : status === 'Cancelled' ? t.cancelled : status}
                         </div>
                         <div className="text-xs text-[#D49F00]">
                           ฿{booking.totalPrice}

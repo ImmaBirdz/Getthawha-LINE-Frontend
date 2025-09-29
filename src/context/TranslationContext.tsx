@@ -47,6 +47,7 @@ type Translations = {
   pending: string;
   succeeded: string;
   cancelled: string;
+  completed: string;
   
   // Actions
   delete: string;
@@ -65,6 +66,9 @@ type Translations = {
   
   // History
   noHistory: string;
+  // Header
+  headerTitle: string;
+  headerSubtitle: string;
 };
 
 const translations: Record<Language, Translations> = {
@@ -112,6 +116,7 @@ const translations: Record<Language, Translations> = {
     pending: 'Pending',
     succeeded: 'Succeeded',
     cancelled: 'Cancelled',
+    completed: 'Completed',
     
     // Actions
     delete: 'Delete',
@@ -130,6 +135,9 @@ const translations: Record<Language, Translations> = {
     
     // History
     noHistory: 'No History',
+    // Header
+    headerTitle: 'GETTHAWHA',
+    headerSubtitle: 'THAI MASSAGE',
   },
   
   TH: {
@@ -174,8 +182,9 @@ const translations: Record<Language, Translations> = {
     branch: 'สาขา',
     date: 'วันที่',
     pending: 'รอดำเนินการ',
-    succeeded: 'สำเร็จ',
+    succeeded: 'เสร็จสิ้น',
     cancelled: 'ยกเลิก',
+    completed: 'เสร็จสิ้น',
     
     // Actions
     delete: 'ลบ',
@@ -194,6 +203,9 @@ const translations: Record<Language, Translations> = {
     
     // History
     noHistory: 'ไม่มีประวัติ',
+    // Header
+    headerTitle: 'เก็ดตะหว๋า',
+    headerSubtitle: 'นวดแผนไทย',
   },
 };
 
