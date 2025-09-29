@@ -1,9 +1,12 @@
 //import libraries
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 // import translation
 import { useTranslation } from '../context/TranslationContext'
+
+// import API
+import { getBranches, getPackages, createBooking, getVoucher } from '../services/backendApi';
 
 //import assets
 import backhome from '../assets/backhome.png';
@@ -13,11 +16,30 @@ import arrow2 from '../assets/arrow2.png';
 import clock from '../assets/clock.png';
 import calendar from '../assets/calendar.png';
 
+// types
+type Branch = {
+  id: string;
+  name: string;
+  address?: string;
+};
+
+type Package = {
+  id: string;
+  title: string;
+  description: string;
+  price: number;
+  duration: number;
+  pictureUrl: string;
+  note?: string;
+  type: string;
+  isActive: boolean;
+};
+
 
 
 function MakeBooking() {
   const navigate = useNavigate();
-  const { t } = useTranslation();
+  const { t, language } = useTranslation();
   
   const [selectedBranch, setSelectedBranch] = useState(t.chooseBranch);
   const [selectedService, setSelectedService] = useState(t.chooseService);
@@ -26,27 +48,67 @@ function MakeBooking() {
   const [selectedTime, setSelectedTime] = useState('');
   const [voucherCode, setVoucherCode] = useState('');
   const [dropdownOpen, setDropdownOpen] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
 
-  const branchOptions = ['Rimping', 'Prasing', 'Rimsing2', 'Location'];
-  const serviceOptions = ['Thai massage (60min)', 'Thai massage (90min)', 'Thai massage (120min)'];
-  const promotionOptions = ['Thai massage (60min)', 'Special promotion', 'No promotion'];
+  // API data
+  const [branches, setBranches] = useState<Branch[]>([]);
+  const [services, setServices] = useState<Package[]>([]);
+  const [promotions, setPromotions] = useState<Package[]>([]);
+
+  // Load data from API
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+        setLoading(true);
+        const [branchData, packageData] = await Promise.all([
+          getBranches(),
+          getPackages()
+        ]);
+
+        setBranches(branchData);
+
+        // Separate services and promotions
+        const servicePackages = packageData.filter((pkg: Package) => pkg.type === 'service');
+        const promotionPackages = packageData.filter((pkg: Package) => pkg.type === 'promotion');
+        
+        setServices(servicePackages);
+        setPromotions(promotionPackages);
+
+      } catch (error) {
+        console.error('Failed to load data:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadData();
+  }, []);
+
+  const branchOptions = branches.map(branch => branch.name);
+  const serviceOptions = services.map(service => `${service.title} (${service.duration}min)`);
+  const promotionOptions = promotions.map(promotion => promotion.title);
 
   return (
     <div className="w-[360px] min-h-screen bg-white flex flex-col">
       {/* Header with back arrow and title */}
       <div className="flex items-center justify-center px-4 py-3 relative">
         <img src={backhome} alt="Back"  className="w-10 h-10 cursor-pointer hover:scale-110 hover:opacity-80 transition-all duration-200 absolute left-2" onClick={() => navigate('/viewbooking')}/>
-        <div className="text-xl font-tiroTamil text-[#7E4300]">{t.booking}</div>
+        <div className={language === 'TH' ? 'text-xl font-athiti font-black text-[#7E4300]' : 'text-xl font-tiroTamil text-[#7E4300]'}>{t.booking}</div>
       </div>
       
       {/* border line */}
       <div className="mx-2 h-1 bg-[#DEC33A]"></div>
 
-      {/* Form */}
-      <div className="flex-1 px-4 py-4 space-y-4">
+      {loading ? (
+        <div className="flex-1 flex items-center justify-center">
+          <div className={language === 'TH' ? 'text-[#7E4300] text-lg font-athiti font-black' : 'text-[#7E4300] text-lg font-tiroTamil'}>{t.loading}</div>
+        </div>
+      ) : (
+        <div className="flex-1 px-4 py-4 space-y-4">
         {/* Select Branch */}
         <div>
-          <label className="block text-base font-tiroTamil text-[#000000] text-left mb-1">
+          <label className={language === 'TH' ? 'block text-base font-athiti font-black text-[#000000] text-left mb-1' : 'block text-base font-tiroTamil text-[#000000] text-left mb-1'}>
             {t.selectBranch}<span className="text-red-500">*</span>
           </label>
           <div className="relative">
@@ -54,7 +116,7 @@ function MakeBooking() {
               onClick={() => {
                 setDropdownOpen(dropdownOpen === 'branch' ? null : 'branch');
               }}
-              className={`w-full px-3 py-1 bg-[#E7E7E7] border border-[#818181] rounded-3xl font-tiroTamil text-base focus:outline-none cursor-pointer text-left ${
+              className={`w-full px-3 py-1 bg-[#E7E7E7] border border-[#818181] rounded-3xl ${language === 'TH' ? 'font-athiti font-bold' : 'font-tiroTamil'} text-base focus:outline-none cursor-pointer text-left ${
                 selectedBranch === t.chooseBranch ? 'text-[#999999]' : 'text-[#000000]'
               }`}
             >
@@ -74,7 +136,7 @@ function MakeBooking() {
                     setSelectedBranch(t.chooseBranch);
                     setDropdownOpen(null);
                   }}
-                  className="px-3 py-2 font-tiroTamil text-[#999999] text-base cursor-pointer rounded-full mx-2 my-1 text-left hover:bg-red-100 hover:text-red-600 italic"
+                  className={language === 'TH' ? 'px-3 py-2 font-athiti font-black text-[#999999] text-base cursor-pointer rounded-full mx-2 my-1 text-left hover:bg-red-100 hover:text-red-600 italic' : 'px-3 py-2 font-tiroTamil text-[#999999] text-base cursor-pointer rounded-full mx-2 my-1 text-left hover:bg-red-100 hover:text-red-600 italic'}
                 >
                   {t.clear}
                 </div>
@@ -85,7 +147,7 @@ function MakeBooking() {
                       setSelectedBranch(option);
                       setDropdownOpen(null);
                     }}
-                    className={`px-3 py-2 font-tiroTamil text-[#000000] text-base cursor-pointer rounded-full mx-2 my-1 text-left ${
+                    className={`px-3 py-2 ${language === 'TH' ? 'font-athiti font-black' : 'font-tiroTamil'} text-[#000000] text-base cursor-pointer rounded-full mx-2 my-1 text-left ${
                       selectedBranch === option 
                         ? 'bg-[#E7E7E7] hover:bg-[#D7D7D7]' 
                         : 'hover:bg-[#F5F5F5]'
@@ -100,8 +162,8 @@ function MakeBooking() {
         </div>
 
         {/* Select Service */}
-        <div>
-          <label className="block text-base font-tiroTamil text-[#000000] text-left mb-1">
+        <div className={selectedPromotion !== t.choosePromotion ? 'opacity-50 pointer-events-none' : ''}>
+          <label className={language === 'TH' ? 'block text-base font-athiti font-black text-[#000000] text-left mb-1' : 'block text-base font-tiroTamil text-[#000000] text-left mb-1'}>
             {t.selectService}<span className="text-red-500">*</span>
           </label>
           <div className="relative">
@@ -109,7 +171,7 @@ function MakeBooking() {
               onClick={() => {
                 setDropdownOpen(dropdownOpen === 'service' ? null : 'service');
               }}
-              className={`w-full px-3 py-1 bg-[#E7E7E7] border border-[#818181] rounded-3xl font-tiroTamil text-base focus:outline-none cursor-pointer text-left ${
+              className={`w-full px-3 py-1 bg-[#E7E7E7] border border-[#818181] rounded-3xl ${language === 'TH' ? 'font-athiti font-black' : 'font-tiroTamil'} text-base focus:outline-none cursor-pointer text-left ${
                 selectedService === t.chooseService ? 'text-[#999999]' : 'text-[#000000]'
               }`}
             >
@@ -127,9 +189,10 @@ function MakeBooking() {
                 <div
                   onClick={() => {
                     setSelectedService(t.chooseService);
+                    setSelectedPromotion(t.choosePromotion);
                     setDropdownOpen(null);
                   }}
-                  className="px-3 py-2 font-tiroTamil text-[#999999] text-base cursor-pointer rounded-full mx-2 my-1 text-left hover:bg-red-100 hover:text-red-600 italic"
+                  className={language === 'TH' ? 'px-3 py-2 font-athiti font-black text-[#999999] text-base cursor-pointer rounded-full mx-2 my-1 text-left hover:bg-red-100 hover:text-red-600 italic' : 'px-3 py-2 font-tiroTamil text-[#999999] text-base cursor-pointer rounded-full mx-2 my-1 text-left hover:bg-red-100 hover:text-red-600 italic'}
                 >
                   {t.clear}
                 </div>
@@ -138,9 +201,10 @@ function MakeBooking() {
                     key={option}
                     onClick={() => {
                       setSelectedService(option);
+                      setSelectedPromotion(t.choosePromotion); // Reset promotion
                       setDropdownOpen(null);
                     }}
-                    className={`px-3 py-2 font-tiroTamil text-[#000000] text-base cursor-pointer rounded-full mx-2 my-1 text-left ${
+                    className={`px-3 py-2 ${language === 'TH' ? 'font-athiti font-black' : 'font-tiroTamil'} text-[#000000] text-base cursor-pointer rounded-full mx-2 my-1 text-left ${
                       selectedService === option 
                         ? 'bg-[#E7E7E7] hover:bg-[#D7D7D7]' 
                         : 'hover:bg-[#F5F5F5]'
@@ -155,8 +219,8 @@ function MakeBooking() {
         </div>
 
         {/* Select Promotion */}
-        <div>
-          <label className="block text-base font-tiroTamil text-[#000000] text-left mb-1">
+        <div className={selectedService !== t.chooseService ? 'opacity-50 pointer-events-none' : ''}>
+          <label className={language === 'TH' ? 'block text-base font-athiti font-black text-[#000000] text-left mb-1' : 'block text-base font-tiroTamil text-[#000000] text-left mb-1'}>
             {t.selectPromotion}<span className="text-red-500">*</span>
           </label>
           <div className="relative">
@@ -164,7 +228,7 @@ function MakeBooking() {
               onClick={() => {
                 setDropdownOpen(dropdownOpen === 'promotion' ? null : 'promotion');
               }}
-              className={`w-full px-3 py-1 bg-[#E7E7E7] border border-[#818181] rounded-3xl font-tiroTamil text-base focus:outline-none cursor-pointer text-left ${
+              className={`w-full px-3 py-1 bg-[#E7E7E7] border border-[#818181] rounded-3xl ${language === 'TH' ? 'font-athiti font-black' : 'font-tiroTamil'} text-base focus:outline-none cursor-pointer text-left ${
                 selectedPromotion === t.choosePromotion ? 'text-[#999999]' : 'text-[#000000]'
               }`}
             >
@@ -182,9 +246,10 @@ function MakeBooking() {
                 <div
                   onClick={() => {
                     setSelectedPromotion(t.choosePromotion);
+                    setSelectedService(t.chooseService);
                     setDropdownOpen(null);
                   }}
-                  className="px-3 py-2 font-tiroTamil text-[#999999] text-base cursor-pointer rounded-full mx-2 my-1 text-left hover:bg-red-100 hover:text-red-600 italic"
+                  className={language === 'TH' ? 'px-3 py-2 font-athiti font-black text-[#999999] text-base cursor-pointer rounded-full mx-2 my-1 text-left hover:bg-red-100 hover:text-red-600 italic' : 'px-3 py-2 font-tiroTamil text-[#999999] text-base cursor-pointer rounded-full mx-2 my-1 text-left hover:bg-red-100 hover:text-red-600 italic'}
                 >
                   {t.clear}
                 </div>
@@ -193,9 +258,10 @@ function MakeBooking() {
                     key={option}
                     onClick={() => {
                       setSelectedPromotion(option);
+                      setSelectedService(t.chooseService); // Reset service  
                       setDropdownOpen(null);
                     }}
-                    className={`px-3 py-2 font-tiroTamil text-[#000000] text-base cursor-pointer rounded-full mx-2 my-1 text-left ${
+                    className={`px-3 py-2 ${language === 'TH' ? 'font-athiti font-black' : 'font-tiroTamil'} text-[#000000] text-base cursor-pointer rounded-full mx-2 my-1 text-left ${
                       selectedPromotion === option 
                         ? 'bg-[#E7E7E7] hover:bg-[#D7D7D7]' 
                         : 'hover:bg-[#F5F5F5]'
@@ -211,7 +277,7 @@ function MakeBooking() {
 
         {/* Date */}
         <div>
-          <label className="block text-base font-tiroTamil text-[#000000] text-left mb-1">
+          <label className={language === 'TH' ? 'block text-base font-athiti font-black text-[#000000] text-left mb-1' : 'block text-base font-tiroTamil text-[#000000] text-left mb-1'}>
             {t.date}<span className="text-red-500">*</span>
           </label>
           <div className="flex justify-start">
@@ -220,7 +286,7 @@ function MakeBooking() {
                 type="text"
                 value={selectedDate}
                 onChange={(e) => setSelectedDate(e.target.value)}
-                className="w-40 px-3 py-1 bg-[#E7E7E7] border border-[#818181] rounded-full font-tiroTamil text-[#000000] text-base focus:outline-none focus:ring-2 focus:ring-[#8B4513]"
+                className={`w-40 px-3 py-1 bg-[#E7E7E7] border border-[#818181] rounded-full ${language === 'TH' ? 'font-athiti font-black' : 'font-tiroTamil'} text-[#000000] text-base focus:outline-none focus:ring-2 focus:ring-[#8B4513]`}
                 placeholder="DD/MM/YYYY"
                 readOnly
               />
@@ -246,7 +312,7 @@ function MakeBooking() {
 
         {/* Time */}
         <div>
-          <label className="block text-base font-tiroTamil text-[#000000] text-left mb-1">
+          <label className={language === 'TH' ? 'block text-base font-athiti font-black text-[#000000] text-left mb-1' : 'block text-base font-tiroTamil text-[#000000] text-left mb-1'}>
             {t.selectTime.replace('Select ', '')}<span className="text-red-500">*</span>
           </label>
           <div className="flex justify-start">
@@ -255,7 +321,7 @@ function MakeBooking() {
                 type="text"
                 value={selectedTime}
                 onChange={(e) => setSelectedTime(e.target.value)}
-                className="w-40 px-3 py-1 bg-[#E7E7E7] border border-[#818181] rounded-full font-tiroTamil text-[#000000] text-base focus:outline-none focus:ring-2 focus:ring-[#8B4513]"
+                className={`w-40 px-3 py-1 bg-[#E7E7E7] border border-[#818181] rounded-full ${language === 'TH' ? 'font-athiti font-black' : 'font-tiroTamil'} text-[#000000] text-base focus:outline-none focus:ring-2 focus:ring-[#8B4513]`}
                 placeholder="-- : -- --"
                 readOnly
               />
@@ -283,15 +349,15 @@ function MakeBooking() {
 
         {/* Voucher Code */}
         <div>
-          <label className="block text-base font-tiroTamil text-[#000000] text-left mb-1">
-            {t.voucherCode}
+          <label className={language === 'TH' ? 'block text-base font-athiti font-black text-[#000000] text-left mb-1' : 'block text-base font-tiroTamil text-[#000000] text-left mb-1'}>
+            {t.voucherCode} <span className="text-gray-500 text-sm">({t.optional})</span>
           </label>
           <div className="relative">
             <input 
               type="text"
               value={voucherCode}
               onChange={(e) => setVoucherCode(e.target.value)}
-              className="w-full px-3 py-1 bg-[#E7E7E7] border border-[#818181] rounded-full font-tiroTamil text-[#000000] text-base focus:outline-none focus:ring-2 focus:ring-[#8B4513]"
+              className={`w-full px-3 py-1 bg-[#E7E7E7] border border-[#818181] rounded-full ${language === 'TH' ? 'font-athiti font-black' : 'font-tiroTamil'} text-[#000000] text-base focus:outline-none focus:ring-2 focus:ring-[#8B4513]`}
               placeholder={t.enterVoucherCode}
             />
             <div className="absolute inset-y-0 right-0 flex items-center pr-3">
@@ -303,39 +369,74 @@ function MakeBooking() {
         {/* Booking Button */}
         <div className="pt-4 flex justify-center">
           <button 
-            className="mt-2 !bg-[#DCA900] text-white text-xs font-tiroTamil self-center cursor-pointer py-1 px-2 rounded border-none hover:scale-110 hover:opacity-80 transition-all"
-            onClick={() => {
-              // Validate required fields
-              if (selectedBranch === t.chooseBranch || 
-                  selectedService === t.chooseService || 
-                  selectedPromotion === t.choosePromotion || 
-                  !selectedDate || 
-                  !selectedTime) {
-                alert('Please fill in all required fields');
-                return;
+            className={language === 'TH' ? 'mt-2 !bg-[#DCA900] text-white text-xs font-athiti font-black self-center cursor-pointer py-1 px-2 rounded border-none hover:scale-110 hover:opacity-80 transition-all disabled:opacity-50 disabled:cursor-not-allowed' : 'mt-2 !bg-[#DCA900] text-white text-xs font-tiroTamil self-center cursor-pointer py-1 px-2 rounded border-none hover:scale-110 hover:opacity-80 transition-all disabled:opacity-50 disabled:cursor-not-allowed'}
+            disabled={submitting}
+            onClick={async () => {
+              try {
+                // Validate required fields
+                if (selectedBranch === t.chooseBranch || 
+                    (selectedService === t.chooseService && selectedPromotion === t.choosePromotion) ||
+                    !selectedDate || 
+                    !selectedTime) {
+                  alert('Please fill in all required fields. Choose either a service or promotion.');
+                  return;
+                }
+
+                setSubmitting(true);
+
+                // Find selected items from API data
+                const selectedBranchData = branches.find(b => b.name === selectedBranch);
+                let selectedPackageData = null;
+                if (selectedService !== t.chooseService) {
+                  selectedPackageData = services.find(s => `${s.title} (${s.duration}min)` === selectedService);
+                } else if (selectedPromotion !== t.choosePromotion) {
+                  selectedPackageData = promotions.find(p => p.title === selectedPromotion);
+                }
+
+                // Get voucherId if voucherCode is provided and valid
+                let voucherId = null;
+                if (voucherCode) {
+                  try {
+                    const voucher = await getVoucher(voucherCode);
+                    voucherId = voucher?.id || null;
+                  } catch (error) {
+                    console.warn('Invalid voucher code:', error);
+                    const continueWithoutVoucher = confirm('Invalid voucher code. Do you want to continue booking without voucher?');
+                    if (!continueWithoutVoucher) {
+                      setSubmitting(false);
+                      return;
+                    }
+                    setVoucherCode('');
+                  }
+                }
+
+                // Create booking data for API 
+                const bookingData = {
+                  branchId: selectedBranchData?.id,
+                  packageId: selectedPackageData?.id,
+                  voucherId: voucherId,
+                  date: `${selectedDate}T${selectedTime}:00.000Z`,
+                };
+
+                // Submit booking to API
+                await createBooking(bookingData);
+
+                // Navigate to view booking page
+                navigate('/viewbooking');
+
+              } catch (error) {
+                console.error('Failed to create booking:', error);
+                alert('Failed to create booking. Please try again.');
+              } finally {
+                setSubmitting(false);
               }
-
-              // Create booking object
-              const bookingData = {
-                id: Date.now(), // Simple ID generation
-                branch: selectedBranch,
-                service: selectedService,
-                promotion: selectedPromotion,
-                date: selectedDate,
-                time: selectedTime,
-                voucherCode: voucherCode || 'None',
-                status: 'Confirmed',
-                bookingDate: new Date().toLocaleDateString('en-GB')
-              };
-
-              // Navigate to view booking page with booking data
-              navigate('/viewbooking', { state: { booking: bookingData } });
             }}
           >
-            {t.confirmBooking}
+            {submitting ? t.creating : t.confirmBooking}
           </button>
         </div>
-      </div>
+        </div>
+      )}
     </div>
   );
 }

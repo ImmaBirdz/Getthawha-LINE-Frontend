@@ -45,6 +45,24 @@
     font-family: 'Tiro Tamil', sans-serif;
 }
 
+
+@font-face {
+  font-family: 'Athiti';
+  src: url('/fonts/Athiti-Thin.ttf') format('truetype'),
+       url('/fonts/Athiti-ExtraLight.ttf') format('truetype'),
+       url('/fonts/Athiti-Light.ttf') format('truetype'),
+       url('/fonts/Athiti-Regular.ttf') format('truetype'),
+       url('/fonts/Athiti-Medium.ttf') format('truetype'),
+       url('/fonts/Athiti-SemiBold.ttf') format('truetype'),
+       url('/fonts/Athiti-Bold.ttf') format('truetype');
+  font-weight: 100 700;
+  font-style: normal;
+}
+
+.font-athiti {
+  font-family: 'Athiti', sans-serif;
+}
+
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;

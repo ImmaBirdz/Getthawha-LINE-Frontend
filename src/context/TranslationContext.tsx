@@ -1,3 +1,4 @@
+//import libaries
 import React, { createContext, useContext, useState } from 'react';
 import type { ReactNode } from 'react';
 
@@ -37,6 +38,8 @@ type Translations = {
   clear: string;
   enterVoucherCode: string;
   confirmBooking: string;
+  creating: string;
+  optional: string;
   
   // Booking details
   package: string;
@@ -45,6 +48,7 @@ type Translations = {
   pending: string;
   succeeded: string;
   cancelled: string;
+  completed: string;
   
   // Actions
   delete: string;
@@ -63,6 +67,9 @@ type Translations = {
   
   // History
   noHistory: string;
+  // Header
+  headerTitle: string;
+  headerSubtitle: string;
 };
 
 const translations: Record<Language, Translations> = {
@@ -100,6 +107,8 @@ const translations: Record<Language, Translations> = {
     clear: 'Clear',
     enterVoucherCode: 'Enter voucher code',
     confirmBooking: 'Confirm Booking',
+    creating: 'Creating...',
+    optional: 'Optional',
     
     // Booking details
     package: 'Package',
@@ -108,6 +117,7 @@ const translations: Record<Language, Translations> = {
     pending: 'Pending',
     succeeded: 'Succeeded',
     cancelled: 'Cancelled',
+    completed: 'Completed',
     
     // Actions
     delete: 'Delete',
@@ -126,6 +136,9 @@ const translations: Record<Language, Translations> = {
     
     // History
     noHistory: 'No History',
+    // Header
+    headerTitle: 'GETTHAWHA',
+    headerSubtitle: 'THAI MASSAGE',
   },
   
   TH: {
@@ -162,14 +175,17 @@ const translations: Record<Language, Translations> = {
     clear: 'ล้าง',
     enterVoucherCode: 'กรอกรหัสส่วนลด',
     confirmBooking: 'ยืนยันการจอง',
+    creating: 'กำลังสร้าง...',
+    optional: 'ไม่บังคับ',
     
     // Booking details
     package: 'แพ็คเกจ',
     branch: 'สาขา',
     date: 'วันที่',
     pending: 'รอดำเนินการ',
-    succeeded: 'สำเร็จ',
+    succeeded: 'เสร็จสิ้น',
     cancelled: 'ยกเลิก',
+    completed: 'เสร็จสิ้น',
     
     // Actions
     delete: 'ลบ',
@@ -188,6 +204,9 @@ const translations: Record<Language, Translations> = {
     
     // History
     noHistory: 'ไม่มีประวัติ',
+    // Header
+    headerTitle: 'เก็ดตะหว๋า',
+    headerSubtitle: 'นวดแผนไทย',
   },
 };
 

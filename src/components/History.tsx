@@ -33,14 +33,16 @@ type Booking = {
     id: string;
     code: string;
   };
-  status?: string; // Add status field for API
+  status?: string; 
 };
+
+type BookingStatus = 'Completed' | 'Cancelled';
 
 function History() {
   const navigate = useNavigate();
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [loading, setLoading] = useState(true);
-  const { t } = useTranslation();
+  const { t, language } = useTranslation();
 
   useEffect(() => {
     const fetchHistory = async () => {
@@ -96,23 +98,23 @@ function History() {
     });
   };
 
-  const getStatus = (booking: Booking): 'Succeeded' | 'Cancelled' => {
+  const getStatus = (booking: Booking): BookingStatus => {
     if (booking.status) {
       // If API provides status, use it
       if (booking.status.toLowerCase().includes('cancel')) {
         return 'Cancelled';
       } else {
-        // Default to Succeeded for history (since we filter out pending)
-        return 'Succeeded';
+        // Default to Completed for history (since we filter out pending)
+        return 'Completed';
       }
     }
     
     // Default logic if no status from API - assume completed bookings are successful
-    return 'Succeeded';
+    return 'Completed';
   };
 
   const getStatusColor = (status: string) => {
-    if (status === 'Succeeded') return 'text-green-600';
+  if (status === 'Completed') return 'text-green-600';
     if (status === 'Cancelled') return 'text-red-600';
     return 'text-yellow-600'; // Pending
   };
@@ -121,7 +123,7 @@ function History() {
     <div className="w-[360px] min-h-screen bg-white flex flex-col">
       {loading ? (
         <div className="w-[360px] min-h-screen bg-white flex flex-col relative">
-          <p className="text-[#7E4300] text-center mt-10 font-tiroTamil">{t.loadingHistory}</p>
+          <p className={language === 'TH' ? 'text-[#7E4300] text-center mt-10 font-athiti font-bold' : 'text-[#7E4300] text-center mt-10 font-tiroTamil'}>{t.loadingHistory}</p>
         </div>
       ) : (
         <div className="flex flex-col items-center gap-2 w-full">
@@ -133,7 +135,7 @@ function History() {
               className="w-10 h-10 cursor-pointer hover:scale-110 hover:opacity-80 transition-all duration-200 absolute left-2" 
               onClick={() => navigate('/')}
             />
-            <div className="text-2xl font-tiroTamil text-[#7E4300]">{t.history}</div>
+            <div className={language === 'TH' ? 'text-2xl font-athiti font-bold text-[#7E4300]' : 'text-2xl font-tiroTamil text-[#7E4300]'}>{t.history}</div>
           </div>
 
            {/* border line */}
@@ -153,22 +155,22 @@ function History() {
                       {/* Left side - Package info */}
                       <div className="flex flex-col gap-1 text-left">
                         <div className="text-[#6B4423] font-medium text-sm text-left">
-                          {t.package}: <span className="text-[#D49F00]">{booking.package.title}</span>
+                          <span className={language === 'TH' ? 'font-athiti font-bold' : ''}>{t.package}:</span> <span className="font-medium text-[#D49F00]">{booking.package.title}</span>
                         </div>
                         <div className="text-[#6B4423] font-medium text-sm text-left">
-                          {t.branch}: <span className="text-[#D49F00]">{booking.branch.name}</span>
+                          <span className={language === 'TH' ? 'font-athiti font-bold' : ''}>{t.branch}:</span> <span className="font-medium text-[#D49F00]">{booking.branch.name}</span>
                         </div>
                         <div className="text-[#6B4423] font-medium text-sm text-left">
-                          {t.date}: <span className="text-[#D49F00]">{getFormattedDate(booking.date)}, {getFormattedTime(booking.date)}</span>
+                          <span className={language === 'TH' ? 'font-athiti font-bold' : ''}>{t.date}:</span> <span className="font-medium text-[#D49F00]">{getFormattedDate(booking.date)}, {getFormattedTime(booking.date)}</span>
                         </div>
                       </div>
 
                       {/* Right side - Status and Price */}
                       <div className="flex flex-col items-end gap-1">
                         <div className={`text-xl font-medium ${getStatusColor(status)}`}>
-                          {status}
+                          <span className={language === 'TH' ? 'font-athiti font-bold' : 'font-medium'}>{status === 'Completed' ? t.completed : status === 'Cancelled' ? t.cancelled : status}</span>
                         </div>
-                        <div className="text-xs text-[#D49F00]">
+                        <div className="text-xs text-[#D49F00] font-medium">
                           ฿{booking.totalPrice}
                         </div>
                       </div>
@@ -178,7 +180,7 @@ function History() {
               })
             ) : (
               <div className="flex justify-center items-center py-0">
-                <div className="text-[#7E4300] text-lg font-tiroTamil">{t.noHistory}</div>
+                <div className={language === 'TH' ? 'text-[#7E4300] text-lg font-athiti font-bold' : 'text-[#7E4300] text-lg font-tiroTamil'}>{t.noHistory}</div>
               </div>
             )}
           </div>
