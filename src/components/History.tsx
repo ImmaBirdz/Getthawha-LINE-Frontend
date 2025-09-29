@@ -154,21 +154,21 @@ function History() {
                     <div className="flex justify-between items-start">
                       {/* Left side - Package info */}
                       <div className="flex flex-col gap-1 text-left">
-                        <div className={language === 'TH' ? 'text-[#6B4423] font-medium text-sm text-left font-athiti font-bold' : 'text-[#6B4423] font-medium text-sm text-left'}>
-                          {t.package}: <span className="font-medium text-[#D49F00]">{booking.package.title}</span>
+                        <div className="text-[#6B4423] font-medium text-sm text-left">
+                          <span className={language === 'TH' ? 'font-athiti font-bold' : ''}>{t.package}:</span> <span className="font-medium text-[#D49F00]">{booking.package.title}</span>
                         </div>
-                        <div className={language === 'TH' ? 'text-[#6B4423] font-medium text-sm text-left font-athiti font-bold' : 'text-[#6B4423] font-medium text-sm text-left'}>
-                          {t.branch}: <span className="font-medium text-[#D49F00]">{booking.branch.name}</span>
+                        <div className="text-[#6B4423] font-medium text-sm text-left">
+                          <span className={language === 'TH' ? 'font-athiti font-bold' : ''}>{t.branch}:</span> <span className="font-medium text-[#D49F00]">{booking.branch.name}</span>
                         </div>
-                        <div className={language === 'TH' ? 'text-[#6B4423] font-medium text-sm text-left font-athiti font-bold' : 'text-[#6B4423] font-medium text-sm text-left'}>
-                          {t.date}: <span className="font-medium text-[#D49F00]">{getFormattedDate(booking.date)}, {getFormattedTime(booking.date)}</span>
+                        <div className="text-[#6B4423] font-medium text-sm text-left">
+                          <span className={language === 'TH' ? 'font-athiti font-bold' : ''}>{t.date}:</span> <span className="font-medium text-[#D49F00]">{getFormattedDate(booking.date)}, {getFormattedTime(booking.date)}</span>
                         </div>
                       </div>
 
                       {/* Right side - Status and Price */}
                       <div className="flex flex-col items-end gap-1">
-                        <div className={`text-xl font-medium ${getStatusColor(status)} ${language === 'TH' ? 'font-athiti font-bold' : ''}`}>
-                          <span className="font-medium">{status === 'Completed' ? t.completed : status === 'Cancelled' ? t.cancelled : status}</span>
+                        <div className={`text-xl font-medium ${getStatusColor(status)}`}>
+                          <span className={language === 'TH' ? 'font-athiti font-bold' : 'font-medium'}>{status === 'Completed' ? t.completed : status === 'Cancelled' ? t.cancelled : status}</span>
                         </div>
                         <div className="text-xs text-[#D49F00] font-medium">
                           ฿{booking.totalPrice}

@@ -163,14 +163,14 @@ function ViewBooking() {
                       <div className="w-2 h-2 bg-[#FFA600] rounded-full animate-pulse shadow-[0_0_4px_#FFD381]"></div>
                       <span className={language === 'TH' ? 'animate-pulse font-athiti font-black' : 'animate-pulse'}>{t.pending}</span>
                     </div>
-                    <div className={language === 'TH' ? 'text-[#6B4423] font-medium text-left text-sm font-athiti font-bold' : 'text-[#6B4423] font-medium text-left text-sm'}>
-                      {t.package}: <span className="font-medium text-[#D49F00]">{booking.package.title}</span>
+                    <div className="text-[#6B4423] font-medium text-left text-sm">
+                      <span className={language === 'TH' ? 'font-athiti font-bold' : ''}>{t.package}:</span> <span className="font-medium text-[#D49F00]">{booking.package.title}</span>
                     </div>
-                    <div className={language === 'TH' ? 'text-[#6B4423] font-medium text-left text-sm font-athiti font-bold' : 'text-[#6B4423] font-medium text-left text-sm'}>
-                      {t.branch}: <span className="font-medium text-[#D49F00]">{booking.branch.name}</span>
+                    <div className="text-[#6B4423] font-medium text-left text-sm">
+                      <span className={language === 'TH' ? 'font-athiti font-bold' : ''}>{t.branch}:</span> <span className="font-medium text-[#D49F00]">{booking.branch.name}</span>
                     </div>
-                    <div className={language === 'TH' ? 'text-[#6B4423] font-medium text-left text-sm font-athiti font-bold' : 'text-[#6B4423] font-medium text-left text-sm'}>
-                      {t.date}: <span className="font-medium text-[#D49F00]">
+                    <div className="text-[#6B4423] font-medium text-left text-sm">
+                      <span className={language === 'TH' ? 'font-athiti font-bold' : ''}>{t.date}:</span> <span className="font-medium text-[#D49F00]">
                         {new Date(booking.date).toLocaleDateString('en-US', { 
                           day: 'numeric',
                           month: 'numeric',  
