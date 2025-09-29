@@ -46,21 +46,90 @@
 }
 
 @font-face {
-  font-family: 'IBM Plex Sans Thai';
-  src: url('/fonts/IBMPlexSansThai-Thin.ttf') format('truetype'),
-       url('/fonts/IBMPlexSansThai-ExtraLight.ttf') format('truetype'),
-       url('/fonts/IBMPlexSansThai-Light.ttf') format('truetype'),
-       url('/fonts/IBMPlexSansThai-Regular.ttf') format('truetype'),
-       url('/fonts/IBMPlexSansThai-Medium.ttf') format('truetype'),
-       url('/fonts/IBMPlexSansThai-SemiBold.ttf') format('truetype'),
-       url('/fonts/IBMPlexSansThai-Bold.ttf') format('truetype');
-  font-weight: normal;
+  font-family: 'Noto Sans Thai';
+  src: url('/fonts/NotoSansThai-Thin.ttf') format('truetype'),
+       url('/fonts/NotoSansThai-ExtraLight.ttf') format('truetype'),
+       url('/fonts/NotoSansThai-Light.ttf') format('truetype'),
+       url('/fonts/NotoSansThai-Regular.ttf') format('truetype'),
+       url('/fonts/NotoSansThai-Medium.ttf') format('truetype'),
+       url('/fonts/NotoSansThai-SemiBold.ttf') format('truetype'),
+       url('/fonts/NotoSansThai-Bold.ttf') format('truetype'),
+       url('/fonts/NotoSansThai-ExtraBold.ttf') format('truetype'),
+       url('/fonts/NotoSansThai-Black.ttf') format('truetype'),
+       url('/fonts/NotoSansThai-VariableFont_wdth,wght.ttf') format('truetype');
+  font-weight: 100 900;
+  font-stretch: 75% 125%;
   font-style: normal;
 }
 
-.font-ibm-thai {
-  font-family: 'IBM Plex Sans Thai', sans-serif;
+.font-noto-thai {
+  font-family: 'Noto Sans Thai', sans-serif;
 }
+
+/* Condensed */
+@font-face {
+  font-family: 'Noto Sans Thai Condensed';
+  src: url('/fonts/NotoSansThai_Condensed-Thin.ttf') format('truetype'),
+       url('/fonts/NotoSansThai_Condensed-ExtraLight.ttf') format('truetype'),
+       url('/fonts/NotoSansThai_Condensed-Light.ttf') format('truetype'),
+       url('/fonts/NotoSansThai_Condensed-Regular.ttf') format('truetype'),
+       url('/fonts/NotoSansThai_Condensed-Medium.ttf') format('truetype'),
+       url('/fonts/NotoSansThai_Condensed-SemiBold.ttf') format('truetype'),
+       url('/fonts/NotoSansThai_Condensed-Bold.ttf') format('truetype'),
+       url('/fonts/NotoSansThai_Condensed-ExtraBold.ttf') format('truetype'),
+       url('/fonts/NotoSansThai_Condensed-Black.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+}
+
+.font-noto-thai,
+.font-noto-thai-condensed {
+  font-family: 'Noto Sans Thai', 'Noto Sans Thai Condensed', sans-serif;
+}
+
+/* Extra Condensed */
+@font-face {
+  font-family: 'Noto Sans Thai ExtraCondensed';
+  src: url('/fonts/NotoSansThai_ExtraCondensed-Thin.ttf') format('truetype'),
+       url('/fonts/NotoSansThai_ExtraCondensed-ExtraLight.ttf') format('truetype'),
+       url('/fonts/NotoSansThai_ExtraCondensed-Light.ttf') format('truetype'),
+       url('/fonts/NotoSansThai_ExtraCondensed-Regular.ttf') format('truetype'),
+       url('/fonts/NotoSansThai_ExtraCondensed-Medium.ttf') format('truetype'),
+       url('/fonts/NotoSansThai_ExtraCondensed-SemiBold.ttf') format('truetype'),
+       url('/fonts/NotoSansThai_ExtraCondensed-Bold.ttf') format('truetype'),
+       url('/fonts/NotoSansThai_ExtraCondensed-ExtraBold.ttf') format('truetype'),
+       url('/fonts/NotoSansThai_ExtraCondensed-Black.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+}
+
+/* Semi Condensed */
+@font-face {
+  font-family: 'Noto Sans Thai SemiCondensed';
+  src: url('/fonts/NotoSansThai_SemiCondensed-Thin.ttf') format('truetype'),
+       url('/fonts/NotoSansThai_SemiCondensed-ExtraLight.ttf') format('truetype'),
+       url('/fonts/NotoSansThai_SemiCondensed-Light.ttf') format('truetype'),
+       url('/fonts/NotoSansThai_SemiCondensed-Regular.ttf') format('truetype'),
+       url('/fonts/NotoSansThai_SemiCondensed-Medium.ttf') format('truetype'),
+       url('/fonts/NotoSansThai_SemiCondensed-SemiBold.ttf') format('truetype'),
+       url('/fonts/NotoSansThai_SemiCondensed-Bold.ttf') format('truetype'),
+       url('/fonts/NotoSansThai_SemiCondensed-ExtraBold.ttf') format('truetype'),
+       url('/fonts/NotoSansThai_SemiCondensed-Black.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+}
+
+.font-noto-thai-condensed {
+  font-family: 'Noto Sans Thai Condensed', sans-serif;
+}
+.font-noto-thai-extracondensed {
+  font-family: 'Noto Sans Thai ExtraCondensed', sans-serif;
+}
+.font-noto-thai-semicondensed {
+  font-family: 'Noto Sans Thai SemiCondensed', sans-serif;
+}
+
+
 
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;

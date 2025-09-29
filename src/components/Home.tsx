@@ -118,15 +118,27 @@ function Home() {
 
                             {/* User details */}
                             <div className="space-y-1">
-                                <p className="text-[16px] font-tiroTamil text-[#280A00]">{t.email}: {profile?.email}</p>
+                                <p className={
+                                  language === 'TH'
+                                    ? 'text-[16px] font-noto-thai font-extrabold text-[#280A00]'
+                                    : 'text-[16px] font-tiroTamil text-[#280A00]'
+                                }>{t.email}: {profile?.email}</p>
                             </div>
 
                         </div>
                         {/* Booking Buttons */}
                         <div className="flex justify-between w-full mt-2 gap-6">
-                            <button className="flex-1 !bg-[#DCA900] text-white text-sm font-tiroTamil cursor-pointer py-2 px-4 rounded-lg border-none hover:scale-105 hover:opacity-90 transition-all"
+                            <button className={
+                              language === 'TH'
+                                ? 'flex-1 !bg-[#DCA900] text-white text-sm font-noto-thai font-extrabold cursor-pointer py-2 px-4 rounded-lg border-none hover:scale-105 hover:opacity-90 transition-all'
+                                : 'flex-1 !bg-[#DCA900] text-white text-sm font-tiroTamil cursor-pointer py-2 px-4 rounded-lg border-none hover:scale-105 hover:opacity-90 transition-all'
+                            }
                                 onClick={() => { navigate('/viewbooking') }}>{t.viewBooking}</button>
-                            <button className="flex-1 !bg-[#DCA900] text-white text-sm font-tiroTamil cursor-pointer py-2 px-4 rounded-lg border-none hover:scale-105 hover:opacity-90 transition-all"
+                            <button className={
+                              language === 'TH'
+                                ? 'flex-1 !bg-[#DCA900] text-white text-sm font-noto-thai font-extrabold cursor-pointer py-2 px-4 rounded-lg border-none hover:scale-105 hover:opacity-90 transition-all'
+                                : 'flex-1 !bg-[#DCA900] text-white text-sm font-tiroTamil cursor-pointer py-2 px-4 rounded-lg border-none hover:scale-105 hover:opacity-90 transition-all'
+                            }
                                 onClick={() => { navigate('/history') }}>{t.history}</button>
                         </div>
                     </div>
@@ -137,7 +149,11 @@ function Home() {
                     {packages.filter(pkg => pkg.type === 'service').length > 0 && (
                         <>
                             <div className="px-4 pt-2 pb-1 w-full">
-                                <div className="text-[#7E4300] text-xl font-tiroTamil mb-1">{t.services}</div>
+                                <div className={
+                                  language === 'TH'
+                                    ? 'text-[#7E4300] text-xl font-noto-thai font-extrabold mb-1'
+                                    : 'text-[#7E4300] text-xl font-tiroTamil mb-1'
+                                }>{t.services}</div>
                             </div>
                             <ul className="flex flex-col gap-3 px-4 pb-2 list-none">
                                 {packages.filter(pkg => pkg.type === 'service').map((pkg) => (
@@ -160,7 +176,11 @@ function Home() {
                     {packages.filter(pkg => pkg.type === 'promotion').length > 0 && (
                         <>
                             <div className="px-4 pt-2 pb-1 w-full">
-                                <div className="text-[#7E4300] text-xl font-tiroTamil mb-1">{t.promotions}</div>
+                                <div className={
+                                  language === 'TH'
+                                    ? 'text-[#7E4300] text-xl font-noto-thai font-extrabold mb-1'
+                                    : 'text-[#7E4300] text-xl font-tiroTamil mb-1'
+                                }>{t.promotions}</div>
                             </div>
                             <ul className="flex flex-col gap-3 px-4 pb-2 list-none">
                                 {packages.filter(pkg => pkg.type === 'promotion').map((pkg) => (
