@@ -35,6 +35,11 @@ export async function getPackages() {
   return apiFetch("/package");
 }
 
+// ---------- BRANCH ----------
+export async function getBranches() {
+  return apiFetch("/branch");
+}
+
 // ---------- VOUCHER ----------
 export async function getVoucher(code: string) {
   return apiFetch(`/voucher/${code}`);
