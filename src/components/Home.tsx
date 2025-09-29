@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom'
 
 // import context
 import { ProfileContext } from '../context/ProfileContext'
+import { useTranslation } from '../context/TranslationContext'
 
 // import API
 import {
@@ -38,6 +39,9 @@ function Home() {
         isLiffLoaded
     } = useContext(ProfileContext)
     const navigate = useNavigate();
+
+    // Use global translation context
+    const { language, setLanguage, t } = useTranslation();
 
     // // Dummy profile data for demonstration purposes
     // const [profile] = useState({
@@ -82,7 +86,24 @@ function Home() {
                     <div className="px-6 py-4 text-[#D49F00] bg-white justify-evenly ">
                         <div className="text-left pb-8">
                             {/* Profile picture and name section */}
-                            <div className="flex items-center gap-4 mb-4">
+                            <div className="flex items-center gap-4 mb-4 relative">
+                                {/* Language selector - positioned at top right */}
+                                <div className="absolute top-0 -right-4 text-sm text-[#673F00] font-tiroTamil">
+                                    <span 
+                                        className={`cursor-pointer hover:text-[#DCA900] transition-colors ${language === 'TH' ? 'text-[#DCA900] font-bold' : ''}`}
+                                        onClick={() => setLanguage('TH')}
+                                    >
+                                        TH
+                                    </span>
+                                    <span className="mx-1">|</span>
+                                    <span 
+                                        className={`cursor-pointer hover:text-[#DCA900] transition-colors ${language === 'EN' ? 'text-[#DCA900] font-bold' : ''}`}
+                                        onClick={() => setLanguage('EN')}
+                                    >
+                                        EN
+                                    </span>
+                                </div>
+                                
                                 <div className="w-16 h-16 rounded-full bg-gray-300 overflow-hidden">
                                     {profile?.pictureUrl ? (
                                         <img src={profile?.pictureUrl} alt="Profile" className="w-full h-full object-cover" />
@@ -97,16 +118,16 @@ function Home() {
 
                             {/* User details */}
                             <div className="space-y-1">
-                                <p className="text-[16px] font-tiroTamil text-[#280A00]">Email: {profile?.email}</p>
+                                <p className="text-[16px] font-tiroTamil text-[#280A00]">{t.email}: {profile?.email}</p>
                             </div>
 
                         </div>
                         {/* Booking Buttons */}
                         <div className="flex justify-between w-full mt-2 gap-6">
                             <button className="flex-1 !bg-[#DCA900] text-white text-sm font-tiroTamil cursor-pointer py-2 px-4 rounded-lg border-none hover:scale-105 hover:opacity-90 transition-all"
-                                onClick={() => { navigate('/viewbooking') }}>View Booking</button>
+                                onClick={() => { navigate('/viewbooking') }}>{t.viewBooking}</button>
                             <button className="flex-1 !bg-[#DCA900] text-white text-sm font-tiroTamil cursor-pointer py-2 px-4 rounded-lg border-none hover:scale-105 hover:opacity-90 transition-all"
-                                onClick={() => { navigate('/history') }}>History</button>
+                                onClick={() => { navigate('/history') }}>{t.history}</button>
                         </div>
                     </div>
 
@@ -116,7 +137,7 @@ function Home() {
                     {packages.filter(pkg => pkg.type === 'service').length > 0 && (
                         <>
                             <div className="px-4 pt-2 pb-1 w-full">
-                                <div className="text-[#7E4300] text-xl font-tiroTamil mb-1">Services</div>
+                                <div className="text-[#7E4300] text-xl font-tiroTamil mb-1">{t.services}</div>
                             </div>
                             <ul className="flex flex-col gap-3 px-4 pb-2 list-none">
                                 {packages.filter(pkg => pkg.type === 'service').map((pkg) => (
@@ -139,7 +160,7 @@ function Home() {
                     {packages.filter(pkg => pkg.type === 'promotion').length > 0 && (
                         <>
                             <div className="px-4 pt-2 pb-1 w-full">
-                                <div className="text-[#7E4300] text-xl font-tiroTamil mb-1">Promotions</div>
+                                <div className="text-[#7E4300] text-xl font-tiroTamil mb-1">{t.promotions}</div>
                             </div>
                             <ul className="flex flex-col gap-3 px-4 pb-2 list-none">
                                 {packages.filter(pkg => pkg.type === 'promotion').map((pkg) => (
@@ -162,7 +183,7 @@ function Home() {
             </div>
         ) : (
             <div className="m-0 w-[360px] min-h-[90vh] bg-white flex flex-col relative">
-                <p className="text-[#7E4300] text-center mt-10 font-tiroTamil">Loading profile...</p>
+                <p className="text-[#7E4300] text-center mt-10 font-tiroTamil">{t.loadingProfile}</p>
             </div>
         )
     );
