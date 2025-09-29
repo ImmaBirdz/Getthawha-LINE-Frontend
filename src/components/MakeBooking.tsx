@@ -410,7 +410,7 @@ function MakeBooking() {
                   }
                 }
 
-                // Create booking data for API (only branchId, packageId, voucherId, date)
+                // Create booking data for API 
                 const bookingData = {
                   branchId: selectedBranchData?.id,
                   packageId: selectedPackageData?.id,
