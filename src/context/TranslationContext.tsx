@@ -231,16 +231,14 @@ interface TranslationProviderProps {
 
 export const TranslationProvider: React.FC<TranslationProviderProps> = ({ children }) => {
 
-  // Initialize language from localStorage or default to 'EN' (first visit)
-  const [language, setLanguage] = useState<Language>(() => {
-    const savedLanguage = localStorage.getItem('app-language');
-    if (savedLanguage === 'TH' || savedLanguage === 'EN') {
-      return savedLanguage as Language;
-    } else {
-      localStorage.setItem('app-language', 'EN');
-      return 'EN';
-    }
-  });
+  // Always force English on every reload
+  const [language, setLanguage] = useState<Language>('EN');
+
+  // On mount, always set localStorage and state to EN
+  React.useEffect(() => {
+    setLanguage('EN');
+    localStorage.setItem('app-language', 'EN');
+  }, []);
 
   // Save language to localStorage whenever it changes
   const updateLanguage = (newLanguage: Language) => {
