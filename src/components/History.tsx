@@ -123,7 +123,7 @@ function History() {
     <div className="w-[360px] min-h-screen bg-white flex flex-col">
       {loading ? (
         <div className="w-[360px] min-h-screen bg-white flex flex-col relative">
-          <p className={language === 'TH' ? 'text-[#7E4300] text-center mt-10 font-noto-thai font-extrabold' : 'text-[#7E4300] text-center mt-10 font-tiroTamil'}>{t.loadingHistory}</p>
+          <p className={language === 'TH' ? 'text-[#7E4300] text-center mt-10 font-anuphan font-extrabold' : 'text-[#7E4300] text-center mt-10 font-tiroTamil'}>{t.loadingHistory}</p>
         </div>
       ) : (
         <div className="flex flex-col items-center gap-2 w-full">
@@ -135,7 +135,7 @@ function History() {
               className="w-10 h-10 cursor-pointer hover:scale-110 hover:opacity-80 transition-all duration-200 absolute left-2" 
               onClick={() => navigate('/')}
             />
-            <div className={language === 'TH' ? 'text-2xl font-noto-thai font-extrabold text-[#7E4300]' : 'text-2xl font-tiroTamil text-[#7E4300]'}>{t.history}</div>
+            <div className={language === 'TH' ? 'text-2xl font-anuphan font-extrabold text-[#7E4300]' : 'text-2xl font-tiroTamil text-[#7E4300]'}>{t.history}</div>
           </div>
 
            {/* border line */}
@@ -154,20 +154,20 @@ function History() {
                     <div className="flex justify-between items-start">
                       {/* Left side - Package info */}
                       <div className="flex flex-col gap-1 text-left">
-                        <div className={language === 'TH' ? 'text-[#6B4423] font-medium text-sm text-left font-noto-thai font-extrabold' : 'text-[#6B4423] font-medium text-sm text-left'}>
+                        <div className={language === 'TH' ? 'text-[#6B4423] font-medium text-sm text-left font-anuphan font-extrabold' : 'text-[#6B4423] font-medium text-sm text-left'}>
                           {t.package}: <span className="text-[#D49F00]">{booking.package.title}</span>
                         </div>
-                        <div className={language === 'TH' ? 'text-[#6B4423] font-medium text-sm text-left font-noto-thai font-extrabold' : 'text-[#6B4423] font-medium text-sm text-left'}>
+                        <div className={language === 'TH' ? 'text-[#6B4423] font-medium text-sm text-left font-anuphan font-extrabold' : 'text-[#6B4423] font-medium text-sm text-left'}>
                           {t.branch}: <span className="text-[#D49F00]">{booking.branch.name}</span>
                         </div>
-                        <div className={language === 'TH' ? 'text-[#6B4423] font-medium text-sm text-left font-noto-thai font-extrabold' : 'text-[#6B4423] font-medium text-sm text-left'}>
+                        <div className={language === 'TH' ? 'text-[#6B4423] font-medium text-sm text-left font-anuphan font-extrabold' : 'text-[#6B4423] font-medium text-sm text-left'}>
                           {t.date}: <span className="text-[#D49F00]">{getFormattedDate(booking.date)}, {getFormattedTime(booking.date)}</span>
                         </div>
                       </div>
 
                       {/* Right side - Status and Price */}
                       <div className="flex flex-col items-end gap-1">
-                        <div className={`text-xl font-medium ${getStatusColor(status)} ${language === 'TH' ? 'font-noto-thai font-extrabold' : ''}`}>
+                        <div className={`text-xl font-medium ${getStatusColor(status)} ${language === 'TH' ? 'font-anuphan font-extrabold' : ''}`}>
                           {status === 'Completed' ? t.completed : status === 'Cancelled' ? t.cancelled : status}
                         </div>
                         <div className="text-xs text-[#D49F00]">
@@ -180,7 +180,7 @@ function History() {
               })
             ) : (
               <div className="flex justify-center items-center py-0">
-                <div className={language === 'TH' ? 'text-[#7E4300] text-lg font-noto-thai font-extrabold' : 'text-[#7E4300] text-lg font-tiroTamil'}>{t.noHistory}</div>
+                <div className={language === 'TH' ? 'text-[#7E4300] text-lg font-anuphan font-extrabold' : 'text-[#7E4300] text-lg font-tiroTamil'}>{t.noHistory}</div>
               </div>
             )}
           </div>

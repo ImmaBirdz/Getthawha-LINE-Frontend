@@ -53,14 +53,14 @@ function ViewBooking() {
 
   const handleDeleteBooking = async (bookingId: string) => {
     MySwal.fire({
-      title: <div className={language === 'TH' ? 'font-noto-thai font-extrabold text-[#7E4300] text-lg' : 'font-tiroTamil text-[#7E4300] text-lg'}>{t.areYouSureDelete}</div>,
-      html: <div className={language === 'TH' ? 'font-noto-thai font-extrabold text-[#6B4423] text-sm' : 'font-tiroTamil text-[#6B4423] text-sm'}>{t.cantChangeDecision}</div>,
+      title: <div className={language === 'TH' ? 'font-anuphan font-extrabold text-[#7E4300] text-lg' : 'font-tiroTamil text-[#7E4300] text-lg'}>{t.areYouSureDelete}</div>,
+      html: <div className={language === 'TH' ? 'font-anuphan font-extrabold text-[#6B4423] text-sm' : 'font-tiroTamil text-[#6B4423] text-sm'}>{t.cantChangeDecision}</div>,
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#7E4300",
       cancelButtonColor: "#7E4300",
-      confirmButtonText: <span className={language === 'TH' ? 'font-noto-thai font-extrabold' : 'font-tiroTamil'}>{t.yesDeleteIt}</span>,
-      cancelButtonText: <span className={language === 'TH' ? 'font-noto-thai font-extrabold' : 'font-tiroTamil'}>{t.noKeepIt}</span>
+      confirmButtonText: <span className={language === 'TH' ? 'font-anuphan font-extrabold' : 'font-tiroTamil'}>{t.yesDeleteIt}</span>,
+      cancelButtonText: <span className={language === 'TH' ? 'font-anuphan font-extrabold' : 'font-tiroTamil'}>{t.noKeepIt}</span>
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
@@ -70,8 +70,8 @@ function ViewBooking() {
           setBookings(bookings.filter(booking => booking.id !== bookingId));
           
           MySwal.fire({
-            title: <div className={language === 'TH' ? 'font-noto-thai font-extrabold text-[#7E4300] text-lg' : 'font-tiroTamil text-[#7E4300] text-lg'}>{t.bookingCancelled}</div>,
-            html: <div className={language === 'TH' ? 'font-noto-thai font-extrabold text-[#6B4423] text-sm' : 'font-tiroTamil text-[#6B4423] text-sm'}>{t.bookingDeleted}</div>,
+            title: <div className={language === 'TH' ? 'font-anuphan font-extrabold text-[#7E4300] text-lg' : 'font-tiroTamil text-[#7E4300] text-lg'}>{t.bookingCancelled}</div>,
+            html: <div className={language === 'TH' ? 'font-anuphan font-extrabold text-[#6B4423] text-sm' : 'font-tiroTamil text-[#6B4423] text-sm'}>{t.bookingDeleted}</div>,
             icon: "success",
             confirmButtonColor: "#7E4300",
             confirmButtonText: <span className="font-tiroTamil">OK</span>
@@ -79,8 +79,8 @@ function ViewBooking() {
         } catch (error) {
           console.error('Failed to delete booking:', error);
           MySwal.fire({
-            title: <div className={language === 'TH' ? 'font-noto-thai font-extrabold text-[#7E4300] text-lg' : 'font-tiroTamil text-[#7E4300] text-lg'}>{t.error}</div>,
-            html: <div className={language === 'TH' ? 'font-noto-thai font-extrabold text-[#6B4423] text-sm' : 'font-tiroTamil text-[#6B4423] text-sm'}>{t.failedToCancel}</div>,
+            title: <div className={language === 'TH' ? 'font-anuphan font-extrabold text-[#7E4300] text-lg' : 'font-tiroTamil text-[#7E4300] text-lg'}>{t.error}</div>,
+            html: <div className={language === 'TH' ? 'font-anuphan font-extrabold text-[#6B4423] text-sm' : 'font-tiroTamil text-[#6B4423] text-sm'}>{t.failedToCancel}</div>,
             icon: "error",
             confirmButtonColor: "#7E4300",
             confirmButtonText: <span className="font-tiroTamil">OK</span>
@@ -136,14 +136,14 @@ function ViewBooking() {
     <div className="m-0 w-[360px] min-h-[90vh] bg-white flex flex-col items-center justify-start px-4 pt-2 pb-4">
       {loading ? (
         <div className="m-0 w-[360px] min-h-[90vh] bg-white flex flex-col relative">
-          <p className={language === 'TH' ? 'text-[#7E4300] text-center mt-10 font-noto-thai font-extrabold' : 'text-[#7E4300] text-center mt-10 font-tiroTamil'}>{t.loadingBookings}</p>
+          <p className={language === 'TH' ? 'text-[#7E4300] text-center mt-10 font-anuphan font-extrabold' : 'text-[#7E4300] text-center mt-10 font-tiroTamil'}>{t.loadingBookings}</p>
         </div>
       ) : bookings && bookings.length > 0 ? (
         <div className="flex flex-col items-center gap-4 w-full">
           {/* Header with back button and title */}
           <div className="flex items-center justify-center w-full relative mt-2">
             <img src={Backtohomepage} alt="Back to Home" className="absolute left-[-10px] w-10 h-10 cursor-pointer hover:scale-110 hover:opacity-80 transition-all duration-200" onClick={() => { window.location.href = '/' }} />
-            <div className={language === 'TH' ? 'text-[#7E4300] text-xl font-noto-thai font-extrabold' : 'text-[#7E4300] text-xl font-tiroTamil'}>{t.yourBookings}</div>
+            <div className={language === 'TH' ? 'text-[#7E4300] text-xl font-anuphan font-extrabold' : 'text-[#7E4300] text-xl font-tiroTamil'}>{t.yourBookings}</div>
           </div>
 
           {/* border line */}
@@ -161,15 +161,15 @@ function ViewBooking() {
                     {/* Status - Pending */}
                     <div className="text-[#818181] font-medium text-sm mb-1 flex items-center gap-1">
                       <div className="w-2 h-2 bg-[#FFA600] rounded-full animate-pulse shadow-[0_0_4px_#FFD381]"></div>
-                      <span className={language === 'TH' ? 'animate-pulse font-noto-thai font-extrabold' : 'animate-pulse'}>{t.pending}</span>
+                      <span className={language === 'TH' ? 'animate-pulse font-anuphan font-extrabold' : 'animate-pulse'}>{t.pending}</span>
                     </div>
-                    <div className={language === 'TH' ? 'text-[#6B4423] font-medium text-left text-sm font-noto-thai font-extrabold' : 'text-[#6B4423] font-medium text-left text-sm'}>
+                    <div className={language === 'TH' ? 'text-[#6B4423] font-medium text-left text-sm font-anuphan font-extrabold' : 'text-[#6B4423] font-medium text-left text-sm'}>
                       {t.package}: <span className="text-[#D49F00]">{booking.package.title}</span>
                     </div>
-                    <div className={language === 'TH' ? 'text-[#6B4423] font-medium text-left text-sm font-noto-thai font-extrabold' : 'text-[#6B4423] font-medium text-left text-sm'}>
+                    <div className={language === 'TH' ? 'text-[#6B4423] font-medium text-left text-sm font-anuphan font-extrabold' : 'text-[#6B4423] font-medium text-left text-sm'}>
                       {t.branch}: <span className="text-[#D49F00]">{booking.branch.name}</span>
                     </div>
-                    <div className={language === 'TH' ? 'text-[#6B4423] font-medium text-left text-sm font-noto-thai font-extrabold' : 'text-[#6B4423] font-medium text-left text-sm'}>
+                    <div className={language === 'TH' ? 'text-[#6B4423] font-medium text-left text-sm font-anuphan font-extrabold' : 'text-[#6B4423] font-medium text-left text-sm'}>
                       {t.date}: <span className="text-[#D49F00]">
                         {new Date(booking.date).toLocaleDateString('en-US', { 
                           day: 'numeric',
@@ -204,14 +204,14 @@ function ViewBooking() {
           </ul>
 
           {/* Make a booking button */}
-          <button className={language === 'TH' ? 'mt-2 !bg-[#DCA900] text-white text-xs font-noto-thai font-extrabold self-center cursor-pointer py-1 px-2 rounded border-none hover:scale-110 hover:opacity-80 transition-all' : 'mt-2 !bg-[#DCA900] text-white text-xs font-tiroTamil self-center cursor-pointer py-1 px-2 rounded border-none hover:scale-110 hover:opacity-80 transition-all'} onClick={() => navigate('/makebooking')}>{t.makeBooking}</button>
+          <button className={language === 'TH' ? 'mt-2 !bg-[#DCA900] text-white text-xs font-anuphan font-extrabold self-center cursor-pointer py-1 px-2 rounded border-none hover:scale-110 hover:opacity-80 transition-all' : 'mt-2 !bg-[#DCA900] text-white text-xs font-tiroTamil self-center cursor-pointer py-1 px-2 rounded border-none hover:scale-110 hover:opacity-80 transition-all'} onClick={() => navigate('/makebooking')}>{t.makeBooking}</button>
         </div>
       ) : (
         <div className="flex flex-col items-center gap-4 w-full">
           {/* Header with back button and title */}
           <div className="flex items-center justify-center w-full relative mt-2">
             <img src={Backtohomepage} alt="Back to Home" className="absolute left-[-10px] w-10 h-10 cursor-pointer hover:scale-110 hover:opacity-80 transition-all duration-200" onClick={() => { window.location.href = '/' }} />
-            <div className={language === 'TH' ? 'text-[#7E4300] text-xl font-noto-thai font-extrabold' : 'text-[#7E4300] text-xl font-tiroTamil'}>{t.yourBookings}</div>
+            <div className={language === 'TH' ? 'text-[#7E4300] text-xl font-anuphan font-extrabold' : 'text-[#7E4300] text-xl font-tiroTamil'}>{t.yourBookings}</div>
           </div>
 
           {/* border line */}
@@ -221,10 +221,10 @@ function ViewBooking() {
 
           {/* No bookings message */}
           <div className="flex flex-col items-center gap-4 justify-start p-4">
-            <div className={language === 'TH' ? 'text-[#7E4300] text-lg font-noto-thai font-extrabold' : 'text-[#7E4300] text-lg font-tiroTamil'}>{t.noBookings}</div>
+            <div className={language === 'TH' ? 'text-[#7E4300] text-lg font-anuphan font-extrabold' : 'text-[#7E4300] text-lg font-tiroTamil'}>{t.noBookings}</div>
 
             {/* Make a booking button */}
-            <button className={language === 'TH' ? 'mt-2 !bg-[#DCA900] text-white text-xs font-noto-thai font-extrabold self-center cursor-pointer py-1 px-2 rounded border-none hover:scale-110 hover:opacity-80 transition-all' : 'mt-2 !bg-[#DCA900] text-white text-xs font-tiroTamil self-center cursor-pointer py-1 px-2 rounded border-none hover:scale-110 hover:opacity-80 transition-all'} onClick={() => navigate('/makebooking')}>{t.makeBooking}</button>
+            <button className={language === 'TH' ? 'mt-2 !bg-[#DCA900] text-white text-xs font-anuphan font-extrabold self-center cursor-pointer py-1 px-2 rounded border-none hover:scale-110 hover:opacity-80 transition-all disabled:opacity-50 disabled:cursor-not-allowed' : 'mt-2 !bg-[#DCA900] text-white text-xs font-tiroTamil self-center cursor-pointer py-1 px-2 rounded border-none hover:scale-110 hover:opacity-80 transition-all disabled:opacity-50 disabled:cursor-not-allowed'} onClick={() => navigate('/makebooking')}>{t.makeBooking}</button>
           </div>
         </div>
       )}

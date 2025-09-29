@@ -46,156 +46,20 @@
 }
 
 @font-face {
-  font-family: 'Noto Sans Thai';
-  src: url('/fonts/NotoSansThai-Thin.ttf') format('truetype'),
-       url('/fonts/NotoSansThai-ExtraLight.ttf') format('truetype'),
-       url('/fonts/NotoSansThai-Light.ttf') format('truetype'),
-       url('/fonts/NotoSansThai-Regular.ttf') format('truetype'),
-       url('/fonts/NotoSansThai-Medium.ttf') format('truetype'),
-       url('/fonts/NotoSansThai-SemiBold.ttf') format('truetype'),
-       url('/fonts/NotoSansThai-Bold.ttf') format('truetype'),
-       url('/fonts/NotoSansThai-ExtraBold.ttf') format('truetype'),
-       url('/fonts/NotoSansThai-Black.ttf') format('truetype'),
-       url('/fonts/NotoSansThai-VariableFont_wdth,wght.ttf') format('truetype');
-  font-weight: 100 900;
-  font-stretch: 75% 125%;
-  font-style: normal;
-}
-
-.font-noto-thai {
-  font-family: 'Noto Sans Thai', sans-serif;
-}
-
-/* Condensed */
-@font-face {
-  font-family: 'Noto Sans Thai Condensed';
-  src: url('/fonts/NotoSansThai_Condensed-Thin.ttf') format('truetype'),
-       url('/fonts/NotoSansThai_Condensed-ExtraLight.ttf') format('truetype'),
-       url('/fonts/NotoSansThai_Condensed-Light.ttf') format('truetype'),
-       url('/fonts/NotoSansThai_Condensed-Regular.ttf') format('truetype'),
-       url('/fonts/NotoSansThai_Condensed-Medium.ttf') format('truetype'),
-       url('/fonts/NotoSansThai_Condensed-SemiBold.ttf') format('truetype'),
-       url('/fonts/NotoSansThai_Condensed-Bold.ttf') format('truetype'),
-       url('/fonts/NotoSansThai_Condensed-ExtraBold.ttf') format('truetype'),
-       url('/fonts/NotoSansThai_Condensed-Black.ttf') format('truetype');
+  font-family: 'Anuphan';
+  src: url('/fonts/Anuphan-Thin.ttf') format('truetype'),
+       url('/fonts/Anuphan-ExtraLight.ttf') format('truetype'),
+       url('/fonts/Anuphan-Light.ttf') format('truetype'),
+       url('/fonts/Anuphan-Regular.ttf') format('truetype'),
+       url('/fonts/Anuphan-Medium.ttf') format('truetype'),
+       url('/fonts/Anuphan-SemiBold.ttf') format('truetype'),
+       url('/fonts/Anuphan-Bold.ttf') format('truetype'),
+       url('/fonts/Anuphan-ExtraBold.ttf') format('truetype'),
+       url('/fonts/Anuphan-Black.ttf') format('truetype');
   font-weight: 100 900;
   font-style: normal;
 }
 
-.font-noto-thai,
-.font-noto-thai-condensed {
-  font-family: 'Noto Sans Thai', 'Noto Sans Thai Condensed', sans-serif;
-}
-
-/* Extra Condensed */
-@font-face {
-  font-family: 'Noto Sans Thai ExtraCondensed';
-  src: url('/fonts/NotoSansThai_ExtraCondensed-Thin.ttf') format('truetype'),
-       url('/fonts/NotoSansThai_ExtraCondensed-ExtraLight.ttf') format('truetype'),
-       url('/fonts/NotoSansThai_ExtraCondensed-Light.ttf') format('truetype'),
-       url('/fonts/NotoSansThai_ExtraCondensed-Regular.ttf') format('truetype'),
-       url('/fonts/NotoSansThai_ExtraCondensed-Medium.ttf') format('truetype'),
-       url('/fonts/NotoSansThai_ExtraCondensed-SemiBold.ttf') format('truetype'),
-       url('/fonts/NotoSansThai_ExtraCondensed-Bold.ttf') format('truetype'),
-       url('/fonts/NotoSansThai_ExtraCondensed-ExtraBold.ttf') format('truetype'),
-       url('/fonts/NotoSansThai_ExtraCondensed-Black.ttf') format('truetype');
-  font-weight: 100 900;
-  font-style: normal;
-}
-
-/* Semi Condensed */
-@font-face {
-  font-family: 'Noto Sans Thai SemiCondensed';
-  src: url('/fonts/NotoSansThai_SemiCondensed-Thin.ttf') format('truetype'),
-       url('/fonts/NotoSansThai_SemiCondensed-ExtraLight.ttf') format('truetype'),
-       url('/fonts/NotoSansThai_SemiCondensed-Light.ttf') format('truetype'),
-       url('/fonts/NotoSansThai_SemiCondensed-Regular.ttf') format('truetype'),
-       url('/fonts/NotoSansThai_SemiCondensed-Medium.ttf') format('truetype'),
-       url('/fonts/NotoSansThai_SemiCondensed-SemiBold.ttf') format('truetype'),
-       url('/fonts/NotoSansThai_SemiCondensed-Bold.ttf') format('truetype'),
-       url('/fonts/NotoSansThai_SemiCondensed-ExtraBold.ttf') format('truetype'),
-       url('/fonts/NotoSansThai_SemiCondensed-Black.ttf') format('truetype');
-  font-weight: 100 900;
-  font-style: normal;
-}
-
-.font-noto-thai-condensed {
-  font-family: 'Noto Sans Thai Condensed', sans-serif;
-}
-.font-noto-thai-extracondensed {
-  font-family: 'Noto Sans Thai ExtraCondensed', sans-serif;
-}
-.font-noto-thai-semicondensed {
-  font-family: 'Noto Sans Thai SemiCondensed', sans-serif;
-}
-
-
-
-:root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
-
-body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
-}
-
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
-
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+.font-anuphan {
+  font-family: 'Anuphan', sans-serif;
 }

@@ -118,11 +118,9 @@ function Home() {
 
                             {/* User details */}
                             <div className="space-y-1">
-                                <p className={
-                                  language === 'TH'
-                                    ? 'text-[16px] font-noto-thai font-extrabold text-[#280A00]'
-                                    : 'text-[16px] font-tiroTamil text-[#280A00]'
-                                }>{t.email}: {profile?.email}</p>
+                                <p className="text-[16px] text-[#280A00]">
+                                  <span className={language === 'TH' ? 'font-anuphan font-extrabold' : 'font-tiroTamil'}>{t.email}:</span> <span className="font-tiroTamil">{profile?.email}</span>
+                                </p>
                             </div>
 
                         </div>
@@ -130,13 +128,13 @@ function Home() {
                         <div className="flex justify-between w-full mt-2 gap-6">
                             <button className={
                               language === 'TH'
-                                ? 'flex-1 !bg-[#DCA900] text-white text-sm font-noto-thai font-extrabold cursor-pointer py-2 px-4 rounded-lg border-none hover:scale-105 hover:opacity-90 transition-all'
+                                ? 'flex-1 !bg-[#DCA900] text-white text-sm font-anuphan font-extrabold cursor-pointer py-2 px-4 rounded-lg border-none hover:scale-105 hover:opacity-90 transition-all'
                                 : 'flex-1 !bg-[#DCA900] text-white text-sm font-tiroTamil cursor-pointer py-2 px-4 rounded-lg border-none hover:scale-105 hover:opacity-90 transition-all'
                             }
                                 onClick={() => { navigate('/viewbooking') }}>{t.viewBooking}</button>
                             <button className={
                               language === 'TH'
-                                ? 'flex-1 !bg-[#DCA900] text-white text-sm font-noto-thai font-extrabold cursor-pointer py-2 px-4 rounded-lg border-none hover:scale-105 hover:opacity-90 transition-all'
+                                ? 'flex-1 !bg-[#DCA900] text-white text-sm font-anuphan font-extrabold cursor-pointer py-2 px-4 rounded-lg border-none hover:scale-105 hover:opacity-90 transition-all'
                                 : 'flex-1 !bg-[#DCA900] text-white text-sm font-tiroTamil cursor-pointer py-2 px-4 rounded-lg border-none hover:scale-105 hover:opacity-90 transition-all'
                             }
                                 onClick={() => { navigate('/history') }}>{t.history}</button>
@@ -151,7 +149,7 @@ function Home() {
                             <div className="px-4 pt-2 pb-1 w-full">
                                 <div className={
                                   language === 'TH'
-                                    ? 'text-[#7E4300] text-xl font-noto-thai font-extrabold mb-1'
+                                    ? 'text-[#7E4300] text-xl font-anuphan font-extrabold mb-1'
                                     : 'text-[#7E4300] text-xl font-tiroTamil mb-1'
                                 }>{t.services}</div>
                             </div>
@@ -178,7 +176,7 @@ function Home() {
                             <div className="px-4 pt-2 pb-1 w-full">
                                 <div className={
                                   language === 'TH'
-                                    ? 'text-[#7E4300] text-xl font-noto-thai font-extrabold mb-1'
+                                    ? 'text-[#7E4300] text-xl font-anuphan font-extrabold mb-1'
                                     : 'text-[#7E4300] text-xl font-tiroTamil mb-1'
                                 }>{t.promotions}</div>
                             </div>
