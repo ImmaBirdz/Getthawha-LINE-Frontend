@@ -355,7 +355,7 @@ function MakeBooking() {
         {/* Voucher Code */}
         <div>
           <label className="block text-base font-tiroTamil text-[#000000] text-left mb-1">
-            {t.voucherCode}
+            {t.voucherCode} <span className="text-gray-500 text-sm">({t.optional})</span>
           </label>
           <div className="relative">
             <input 
@@ -408,14 +408,22 @@ function MakeBooking() {
                   packageDuration = selectedPackageData?.duration || 60;
                 }
 
-                // Validate voucher if provided
+                // Validate voucher if provided (optional)
                 if (voucherCode) {
                   try {
                     await getVoucher(voucherCode);
                     // Voucher is valid, continue with booking
+                    console.log('Valid voucher applied:', voucherCode);
                   } catch (error) {
                     console.warn('Invalid voucher code:', error);
-                    // Continue without voucher
+                    // Ask user if they want to continue without voucher
+                    const continueWithoutVoucher = confirm('Invalid voucher code. Do you want to continue booking without voucher?');
+                    if (!continueWithoutVoucher) {
+                      setSubmitting(false);
+                      return;
+                    }
+                    // Clear invalid voucher and continue
+                    setVoucherCode('');
                   }
                 }
 

@@ -38,6 +38,7 @@ type Translations = {
   enterVoucherCode: string;
   confirmBooking: string;
   creating: string;
+  optional: string;
   
   // Booking details
   package: string;
@@ -102,6 +103,7 @@ const translations: Record<Language, Translations> = {
     enterVoucherCode: 'Enter voucher code',
     confirmBooking: 'Confirm Booking',
     creating: 'Creating...',
+    optional: 'Optional',
     
     // Booking details
     package: 'Package',
@@ -165,6 +167,7 @@ const translations: Record<Language, Translations> = {
     enterVoucherCode: 'กรอกรหัสส่วนลด',
     confirmBooking: 'ยืนยันการจอง',
     creating: 'กำลังสร้าง...',
+    optional: 'ไม่บังคับ',
     
     // Booking details
     package: 'แพ็คเกจ',
