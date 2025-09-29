@@ -94,7 +94,7 @@ function MakeBooking() {
       {/* Header with back arrow and title */}
       <div className="flex items-center justify-center px-4 py-3 relative">
         <img src={backhome} alt="Back"  className="w-10 h-10 cursor-pointer hover:scale-110 hover:opacity-80 transition-all duration-200 absolute left-2" onClick={() => navigate('/viewbooking')}/>
-        <div className={language === 'TH' ? 'text-xl font-anuphan font-black text-[#7E4300]' : 'text-xl font-tiroTamil text-[#7E4300]'}>{t.booking}</div>
+        <div className={language === 'TH' ? 'text-xl font-athiti font-black text-[#7E4300]' : 'text-xl font-tiroTamil text-[#7E4300]'}>{t.booking}</div>
       </div>
       
       {/* border line */}
@@ -102,13 +102,13 @@ function MakeBooking() {
 
       {loading ? (
         <div className="flex-1 flex items-center justify-center">
-          <div className={language === 'TH' ? 'text-[#7E4300] text-lg font-anuphan font-black' : 'text-[#7E4300] text-lg font-tiroTamil'}>{t.loading}</div>
+          <div className={language === 'TH' ? 'text-[#7E4300] text-lg font-athiti font-black' : 'text-[#7E4300] text-lg font-tiroTamil'}>{t.loading}</div>
         </div>
       ) : (
         <div className="flex-1 px-4 py-4 space-y-4">
         {/* Select Branch */}
         <div>
-          <label className={language === 'TH' ? 'block text-base font-anuphan font-black text-[#000000] text-left mb-1' : 'block text-base font-tiroTamil text-[#000000] text-left mb-1'}>
+          <label className={language === 'TH' ? 'block text-base font-athiti font-black text-[#000000] text-left mb-1' : 'block text-base font-tiroTamil text-[#000000] text-left mb-1'}>
             {t.selectBranch}<span className="text-red-500">*</span>
           </label>
           <div className="relative">
@@ -116,7 +116,7 @@ function MakeBooking() {
               onClick={() => {
                 setDropdownOpen(dropdownOpen === 'branch' ? null : 'branch');
               }}
-              className={`w-full px-3 py-1 bg-[#E7E7E7] border border-[#818181] rounded-3xl ${language === 'TH' ? 'font-anuphan font-black' : 'font-tiroTamil'} text-base focus:outline-none cursor-pointer text-left ${
+              className={`w-full px-3 py-1 bg-[#E7E7E7] border border-[#818181] rounded-3xl ${language === 'TH' ? 'font-athiti font-black' : 'font-tiroTamil'} text-base focus:outline-none cursor-pointer text-left ${
                 selectedBranch === t.chooseBranch ? 'text-[#999999]' : 'text-[#000000]'
               }`}
             >
@@ -136,7 +136,7 @@ function MakeBooking() {
                     setSelectedBranch(t.chooseBranch);
                     setDropdownOpen(null);
                   }}
-                  className={language === 'TH' ? 'px-3 py-2 font-anuphan font-black text-[#999999] text-base cursor-pointer rounded-full mx-2 my-1 text-left hover:bg-red-100 hover:text-red-600 italic' : 'px-3 py-2 font-tiroTamil text-[#999999] text-base cursor-pointer rounded-full mx-2 my-1 text-left hover:bg-red-100 hover:text-red-600 italic'}
+                  className={language === 'TH' ? 'px-3 py-2 font-athiti font-black text-[#999999] text-base cursor-pointer rounded-full mx-2 my-1 text-left hover:bg-red-100 hover:text-red-600 italic' : 'px-3 py-2 font-tiroTamil text-[#999999] text-base cursor-pointer rounded-full mx-2 my-1 text-left hover:bg-red-100 hover:text-red-600 italic'}
                 >
                   {t.clear}
                 </div>
@@ -147,7 +147,7 @@ function MakeBooking() {
                       setSelectedBranch(option);
                       setDropdownOpen(null);
                     }}
-                    className={`px-3 py-2 ${language === 'TH' ? 'font-anuphan font-black' : 'font-tiroTamil'} text-[#000000] text-base cursor-pointer rounded-full mx-2 my-1 text-left ${
+                    className={`px-3 py-2 ${language === 'TH' ? 'font-athiti font-black' : 'font-tiroTamil'} text-[#000000] text-base cursor-pointer rounded-full mx-2 my-1 text-left ${
                       selectedBranch === option 
                         ? 'bg-[#E7E7E7] hover:bg-[#D7D7D7]' 
                         : 'hover:bg-[#F5F5F5]'
@@ -163,7 +163,7 @@ function MakeBooking() {
 
         {/* Select Service */}
         <div className={selectedPromotion !== t.choosePromotion ? 'opacity-50 pointer-events-none' : ''}>
-          <label className={language === 'TH' ? 'block text-base font-anuphan font-black text-[#000000] text-left mb-1' : 'block text-base font-tiroTamil text-[#000000] text-left mb-1'}>
+          <label className={language === 'TH' ? 'block text-base font-athiti font-black text-[#000000] text-left mb-1' : 'block text-base font-tiroTamil text-[#000000] text-left mb-1'}>
             {t.selectService}<span className="text-red-500">*</span>
           </label>
           <div className="relative">
@@ -171,7 +171,7 @@ function MakeBooking() {
               onClick={() => {
                 setDropdownOpen(dropdownOpen === 'service' ? null : 'service');
               }}
-              className={`w-full px-3 py-1 bg-[#E7E7E7] border border-[#818181] rounded-3xl ${language === 'TH' ? 'font-anuphan font-black' : 'font-tiroTamil'} text-base focus:outline-none cursor-pointer text-left ${
+              className={`w-full px-3 py-1 bg-[#E7E7E7] border border-[#818181] rounded-3xl ${language === 'TH' ? 'font-athiti font-black' : 'font-tiroTamil'} text-base focus:outline-none cursor-pointer text-left ${
                 selectedService === t.chooseService ? 'text-[#999999]' : 'text-[#000000]'
               }`}
             >
@@ -192,7 +192,7 @@ function MakeBooking() {
                     setSelectedPromotion(t.choosePromotion);
                     setDropdownOpen(null);
                   }}
-                  className={language === 'TH' ? 'px-3 py-2 font-anuphan font-black text-[#999999] text-base cursor-pointer rounded-full mx-2 my-1 text-left hover:bg-red-100 hover:text-red-600 italic' : 'px-3 py-2 font-tiroTamil text-[#999999] text-base cursor-pointer rounded-full mx-2 my-1 text-left hover:bg-red-100 hover:text-red-600 italic'}
+                  className={language === 'TH' ? 'px-3 py-2 font-athiti font-black text-[#999999] text-base cursor-pointer rounded-full mx-2 my-1 text-left hover:bg-red-100 hover:text-red-600 italic' : 'px-3 py-2 font-tiroTamil text-[#999999] text-base cursor-pointer rounded-full mx-2 my-1 text-left hover:bg-red-100 hover:text-red-600 italic'}
                 >
                   {t.clear}
                 </div>
@@ -204,7 +204,7 @@ function MakeBooking() {
                       setSelectedPromotion(t.choosePromotion); // Reset promotion
                       setDropdownOpen(null);
                     }}
-                    className={`px-3 py-2 ${language === 'TH' ? 'font-anuphan font-black' : 'font-tiroTamil'} text-[#000000] text-base cursor-pointer rounded-full mx-2 my-1 text-left ${
+                    className={`px-3 py-2 ${language === 'TH' ? 'font-athiti font-black' : 'font-tiroTamil'} text-[#000000] text-base cursor-pointer rounded-full mx-2 my-1 text-left ${
                       selectedService === option 
                         ? 'bg-[#E7E7E7] hover:bg-[#D7D7D7]' 
                         : 'hover:bg-[#F5F5F5]'
@@ -220,7 +220,7 @@ function MakeBooking() {
 
         {/* Select Promotion */}
         <div className={selectedService !== t.chooseService ? 'opacity-50 pointer-events-none' : ''}>
-          <label className={language === 'TH' ? 'block text-base font-anuphan font-black text-[#000000] text-left mb-1' : 'block text-base font-tiroTamil text-[#000000] text-left mb-1'}>
+          <label className={language === 'TH' ? 'block text-base font-athiti font-black text-[#000000] text-left mb-1' : 'block text-base font-tiroTamil text-[#000000] text-left mb-1'}>
             {t.selectPromotion}<span className="text-red-500">*</span>
           </label>
           <div className="relative">
@@ -228,7 +228,7 @@ function MakeBooking() {
               onClick={() => {
                 setDropdownOpen(dropdownOpen === 'promotion' ? null : 'promotion');
               }}
-              className={`w-full px-3 py-1 bg-[#E7E7E7] border border-[#818181] rounded-3xl ${language === 'TH' ? 'font-anuphan font-black' : 'font-tiroTamil'} text-base focus:outline-none cursor-pointer text-left ${
+              className={`w-full px-3 py-1 bg-[#E7E7E7] border border-[#818181] rounded-3xl ${language === 'TH' ? 'font-athiti font-black' : 'font-tiroTamil'} text-base focus:outline-none cursor-pointer text-left ${
                 selectedPromotion === t.choosePromotion ? 'text-[#999999]' : 'text-[#000000]'
               }`}
             >
@@ -249,7 +249,7 @@ function MakeBooking() {
                     setSelectedService(t.chooseService);
                     setDropdownOpen(null);
                   }}
-                  className={language === 'TH' ? 'px-3 py-2 font-anuphan font-black text-[#999999] text-base cursor-pointer rounded-full mx-2 my-1 text-left hover:bg-red-100 hover:text-red-600 italic' : 'px-3 py-2 font-tiroTamil text-[#999999] text-base cursor-pointer rounded-full mx-2 my-1 text-left hover:bg-red-100 hover:text-red-600 italic'}
+                  className={language === 'TH' ? 'px-3 py-2 font-athiti font-black text-[#999999] text-base cursor-pointer rounded-full mx-2 my-1 text-left hover:bg-red-100 hover:text-red-600 italic' : 'px-3 py-2 font-tiroTamil text-[#999999] text-base cursor-pointer rounded-full mx-2 my-1 text-left hover:bg-red-100 hover:text-red-600 italic'}
                 >
                   {t.clear}
                 </div>
@@ -261,7 +261,7 @@ function MakeBooking() {
                       setSelectedService(t.chooseService); // Reset service  
                       setDropdownOpen(null);
                     }}
-                    className={`px-3 py-2 ${language === 'TH' ? 'font-anuphan font-black' : 'font-tiroTamil'} text-[#000000] text-base cursor-pointer rounded-full mx-2 my-1 text-left ${
+                    className={`px-3 py-2 ${language === 'TH' ? 'font-athiti font-black' : 'font-tiroTamil'} text-[#000000] text-base cursor-pointer rounded-full mx-2 my-1 text-left ${
                       selectedPromotion === option 
                         ? 'bg-[#E7E7E7] hover:bg-[#D7D7D7]' 
                         : 'hover:bg-[#F5F5F5]'
@@ -277,7 +277,7 @@ function MakeBooking() {
 
         {/* Date */}
         <div>
-          <label className={language === 'TH' ? 'block text-base font-anuphan font-black text-[#000000] text-left mb-1' : 'block text-base font-tiroTamil text-[#000000] text-left mb-1'}>
+          <label className={language === 'TH' ? 'block text-base font-athiti font-black text-[#000000] text-left mb-1' : 'block text-base font-tiroTamil text-[#000000] text-left mb-1'}>
             {t.date}<span className="text-red-500">*</span>
           </label>
           <div className="flex justify-start">
@@ -286,7 +286,7 @@ function MakeBooking() {
                 type="text"
                 value={selectedDate}
                 onChange={(e) => setSelectedDate(e.target.value)}
-                className={`w-40 px-3 py-1 bg-[#E7E7E7] border border-[#818181] rounded-full ${language === 'TH' ? 'font-anuphan font-black' : 'font-tiroTamil'} text-[#000000] text-base focus:outline-none focus:ring-2 focus:ring-[#8B4513]`}
+                className={`w-40 px-3 py-1 bg-[#E7E7E7] border border-[#818181] rounded-full ${language === 'TH' ? 'font-athiti font-black' : 'font-tiroTamil'} text-[#000000] text-base focus:outline-none focus:ring-2 focus:ring-[#8B4513]`}
                 placeholder="DD/MM/YYYY"
                 readOnly
               />
@@ -312,7 +312,7 @@ function MakeBooking() {
 
         {/* Time */}
         <div>
-          <label className={language === 'TH' ? 'block text-base font-anuphan font-black text-[#000000] text-left mb-1' : 'block text-base font-tiroTamil text-[#000000] text-left mb-1'}>
+          <label className={language === 'TH' ? 'block text-base font-athiti font-black text-[#000000] text-left mb-1' : 'block text-base font-tiroTamil text-[#000000] text-left mb-1'}>
             {t.selectTime.replace('Select ', '')}<span className="text-red-500">*</span>
           </label>
           <div className="flex justify-start">
@@ -321,7 +321,7 @@ function MakeBooking() {
                 type="text"
                 value={selectedTime}
                 onChange={(e) => setSelectedTime(e.target.value)}
-                className={`w-40 px-3 py-1 bg-[#E7E7E7] border border-[#818181] rounded-full ${language === 'TH' ? 'font-anuphan font-black' : 'font-tiroTamil'} text-[#000000] text-base focus:outline-none focus:ring-2 focus:ring-[#8B4513]`}
+                className={`w-40 px-3 py-1 bg-[#E7E7E7] border border-[#818181] rounded-full ${language === 'TH' ? 'font-athiti font-black' : 'font-tiroTamil'} text-[#000000] text-base focus:outline-none focus:ring-2 focus:ring-[#8B4513]`}
                 placeholder="-- : -- --"
                 readOnly
               />
@@ -349,7 +349,7 @@ function MakeBooking() {
 
         {/* Voucher Code */}
         <div>
-          <label className={language === 'TH' ? 'block text-base font-anuphan font-black text-[#000000] text-left mb-1' : 'block text-base font-tiroTamil text-[#000000] text-left mb-1'}>
+          <label className={language === 'TH' ? 'block text-base font-athiti font-black text-[#000000] text-left mb-1' : 'block text-base font-tiroTamil text-[#000000] text-left mb-1'}>
             {t.voucherCode} <span className="text-gray-500 text-sm">({t.optional})</span>
           </label>
           <div className="relative">
@@ -357,7 +357,7 @@ function MakeBooking() {
               type="text"
               value={voucherCode}
               onChange={(e) => setVoucherCode(e.target.value)}
-              className={`w-full px-3 py-1 bg-[#E7E7E7] border border-[#818181] rounded-full ${language === 'TH' ? 'font-anuphan font-black' : 'font-tiroTamil'} text-[#000000] text-base focus:outline-none focus:ring-2 focus:ring-[#8B4513]`}
+              className={`w-full px-3 py-1 bg-[#E7E7E7] border border-[#818181] rounded-full ${language === 'TH' ? 'font-athiti font-black' : 'font-tiroTamil'} text-[#000000] text-base focus:outline-none focus:ring-2 focus:ring-[#8B4513]`}
               placeholder={t.enterVoucherCode}
             />
             <div className="absolute inset-y-0 right-0 flex items-center pr-3">
@@ -369,7 +369,7 @@ function MakeBooking() {
         {/* Booking Button */}
         <div className="pt-4 flex justify-center">
           <button 
-            className={language === 'TH' ? 'mt-2 !bg-[#DCA900] text-white text-xs font-anuphan font-black self-center cursor-pointer py-1 px-2 rounded border-none hover:scale-110 hover:opacity-80 transition-all disabled:opacity-50 disabled:cursor-not-allowed' : 'mt-2 !bg-[#DCA900] text-white text-xs font-tiroTamil self-center cursor-pointer py-1 px-2 rounded border-none hover:scale-110 hover:opacity-80 transition-all disabled:opacity-50 disabled:cursor-not-allowed'}
+            className={language === 'TH' ? 'mt-2 !bg-[#DCA900] text-white text-xs font-athiti font-black self-center cursor-pointer py-1 px-2 rounded border-none hover:scale-110 hover:opacity-80 transition-all disabled:opacity-50 disabled:cursor-not-allowed' : 'mt-2 !bg-[#DCA900] text-white text-xs font-tiroTamil self-center cursor-pointer py-1 px-2 rounded border-none hover:scale-110 hover:opacity-80 transition-all disabled:opacity-50 disabled:cursor-not-allowed'}
             disabled={submitting}
             onClick={async () => {
               try {

@@ -119,7 +119,7 @@ function Home() {
                             {/* User details */}
                             <div className="space-y-1">
                                 <p className="text-[16px] text-[#280A00]">
-                                  <span className={language === 'TH' ? 'font-anuphan font-black' : 'font-tiroTamil'}>{t.email}:</span> <span className="font-tiroTamil">{profile?.email}</span>
+                                  <span className={language === 'TH' ? 'font-athiti font-black' : 'font-tiroTamil'}>{t.email}:</span> <span className="font-tiroTamil">{profile?.email}</span>
                                 </p>
                             </div>
 
@@ -128,13 +128,13 @@ function Home() {
                         <div className="flex justify-between w-full mt-2 gap-6">
                             <button className={
                               language === 'TH'
-                                ? 'flex-1 !bg-[#DCA900] text-white text-sm font-anuphan font-black cursor-pointer py-2 px-4 rounded-lg border-none hover:scale-105 hover:opacity-90 transition-all'
+                                ? 'flex-1 !bg-[#DCA900] text-white text-sm font-athiti font-black cursor-pointer py-2 px-4 rounded-lg border-none hover:scale-105 hover:opacity-90 transition-all'
                                 : 'flex-1 !bg-[#DCA900] text-white text-sm font-tiroTamil cursor-pointer py-2 px-4 rounded-lg border-none hover:scale-105 hover:opacity-90 transition-all'
                             }
                                 onClick={() => { navigate('/viewbooking') }}>{t.viewBooking}</button>
                             <button className={
                               language === 'TH'
-                                ? 'flex-1 !bg-[#DCA900] text-white text-sm font-anuphan font-black cursor-pointer py-2 px-4 rounded-lg border-none hover:scale-105 hover:opacity-90 transition-all'
+                                ? 'flex-1 !bg-[#DCA900] text-white text-sm font-athiti font-black cursor-pointer py-2 px-4 rounded-lg border-none hover:scale-105 hover:opacity-90 transition-all'
                                 : 'flex-1 !bg-[#DCA900] text-white text-sm font-tiroTamil cursor-pointer py-2 px-4 rounded-lg border-none hover:scale-105 hover:opacity-90 transition-all'
                             }
                                 onClick={() => { navigate('/history') }}>{t.history}</button>
@@ -149,7 +149,7 @@ function Home() {
                             <div className="px-4 pt-2 pb-1 w-full">
                                 <div className={
                                   language === 'TH'
-                                    ? 'text-[#7E4300] text-xl font-anuphan font-black mb-1'
+                                    ? 'text-[#7E4300] text-xl font-athiti font-black mb-1'
                                     : 'text-[#7E4300] text-xl font-tiroTamil mb-1'
                                 }>{t.services}</div>
                             </div>
@@ -176,7 +176,7 @@ function Home() {
                             <div className="px-4 pt-2 pb-1 w-full">
                                 <div className={
                                   language === 'TH'
-                                    ? 'text-[#7E4300] text-xl font-anuphan font-black mb-1'
+                                    ? 'text-[#7E4300] text-xl font-athiti font-black mb-1'
                                     : 'text-[#7E4300] text-xl font-tiroTamil mb-1'
                                 }>{t.promotions}</div>
                             </div>
@@ -201,7 +201,7 @@ function Home() {
             </div>
         ) : (
             <div className="m-0 w-[360px] min-h-[90vh] bg-white flex flex-col relative">
-                <p className={language === 'TH' ? 'text-[#7E4300] text-center mt-10 font-anuphan font-black' : 'text-[#7E4300] text-center mt-10 font-tiroTamil'}>{t.loadingProfile}</p>
+                <p className={language === 'TH' ? 'text-[#7E4300] text-center mt-10 font-athiti font-black' : 'text-[#7E4300] text-center mt-10 font-tiroTamil'}>{t.loadingProfile}</p>
             </div>
         )
     );

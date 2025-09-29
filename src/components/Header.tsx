@@ -16,7 +16,7 @@ function Header() {
                 <div
                   className={
                     language === 'TH'
-                      ? 'text-[30px] text-[#DEC33A] font-anuphan font-black'
+                      ? 'text-[30px] text-[#DEC33A] font-athiti font-bold'
                       : 'text-[30px] text-[#DEC33A] font-artifika'
                   }
                 >
@@ -25,7 +25,7 @@ function Header() {
                 <div
                   className={
                     language === 'TH'
-                      ? 'text-[20px] text-[#B9A43B] relative bottom-2 font-anuphan font-black'
+                      ? 'text-[20px] text-[#B9A43B] relative bottom-2 font-athiti font-bold'
                       : 'text-[20px] text-[#B9A43B] relative bottom-2 font-arya'
                   }
                 >

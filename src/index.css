@@ -45,23 +45,22 @@
     font-family: 'Tiro Tamil', sans-serif;
 }
 
+
 @font-face {
-  font-family: 'Anuphan';
-  src: url('/fonts/Anuphan-Thin.ttf') format('truetype'),
-       url('/fonts/Anuphan-ExtraLight.ttf') format('truetype'),
-       url('/fonts/Anuphan-Light.ttf') format('truetype'),
-       url('/fonts/Anuphan-Regular.ttf') format('truetype'),
-       url('/fonts/Anuphan-Medium.ttf') format('truetype'),
-       url('/fonts/Anuphan-SemiBold.ttf') format('truetype'),
-       url('/fonts/Anuphan-Bold.ttf') format('truetype'),
-       url('/fonts/Anuphan-ExtraBold.ttf') format('truetype'),
-       url('/fonts/Anuphan-Black.ttf') format('truetype');
-  font-weight: 100 900;
+  font-family: 'Athiti';
+  src: url('/fonts/Athiti-Thin.ttf') format('truetype'),
+       url('/fonts/Athiti-ExtraLight.ttf') format('truetype'),
+       url('/fonts/Athiti-Light.ttf') format('truetype'),
+       url('/fonts/Athiti-Regular.ttf') format('truetype'),
+       url('/fonts/Athiti-Medium.ttf') format('truetype'),
+       url('/fonts/Athiti-SemiBold.ttf') format('truetype'),
+       url('/fonts/Athiti-Bold.ttf') format('truetype');
+  font-weight: 100 700;
   font-style: normal;
 }
 
-.font-anuphan {
-  font-family: 'Anuphan', sans-serif;
+.font-athiti {
+  font-family: 'Athiti', sans-serif;
 }
 
 :root {
