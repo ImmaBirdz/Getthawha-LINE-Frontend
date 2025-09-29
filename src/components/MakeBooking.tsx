@@ -444,17 +444,9 @@ function MakeBooking() {
                 // Navigate to view booking page
                 navigate('/viewbooking');
 
-              } catch (error: any) {
+              } catch (error) {
                 console.error('Failed to create booking:', error);
-                let errorMsg = 'Failed to create booking. Please try again.';
-                if (error && error.message) {
-                  errorMsg += `\n\nDetails: ${error.message}`;
-                }
-                // Try to show backend error if available
-                if (error && error.response) {
-                  errorMsg += `\n\nBackend: ${JSON.stringify(error.response)}`;
-                }
-                alert(errorMsg);
+                alert('Failed to create booking. Please try again.');
               } finally {
                 setSubmitting(false);
               }
