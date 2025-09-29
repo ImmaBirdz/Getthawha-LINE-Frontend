@@ -163,14 +163,14 @@ function ViewBooking() {
                       <div className="w-2 h-2 bg-[#FFA600] rounded-full animate-pulse shadow-[0_0_4px_#FFD381]"></div>
                       <span className={language === 'TH' ? 'animate-pulse font-athiti font-black' : 'animate-pulse'}>{t.pending}</span>
                     </div>
-                    <div className={language === 'TH' ? 'text-[#6B4423] font-medium text-left text-sm font-athiti font-black' : 'text-[#6B4423] font-medium text-left text-sm'}>
-                      {t.package}: <span className="text-[#D49F00]">{booking.package.title}</span>
+                    <div className={language === 'TH' ? 'text-[#6B4423] font-medium text-left text-sm font-athiti font-bold' : 'text-[#6B4423] font-medium text-left text-sm'}>
+                      {t.package}: <span className="font-tiroTamil text-[#D49F00]">{booking.package.title}</span>
                     </div>
-                    <div className={language === 'TH' ? 'text-[#6B4423] font-medium text-left text-sm font-athiti font-black' : 'text-[#6B4423] font-medium text-left text-sm'}>
-                      {t.branch}: <span className="text-[#D49F00]">{booking.branch.name}</span>
+                    <div className={language === 'TH' ? 'text-[#6B4423] font-medium text-left text-sm font-athiti font-bold' : 'text-[#6B4423] font-medium text-left text-sm'}>
+                      {t.branch}: <span className="font-tiroTamil text-[#D49F00]">{booking.branch.name}</span>
                     </div>
-                    <div className={language === 'TH' ? 'text-[#6B4423] font-medium text-left text-sm font-athiti font-black' : 'text-[#6B4423] font-medium text-left text-sm'}>
-                      {t.date}: <span className="text-[#D49F00]">
+                    <div className={language === 'TH' ? 'text-[#6B4423] font-medium text-left text-sm font-athiti font-bold' : 'text-[#6B4423] font-medium text-left text-sm'}>
+                      {t.date}: <span className="font-tiroTamil text-[#D49F00]">
                         {new Date(booking.date).toLocaleDateString('en-US', { 
                           day: 'numeric',
                           month: 'numeric',  
@@ -186,12 +186,12 @@ function ViewBooking() {
 
                   {/* Right side - Price */}
                   <div className="flex flex-col items-end gap-1 -mt-1">
-                    <div className="text-[#D49F00] text-lg">
+                    <div className="text-[#D49F00] text-lg font-tiroTamil">
                       ฿{booking.totalPrice}
                     </div>
                     {booking.voucher && (
                       <div className="text-[#6B4423] text-xs">
-                        Code: {booking.voucher.code}
+                        Code: <span className="font-tiroTamil">{booking.voucher.code}</span>
                       </div>
                     )}
                   </div>

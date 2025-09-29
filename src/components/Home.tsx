@@ -119,7 +119,7 @@ function Home() {
                             {/* User details */}
                             <div className="space-y-1">
                                 <p className="text-[16px] text-[#280A00]">
-                                  <span className={language === 'TH' ? 'font-athiti font-black' : 'font-tiroTamil'}>{t.email}:</span> <span className="font-tiroTamil">{profile?.email}</span>
+                                  <span className={language === 'TH' ? 'font-athiti font-bold' : 'font-tiroTamil'}>{t.email}:</span> <span className="font-tiroTamil">{profile?.email}</span>
                                 </p>
                             </div>
 

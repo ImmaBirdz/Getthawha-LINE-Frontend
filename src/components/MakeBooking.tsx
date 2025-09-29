@@ -116,7 +116,7 @@ function MakeBooking() {
               onClick={() => {
                 setDropdownOpen(dropdownOpen === 'branch' ? null : 'branch');
               }}
-              className={`w-full px-3 py-1 bg-[#E7E7E7] border border-[#818181] rounded-3xl ${language === 'TH' ? 'font-athiti font-black' : 'font-tiroTamil'} text-base focus:outline-none cursor-pointer text-left ${
+              className={`w-full px-3 py-1 bg-[#E7E7E7] border border-[#818181] rounded-3xl ${language === 'TH' ? 'font-athiti font-bold' : 'font-tiroTamil'} text-base focus:outline-none cursor-pointer text-left ${
                 selectedBranch === t.chooseBranch ? 'text-[#999999]' : 'text-[#000000]'
               }`}
             >
