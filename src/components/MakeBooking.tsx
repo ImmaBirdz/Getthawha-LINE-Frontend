@@ -2,6 +2,9 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+// import translation
+import { useTranslation } from '../context/TranslationContext'
+
 //import assets
 import backhome from '../assets/backhome.png';
 import edit from '../assets/edit.png';
@@ -14,9 +17,11 @@ import calendar from '../assets/calendar.png';
 
 function MakeBooking() {
   const navigate = useNavigate();
-  const [selectedBranch, setSelectedBranch] = useState('Choose your branch');
-  const [selectedService, setSelectedService] = useState('Choose your service');
-  const [selectedPromotion, setSelectedPromotion] = useState('Choose your promotion');
+  const { t } = useTranslation();
+  
+  const [selectedBranch, setSelectedBranch] = useState(t.chooseBranch);
+  const [selectedService, setSelectedService] = useState(t.chooseService);
+  const [selectedPromotion, setSelectedPromotion] = useState(t.choosePromotion);
   const [selectedDate, setSelectedDate] = useState('');
   const [selectedTime, setSelectedTime] = useState('');
   const [voucherCode, setVoucherCode] = useState('');
@@ -31,7 +36,7 @@ function MakeBooking() {
       {/* Header with back arrow and title */}
       <div className="flex items-center justify-center px-4 py-3 relative">
         <img src={backhome} alt="Back"  className="w-10 h-10 cursor-pointer hover:scale-110 hover:opacity-80 transition-all duration-200 absolute left-2" onClick={() => navigate('/viewbooking')}/>
-        <div className="text-xl font-tiroTamil text-[#7E4300]">Booking</div>
+        <div className="text-xl font-tiroTamil text-[#7E4300]">{t.booking}</div>
       </div>
       
       {/* border line */}
@@ -42,7 +47,7 @@ function MakeBooking() {
         {/* Select Branch */}
         <div>
           <label className="block text-base font-tiroTamil text-[#000000] text-left mb-1">
-            Select branch<span className="text-red-500">*</span>
+            {t.selectBranch}<span className="text-red-500">*</span>
           </label>
           <div className="relative">
             <div 
@@ -50,7 +55,7 @@ function MakeBooking() {
                 setDropdownOpen(dropdownOpen === 'branch' ? null : 'branch');
               }}
               className={`w-full px-3 py-1 bg-[#E7E7E7] border border-[#818181] rounded-3xl font-tiroTamil text-base focus:outline-none cursor-pointer text-left ${
-                selectedBranch === 'Choose your branch' ? 'text-[#999999]' : 'text-[#000000]'
+                selectedBranch === t.chooseBranch ? 'text-[#999999]' : 'text-[#000000]'
               }`}
             >
               {selectedBranch}
@@ -66,12 +71,12 @@ function MakeBooking() {
               <div className="absolute top-full left-0 right-0 mt-1 bg-[#E7E7E7] border border-[#818181] rounded-2xl shadow-lg z-10">
                 <div
                   onClick={() => {
-                    setSelectedBranch('Choose your branch');
+                    setSelectedBranch(t.chooseBranch);
                     setDropdownOpen(null);
                   }}
                   className="px-3 py-2 font-tiroTamil text-[#999999] text-base cursor-pointer rounded-full mx-2 my-1 text-left hover:bg-red-100 hover:text-red-600 italic"
                 >
-                  Clear selection
+                  {t.clear}
                 </div>
                 {branchOptions.map((option) => (
                   <div
@@ -97,7 +102,7 @@ function MakeBooking() {
         {/* Select Service */}
         <div>
           <label className="block text-base font-tiroTamil text-[#000000] text-left mb-1">
-            Select service<span className="text-red-500">*</span>
+            {t.selectService}<span className="text-red-500">*</span>
           </label>
           <div className="relative">
             <div 
@@ -105,7 +110,7 @@ function MakeBooking() {
                 setDropdownOpen(dropdownOpen === 'service' ? null : 'service');
               }}
               className={`w-full px-3 py-1 bg-[#E7E7E7] border border-[#818181] rounded-3xl font-tiroTamil text-base focus:outline-none cursor-pointer text-left ${
-                selectedService === 'Choose your service' ? 'text-[#999999]' : 'text-[#000000]'
+                selectedService === t.chooseService ? 'text-[#999999]' : 'text-[#000000]'
               }`}
             >
               {selectedService}
@@ -121,12 +126,12 @@ function MakeBooking() {
               <div className="absolute top-full left-0 right-0 mt-1 bg-[#E7E7E7] border border-[#818181] rounded-2xl shadow-lg z-10">
                 <div
                   onClick={() => {
-                    setSelectedService('Choose your service');
+                    setSelectedService(t.chooseService);
                     setDropdownOpen(null);
                   }}
                   className="px-3 py-2 font-tiroTamil text-[#999999] text-base cursor-pointer rounded-full mx-2 my-1 text-left hover:bg-red-100 hover:text-red-600 italic"
                 >
-                  Clear selection
+                  {t.clear}
                 </div>
                 {serviceOptions.map((option) => (
                   <div
@@ -152,7 +157,7 @@ function MakeBooking() {
         {/* Select Promotion */}
         <div>
           <label className="block text-base font-tiroTamil text-[#000000] text-left mb-1">
-            Select promotion<span className="text-red-500">*</span>
+            {t.selectPromotion}<span className="text-red-500">*</span>
           </label>
           <div className="relative">
             <div 
@@ -160,7 +165,7 @@ function MakeBooking() {
                 setDropdownOpen(dropdownOpen === 'promotion' ? null : 'promotion');
               }}
               className={`w-full px-3 py-1 bg-[#E7E7E7] border border-[#818181] rounded-3xl font-tiroTamil text-base focus:outline-none cursor-pointer text-left ${
-                selectedPromotion === 'Choose your promotion' ? 'text-[#999999]' : 'text-[#000000]'
+                selectedPromotion === t.choosePromotion ? 'text-[#999999]' : 'text-[#000000]'
               }`}
             >
               {selectedPromotion}
@@ -176,12 +181,12 @@ function MakeBooking() {
               <div className="absolute top-full left-0 right-0 mt-1 bg-[#E7E7E7] border border-[#818181] rounded-2xl shadow-lg z-10">
                 <div
                   onClick={() => {
-                    setSelectedPromotion('Choose your promotion');
+                    setSelectedPromotion(t.choosePromotion);
                     setDropdownOpen(null);
                   }}
                   className="px-3 py-2 font-tiroTamil text-[#999999] text-base cursor-pointer rounded-full mx-2 my-1 text-left hover:bg-red-100 hover:text-red-600 italic"
                 >
-                  Clear selection
+                  {t.clear}
                 </div>
                 {promotionOptions.map((option) => (
                   <div
@@ -207,7 +212,7 @@ function MakeBooking() {
         {/* Date */}
         <div>
           <label className="block text-base font-tiroTamil text-[#000000] text-left mb-1">
-            Date<span className="text-red-500">*</span>
+            {t.date}<span className="text-red-500">*</span>
           </label>
           <div className="flex justify-start">
             <div className="relative inline-block">
@@ -242,7 +247,7 @@ function MakeBooking() {
         {/* Time */}
         <div>
           <label className="block text-base font-tiroTamil text-[#000000] text-left mb-1">
-            Time<span className="text-red-500">*</span>
+            {t.selectTime.replace('Select ', '')}<span className="text-red-500">*</span>
           </label>
           <div className="flex justify-start">
             <div className="relative inline-block">
@@ -279,7 +284,7 @@ function MakeBooking() {
         {/* Voucher Code */}
         <div>
           <label className="block text-base font-tiroTamil text-[#000000] text-left mb-1">
-            Voucher Code
+            {t.voucherCode}
           </label>
           <div className="relative">
             <input 
@@ -287,7 +292,7 @@ function MakeBooking() {
               value={voucherCode}
               onChange={(e) => setVoucherCode(e.target.value)}
               className="w-full px-3 py-1 bg-[#E7E7E7] border border-[#818181] rounded-full font-tiroTamil text-[#000000] text-base focus:outline-none focus:ring-2 focus:ring-[#8B4513]"
-              placeholder="Enter voucher code"
+              placeholder={t.enterVoucherCode}
             />
             <div className="absolute inset-y-0 right-0 flex items-center pr-3">
               <img src={edit} alt="Edit" className="w-4 h-4" />
@@ -301,9 +306,9 @@ function MakeBooking() {
             className="mt-2 !bg-[#DCA900] text-white text-xs font-tiroTamil self-center cursor-pointer py-1 px-2 rounded border-none hover:scale-110 hover:opacity-80 transition-all"
             onClick={() => {
               // Validate required fields
-              if (selectedBranch === 'Choose your branch' || 
-                  selectedService === 'Choose your service' || 
-                  selectedPromotion === 'Choose your promotion' || 
+              if (selectedBranch === t.chooseBranch || 
+                  selectedService === t.chooseService || 
+                  selectedPromotion === t.choosePromotion || 
                   !selectedDate || 
                   !selectedTime) {
                 alert('Please fill in all required fields');
@@ -327,7 +332,7 @@ function MakeBooking() {
               navigate('/viewbooking', { state: { booking: bookingData } });
             }}
           >
-            Confirm Booking
+            {t.confirmBooking}
           </button>
         </div>
       </div>

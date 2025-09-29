@@ -12,17 +12,22 @@ import ViewBooking from './components/ViewBooking'
 import MakeBooking from './components/MakeBooking'
 import History from './components/History'
 
+// import Translation Context
+import { TranslationProvider } from './context/TranslationContext'
+
 function App() {
   return (
-    <BrowserRouter>
-      <Header />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/viewbooking" element={<ViewBooking />} />
-        <Route path="/makebooking" element={<MakeBooking />} />
-        <Route path="/history" element={<History />} />
-      </Routes>
-    </BrowserRouter>
+    <TranslationProvider>
+      <BrowserRouter>
+        <Header />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/viewbooking" element={<ViewBooking />} />
+          <Route path="/makebooking" element={<MakeBooking />} />
+          <Route path="/history" element={<History />} />
+        </Routes>
+      </BrowserRouter>
+    </TranslationProvider>
   );
 }
 export default App

@@ -5,6 +5,9 @@ import { useNavigate } from 'react-router-dom';
 // import API
 import { getBookings } from '../services/backendApi';
 
+// import translation
+import { useTranslation } from '../context/TranslationContext'
+
 // import assets
 import backhome from '../assets/backhome.png';
 
@@ -37,6 +40,7 @@ function History() {
   const navigate = useNavigate();
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [loading, setLoading] = useState(true);
+  const { t } = useTranslation();
 
   useEffect(() => {
     const fetchHistory = async () => {
@@ -117,7 +121,7 @@ function History() {
     <div className="w-[360px] min-h-screen bg-white flex flex-col">
       {loading ? (
         <div className="w-[360px] min-h-screen bg-white flex flex-col relative">
-          <p className="text-[#7E4300] text-center mt-10 font-tiroTamil">Loading history...</p>
+          <p className="text-[#7E4300] text-center mt-10 font-tiroTamil">{t.loadingHistory}</p>
         </div>
       ) : (
         <div className="flex flex-col items-center gap-2 w-full">
@@ -129,7 +133,7 @@ function History() {
               className="w-10 h-10 cursor-pointer hover:scale-110 hover:opacity-80 transition-all duration-200 absolute left-2" 
               onClick={() => navigate('/')}
             />
-            <div className="text-2xl font-tiroTamil text-[#7E4300]">History</div>
+            <div className="text-2xl font-tiroTamil text-[#7E4300]">{t.history}</div>
           </div>
 
            {/* border line */}
@@ -149,13 +153,13 @@ function History() {
                       {/* Left side - Package info */}
                       <div className="flex flex-col gap-1 text-left">
                         <div className="text-[#6B4423] font-medium text-sm text-left">
-                          Package: <span className="text-[#D49F00]">{booking.package.title}</span>
+                          {t.package}: <span className="text-[#D49F00]">{booking.package.title}</span>
                         </div>
                         <div className="text-[#6B4423] font-medium text-sm text-left">
-                          Branch: <span className="text-[#D49F00]">{booking.branch.name}</span>
+                          {t.branch}: <span className="text-[#D49F00]">{booking.branch.name}</span>
                         </div>
                         <div className="text-[#6B4423] font-medium text-sm text-left">
-                          Date: <span className="text-[#D49F00]">{getFormattedDate(booking.date)}, {getFormattedTime(booking.date)}</span>
+                          {t.date}: <span className="text-[#D49F00]">{getFormattedDate(booking.date)}, {getFormattedTime(booking.date)}</span>
                         </div>
                       </div>
 
@@ -174,7 +178,7 @@ function History() {
               })
             ) : (
               <div className="flex justify-center items-center py-0">
-                <div className="text-[#7E4300] text-lg font-tiroTamil">No History</div>
+                <div className="text-[#7E4300] text-lg font-tiroTamil">{t.noHistory}</div>
               </div>
             )}
           </div>

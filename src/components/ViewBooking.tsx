@@ -10,6 +10,9 @@ import withReactContent from 'sweetalert2-react-content'
 // import API
 import { getBookings, deleteBooking } from '../services/backendApi';
 
+// import translation
+import { useTranslation } from '../context/TranslationContext'
+
 // import assets
 import Backtohomepage from '../assets/backhome.png';
 import bin from '../assets/bin.png';
@@ -44,19 +47,20 @@ function ViewBooking() {
   const [loading, setLoading] = useState(true)
   const [deleting, setDeleting] = useState<string | null>(null)
   const navigate = useNavigate()
+  const { t } = useTranslation()
 
   const MySwal = withReactContent(Swal)
 
   const handleDeleteBooking = async (bookingId: string) => {
     MySwal.fire({
-      title: <div className="font-tiroTamil text-[#7E4300] text-lg ">Are you sure to delete the bookings?</div>,
-      html: <div className="font-tiroTamil text-[#6B4423] text-sm ">You can't change your decision later.</div>,
+      title: <div className="font-tiroTamil text-[#7E4300] text-lg ">{t.areYouSureDelete}</div>,
+      html: <div className="font-tiroTamil text-[#6B4423] text-sm ">{t.cantChangeDecision}</div>,
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#7E4300",
       cancelButtonColor: "#7E4300",
-      confirmButtonText: <span className="font-tiroTamil">Yes, delete it!</span>,
-      cancelButtonText: <span className="font-tiroTamil">No, keep it</span>
+      confirmButtonText: <span className="font-tiroTamil">{t.yesDeleteIt}</span>,
+      cancelButtonText: <span className="font-tiroTamil">{t.noKeepIt}</span>
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
@@ -66,8 +70,8 @@ function ViewBooking() {
           setBookings(bookings.filter(booking => booking.id !== bookingId));
           
           MySwal.fire({
-            title: <div className="font-tiroTamil text-[#7E4300] text-lg">Cancelled!</div>,
-            html: <div className="font-tiroTamil text-[#6B4423] text-sm">Your booking has been cancelled.</div>,
+            title: <div className="font-tiroTamil text-[#7E4300] text-lg">{t.bookingCancelled}</div>,
+            html: <div className="font-tiroTamil text-[#6B4423] text-sm">{t.bookingDeleted}</div>,
             icon: "success",
             confirmButtonColor: "#7E4300",
             confirmButtonText: <span className="font-tiroTamil">OK</span>
@@ -75,8 +79,8 @@ function ViewBooking() {
         } catch (error) {
           console.error('Failed to delete booking:', error);
           MySwal.fire({
-            title: <div className="font-tiroTamil text-[#7E4300] text-lg">Error!</div>,
-            html: <div className="font-tiroTamil text-[#6B4423] text-sm">Failed to cancel booking. Please try again.</div>,
+            title: <div className="font-tiroTamil text-[#7E4300] text-lg">{t.error}</div>,
+            html: <div className="font-tiroTamil text-[#6B4423] text-sm">{t.failedToCancel}</div>,
             icon: "error",
             confirmButtonColor: "#7E4300",
             confirmButtonText: <span className="font-tiroTamil">OK</span>
@@ -132,14 +136,14 @@ function ViewBooking() {
     <div className="m-0 w-[360px] min-h-[90vh] bg-white flex flex-col items-center justify-start px-4 pt-2 pb-4">
       {loading ? (
         <div className="m-0 w-[360px] min-h-[90vh] bg-white flex flex-col relative">
-          <p className="text-[#7E4300] text-center mt-10 font-tiroTamil">Loading bookings...</p>
+          <p className="text-[#7E4300] text-center mt-10 font-tiroTamil">{t.loadingBookings}</p>
         </div>
       ) : bookings && bookings.length > 0 ? (
         <div className="flex flex-col items-center gap-4 w-full">
           {/* Header with back button and title */}
           <div className="flex items-center justify-center w-full relative mt-2">
             <img src={Backtohomepage} alt="Back to Home" className="absolute left-[-10px] w-10 h-10 cursor-pointer hover:scale-110 hover:opacity-80 transition-all duration-200" onClick={() => { window.location.href = '/' }} />
-            <div className="text-[#7E4300] text-xl font-tiroTamil">Your Bookings</div>
+            <div className="text-[#7E4300] text-xl font-tiroTamil">{t.yourBookings}</div>
           </div>
 
           {/* border line */}
@@ -157,16 +161,16 @@ function ViewBooking() {
                     {/* Status - Pending */}
                     <div className="text-[#818181] font-medium text-sm mb-1 flex items-center gap-1">
                       <div className="w-2 h-2 bg-[#FFA600] rounded-full animate-pulse shadow-[0_0_4px_#FFD381]"></div>
-                      <span className="animate-pulse">Pending</span>
+                      <span className="animate-pulse">{t.pending}</span>
                     </div>
                     <div className="text-[#6B4423] font-medium text-left text-sm">
-                      Package: <span className="text-[#D49F00]">{booking.package.title}</span>
+                      {t.package}: <span className="text-[#D49F00]">{booking.package.title}</span>
                     </div>
                     <div className="text-[#6B4423] font-medium text-left text-sm">
-                      Branch: <span className="text-[#D49F00]">{booking.branch.name}</span>
+                      {t.branch}: <span className="text-[#D49F00]">{booking.branch.name}</span>
                     </div>
                     <div className="text-[#6B4423] font-medium text-left text-sm">
-                      Date: <span className="text-[#D49F00]">
+                      {t.date}: <span className="text-[#D49F00]">
                         {new Date(booking.date).toLocaleDateString('en-US', { 
                           day: 'numeric',
                           month: 'numeric',  
@@ -200,14 +204,14 @@ function ViewBooking() {
           </ul>
 
           {/* Make a booking button */}
-          <button className="mt-2 !bg-[#DCA900] text-white text-xs font-tiroTamil self-center cursor-pointer py-1 px-2 rounded border-none hover:scale-110 hover:opacity-80 transition-all" onClick={() => navigate('/makebooking')}> Make Booking</button>
+          <button className="mt-2 !bg-[#DCA900] text-white text-xs font-tiroTamil self-center cursor-pointer py-1 px-2 rounded border-none hover:scale-110 hover:opacity-80 transition-all" onClick={() => navigate('/makebooking')}>{t.makeBooking}</button>
         </div>
       ) : (
         <div className="flex flex-col items-center gap-4 w-full">
           {/* Header with back button and title */}
           <div className="flex items-center justify-center w-full relative mt-2">
             <img src={Backtohomepage} alt="Back to Home" className="absolute left-[-10px] w-10 h-10 cursor-pointer hover:scale-110 hover:opacity-80 transition-all duration-200" onClick={() => { window.location.href = '/' }} />
-            <div className="text-[#7E4300] text-xl font-tiroTamil">Your Bookings</div>
+            <div className="text-[#7E4300] text-xl font-tiroTamil">{t.yourBookings}</div>
           </div>
 
           {/* border line */}
@@ -217,10 +221,10 @@ function ViewBooking() {
 
           {/* No bookings message */}
           <div className="flex flex-col items-center gap-4 justify-start p-4">
-            <div className="text-[#7E4300] text-lg font-tiroTamil">You have no bookings</div>
+            <div className="text-[#7E4300] text-lg font-tiroTamil">{t.noBookings}</div>
 
             {/* Make a booking button */}
-            <button className="mt-2 !bg-[#DCA900] text-white text-xs font-tiroTamil self-center cursor-pointer py-1 px-2 rounded border-none hover:scale-110 hover:opacity-80 transition-all" onClick={() => navigate('/makebooking')}> Make Booking</button>
+            <button className="mt-2 !bg-[#DCA900] text-white text-xs font-tiroTamil self-center cursor-pointer py-1 px-2 rounded border-none hover:scale-110 hover:opacity-80 transition-all" onClick={() => navigate('/makebooking')}>{t.makeBooking}</button>
           </div>
         </div>
       )}
