@@ -36,6 +36,8 @@ type Booking = {
   status?: string; // Add status field for API
 };
 
+type BookingStatus = 'Completed' | 'Cancelled';
+
 function History() {
   const navigate = useNavigate();
   const [bookings, setBookings] = useState<Booking[]>([]);
@@ -96,23 +98,23 @@ function History() {
     });
   };
 
-  const getStatus = (booking: Booking): 'Succeeded' | 'Cancelled' => {
+  const getStatus = (booking: Booking): BookingStatus => {
     if (booking.status) {
       // If API provides status, use it
       if (booking.status.toLowerCase().includes('cancel')) {
         return 'Cancelled';
       } else {
-        // Default to Succeeded for history (since we filter out pending)
-        return 'Succeeded';
+        // Default to Completed for history (since we filter out pending)
+        return 'Completed';
       }
     }
     
     // Default logic if no status from API - assume completed bookings are successful
-    return 'Succeeded';
+    return 'Completed';
   };
 
   const getStatusColor = (status: string) => {
-    if (status === 'Succeeded') return 'text-green-600';
+  if (status === 'Completed') return 'text-green-600';
     if (status === 'Cancelled') return 'text-red-600';
     return 'text-yellow-600'; // Pending
   };
