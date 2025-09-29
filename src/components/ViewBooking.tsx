@@ -164,13 +164,13 @@ function ViewBooking() {
                       <span className={language === 'TH' ? 'animate-pulse font-athiti font-black' : 'animate-pulse'}>{t.pending}</span>
                     </div>
                     <div className={language === 'TH' ? 'text-[#6B4423] font-medium text-left text-sm font-athiti font-bold' : 'text-[#6B4423] font-medium text-left text-sm'}>
-                      {t.package}: <span className="font-tiroTamil text-[#D49F00]">{booking.package.title}</span>
+                      {t.package}: <span className="font-medium text-[#D49F00]">{booking.package.title}</span>
                     </div>
                     <div className={language === 'TH' ? 'text-[#6B4423] font-medium text-left text-sm font-athiti font-bold' : 'text-[#6B4423] font-medium text-left text-sm'}>
-                      {t.branch}: <span className="font-tiroTamil text-[#D49F00]">{booking.branch.name}</span>
+                      {t.branch}: <span className="font-medium text-[#D49F00]">{booking.branch.name}</span>
                     </div>
                     <div className={language === 'TH' ? 'text-[#6B4423] font-medium text-left text-sm font-athiti font-bold' : 'text-[#6B4423] font-medium text-left text-sm'}>
-                      {t.date}: <span className="font-tiroTamil text-[#D49F00]">
+                      {t.date}: <span className="font-medium text-[#D49F00]">
                         {new Date(booking.date).toLocaleDateString('en-US', { 
                           day: 'numeric',
                           month: 'numeric',  
@@ -186,12 +186,12 @@ function ViewBooking() {
 
                   {/* Right side - Price */}
                   <div className="flex flex-col items-end gap-1 -mt-1">
-                    <div className="text-[#D49F00] text-lg font-tiroTamil">
+                    <div className="text-[#D49F00] text-lg font-medium">
                       ฿{booking.totalPrice}
                     </div>
                     {booking.voucher && (
                       <div className="text-[#6B4423] text-xs">
-                        Code: <span className="font-tiroTamil">{booking.voucher.code}</span>
+                        Code: <span className="font-medium">{booking.voucher.code}</span>
                       </div>
                     )}
                   </div>
@@ -204,14 +204,14 @@ function ViewBooking() {
           </ul>
 
           {/* Make a booking button */}
-          <button className={language === 'TH' ? 'mt-2 !bg-[#DCA900] text-white text-xs font-athiti font-black self-center cursor-pointer py-1 px-2 rounded border-none hover:scale-110 hover:opacity-80 transition-all' : 'mt-2 !bg-[#DCA900] text-white text-xs font-tiroTamil self-center cursor-pointer py-1 px-2 rounded border-none hover:scale-110 hover:opacity-80 transition-all'} onClick={() => navigate('/makebooking')}>{t.makeBooking}</button>
+          <button className={language === 'TH' ? 'mt-2 !bg-[#DCA900] text-white text-xs font-athiti font-bold self-center cursor-pointer py-1 px-2 rounded border-none hover:scale-110 hover:opacity-80 transition-all' : 'mt-2 !bg-[#DCA900] text-white text-xs font-tiroTamil self-center cursor-pointer py-1 px-2 rounded border-none hover:scale-110 hover:opacity-80 transition-all'} onClick={() => navigate('/makebooking')}>{t.makeBooking}</button>
         </div>
       ) : (
         <div className="flex flex-col items-center gap-4 w-full">
           {/* Header with back button and title */}
           <div className="flex items-center justify-center w-full relative mt-2">
             <img src={Backtohomepage} alt="Back to Home" className="absolute left-[-10px] w-10 h-10 cursor-pointer hover:scale-110 hover:opacity-80 transition-all duration-200" onClick={() => { window.location.href = '/' }} />
-            <div className={language === 'TH' ? 'text-[#7E4300] text-xl font-athiti font-black' : 'text-[#7E4300] text-xl font-tiroTamil'}>{t.yourBookings}</div>
+            <div className={language === 'TH' ? 'text-[#7E4300] text-xl font-athiti font-bold' : 'text-[#7E4300] text-xl font-tiroTamil'}>{t.yourBookings}</div>
           </div>
 
           {/* border line */}
@@ -221,10 +221,10 @@ function ViewBooking() {
 
           {/* No bookings message */}
           <div className="flex flex-col items-center gap-4 justify-start p-4">
-            <div className={language === 'TH' ? 'text-[#7E4300] text-lg font-athiti font-black' : 'text-[#7E4300] text-lg font-tiroTamil'}>{t.noBookings}</div>
+            <div className={language === 'TH' ? 'text-[#7E4300] text-lg font-athiti font-bold' : 'text-[#7E4300] text-lg font-tiroTamil'}>{t.noBookings}</div>
 
             {/* Make a booking button */}
-            <button className={language === 'TH' ? 'mt-2 !bg-[#DCA900] text-white text-xs font-athiti font-black self-center cursor-pointer py-1 px-2 rounded border-none hover:scale-110 hover:opacity-80 transition-all disabled:opacity-50 disabled:cursor-not-allowed' : 'mt-2 !bg-[#DCA900] text-white text-xs font-tiroTamil self-center cursor-pointer py-1 px-2 rounded border-none hover:scale-110 hover:opacity-80 transition-all disabled:opacity-50 disabled:cursor-not-allowed'} onClick={() => navigate('/makebooking')}>{t.makeBooking}</button>
+            <button className={language === 'TH' ? 'mt-2 !bg-[#DCA900] text-white text-xs font-athiti font-bold self-center cursor-pointer py-1 px-2 rounded border-none hover:scale-110 hover:opacity-80 transition-all disabled:opacity-50 disabled:cursor-not-allowed' : 'mt-2 !bg-[#DCA900] text-white text-xs font-tiroTamil self-center cursor-pointer py-1 px-2 rounded border-none hover:scale-110 hover:opacity-80 transition-all disabled:opacity-50 disabled:cursor-not-allowed'} onClick={() => navigate('/makebooking')}>{t.makeBooking}</button>
           </div>
         </div>
       )}
