@@ -39,7 +39,7 @@ type Booking = {
     id: string;
     code: string;
   };
-  status?: string; // Add status field for API
+  status?: string; 
 };
 
 function ViewBooking() {

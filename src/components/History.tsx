@@ -33,7 +33,7 @@ type Booking = {
     id: string;
     code: string;
   };
-  status?: string; // Add status field for API
+  status?: string; 
 };
 
 type BookingStatus = 'Completed' | 'Cancelled';

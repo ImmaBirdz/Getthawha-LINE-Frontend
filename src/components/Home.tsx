@@ -87,7 +87,7 @@ function Home() {
                         <div className="text-left pb-8">
                             {/* Profile picture and name section */}
                             <div className="flex items-center gap-4 mb-4 relative">
-                                {/* Language selector - positioned at top right */}
+                                {/* Language selector */}
                                 <div className="absolute top-0 -right-4 text-sm text-[#673F00] font-tiroTamil">
                                     <span 
                                         className={`cursor-pointer hover:text-[#DCA900] transition-colors ${language === 'TH' ? 'text-[#DCA900] font-bold' : ''}`}

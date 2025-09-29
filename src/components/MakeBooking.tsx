@@ -16,7 +16,7 @@ import arrow2 from '../assets/arrow2.png';
 import clock from '../assets/clock.png';
 import calendar from '../assets/calendar.png';
 
-// Types
+// types
 type Branch = {
   id: string;
   name: string;
