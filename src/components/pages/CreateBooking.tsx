@@ -1,20 +1,28 @@
 //import libraries
-import { useState, useEffect } from 'react';
+import {
+  useEffect,
+  useState
+} from 'react';
 import { useNavigate } from 'react-router-dom';
 
 // import translation
-import { useTranslation } from '../context/TranslationContext'
+import { useTranslation } from '../../context/TranslationContext';
 
 // import API
-import { getBranches, getPackages, createBooking, getVoucher } from '../services/backendApi';
+import {
+  createBooking,
+  getBranches,
+  getPackages,
+  getVoucher
+} from '../../services/backendApi';
 
 //import assets
-import backhome from '../assets/backhome.png';
-import edit from '../assets/edit.png';
-import arrow1 from '../assets/arrow1.png';
-import arrow2 from '../assets/arrow2.png';
-import clock from '../assets/clock.png';
-import calendar from '../assets/calendar.png';
+import arrow1 from '../../assets/arrow1.png';
+import arrow2 from '../../assets/arrow2.png';
+import backhome from '../../assets/backhome.png';
+import calendar from '../../assets/calendar.png';
+import clock from '../../assets/clock.png';
+import edit from '../../assets/edit.png';
 
 // types
 type Branch = {
@@ -34,8 +42,6 @@ type Package = {
   type: string;
   isActive: boolean;
 };
-
-
 
 function MakeBooking() {
   const navigate = useNavigate();

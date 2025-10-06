@@ -1,7 +1,7 @@
 // import assets
-import border1 from '../assets/border1.png';
-import border2 from '../assets/border2.png';
-import { useTranslation } from '../context/TranslationContext';
+import { useTranslation } from '../../context/TranslationContext';
+import border1 from '../../assets/border1.png';
+import border2 from '../../assets/border2.png';
 
 function Header() {
     const { t, language } = useTranslation();
