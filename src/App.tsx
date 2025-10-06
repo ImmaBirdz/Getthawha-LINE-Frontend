@@ -7,7 +7,7 @@ import {
 
 // import UI Components
 import Header from './components/layouts/Header'
-import MakeBooking from './components/pages/CreateBooking'
+import CreateBooking from './components/pages/CreateBooking'
 import History from './components/pages/History'
 import Home from './components/pages/Home'
 import ViewBooking from './components/pages/ViewBooking'
@@ -23,7 +23,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/booking" element={<ViewBooking />} />
-          <Route path="/booking/create" element={<MakeBooking />} />
+          <Route path="/booking/create" element={<CreateBooking />} />
           <Route path="/booking/history" element={<History />} />
         </Routes>
       </BrowserRouter>
