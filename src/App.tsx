@@ -1,16 +1,16 @@
 // import libraries
 import {
   BrowserRouter,
-  Routes,
-  Route
+  Route,
+  Routes
 } from 'react-router-dom'
 
 // import UI Components
-import Header from './components/Header'
-import Home from './components/Home'
-import ViewBooking from './components/ViewBooking'
-import MakeBooking from './components/MakeBooking'
-import History from './components/History'
+import Header from './components/layouts/Header'
+import MakeBooking from './components/pages/CreateBooking'
+import History from './components/pages/History'
+import Home from './components/pages/Home'
+import ViewBooking from './components/pages/ViewBooking'
 
 // import Translation Context
 import { TranslationProvider } from './context/TranslationContext'
@@ -22,9 +22,9 @@ function App() {
         <Header />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/viewbooking" element={<ViewBooking />} />
-          <Route path="/makebooking" element={<MakeBooking />} />
-          <Route path="/history" element={<History />} />
+          <Route path="/booking" element={<ViewBooking />} />
+          <Route path="/booking/create" element={<MakeBooking />} />
+          <Route path="/booking/history" element={<History />} />
         </Routes>
       </BrowserRouter>
     </TranslationProvider>

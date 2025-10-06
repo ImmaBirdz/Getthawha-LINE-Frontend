@@ -1,21 +1,21 @@
 // import libraries
 import {
-  useState,
-  useEffect
-} from 'react'
-import { useNavigate } from 'react-router-dom'
-import Swal from 'sweetalert2'
-import withReactContent from 'sweetalert2-react-content'
+  useEffect,
+  useState
+} from 'react';
+import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
 
 // import API
-import { getBookings, deleteBooking } from '../services/backendApi';
+import { deleteBooking, getBookings } from '../../services/backendApi';
 
 // import translation
-import { useTranslation } from '../context/TranslationContext'
+import { useTranslation } from '../../context/TranslationContext';
 
 // import assets
-import Backtohomepage from '../assets/backhome.png';
-import bin from '../assets/bin.png';
+import Backtohomepage from '../../assets/backhome.png';
+import bin from '../../assets/bin.png';
 
 type Booking = {
   id: string;
@@ -204,7 +204,7 @@ function ViewBooking() {
           </ul>
 
           {/* Make a booking button */}
-          <button className={language === 'TH' ? 'mt-2 !bg-[#DCA900] text-white text-xs font-athiti font-bold self-center cursor-pointer py-1 px-2 rounded border-none hover:scale-110 hover:opacity-80 transition-all' : 'mt-2 !bg-[#DCA900] text-white text-xs font-tiroTamil self-center cursor-pointer py-1 px-2 rounded border-none hover:scale-110 hover:opacity-80 transition-all'} onClick={() => navigate('/makebooking')}>{t.makeBooking}</button>
+          <button className={language === 'TH' ? 'mt-2 !bg-[#DCA900] text-white text-xs font-athiti font-bold self-center cursor-pointer py-1 px-2 rounded border-none hover:scale-110 hover:opacity-80 transition-all' : 'mt-2 !bg-[#DCA900] text-white text-xs font-tiroTamil self-center cursor-pointer py-1 px-2 rounded border-none hover:scale-110 hover:opacity-80 transition-all'} onClick={() => navigate('/booking/new')}>{t.makeBooking}</button>
         </div>
       ) : (
         <div className="flex flex-col items-center gap-4 w-full">
@@ -224,7 +224,7 @@ function ViewBooking() {
             <div className={language === 'TH' ? 'text-[#7E4300] text-lg font-athiti font-bold' : 'text-[#7E4300] text-lg font-tiroTamil'}>{t.noBookings}</div>
 
             {/* Make a booking button */}
-            <button className={language === 'TH' ? 'mt-2 !bg-[#DCA900] text-white text-xs font-athiti font-bold self-center cursor-pointer py-1 px-2 rounded border-none hover:scale-110 hover:opacity-80 transition-all disabled:opacity-50 disabled:cursor-not-allowed' : 'mt-2 !bg-[#DCA900] text-white text-xs font-tiroTamil self-center cursor-pointer py-1 px-2 rounded border-none hover:scale-110 hover:opacity-80 transition-all disabled:opacity-50 disabled:cursor-not-allowed'} onClick={() => navigate('/makebooking')}>{t.makeBooking}</button>
+            <button className={language === 'TH' ? 'mt-2 !bg-[#DCA900] text-white text-xs font-athiti font-bold self-center cursor-pointer py-1 px-2 rounded border-none hover:scale-110 hover:opacity-80 transition-all disabled:opacity-50 disabled:cursor-not-allowed' : 'mt-2 !bg-[#DCA900] text-white text-xs font-tiroTamil self-center cursor-pointer py-1 px-2 rounded border-none hover:scale-110 hover:opacity-80 transition-all disabled:opacity-50 disabled:cursor-not-allowed'} onClick={() => navigate('/booking/new')}>{t.makeBooking}</button>
           </div>
         </div>
       )}

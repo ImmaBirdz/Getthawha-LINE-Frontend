@@ -1,15 +1,15 @@
 // import libraries
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 // import API
-import { getBookings } from '../services/backendApi';
+import { getBookings } from '../../services/backendApi';
 
 // import translation
-import { useTranslation } from '../context/TranslationContext'
+import { useTranslation } from '../../context/TranslationContext';
 
 // import assets
-import backhome from '../assets/backhome.png';
+import backhome from '../../assets/backhome.png';
 
 type Booking = {
   id: string;
