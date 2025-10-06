@@ -410,12 +410,26 @@ function MakeBooking() {
                   }
                 }
 
+                // Convert date and time to proper ISO format
+                const [day, month, year] = selectedDate.split('/');
+                const timeString = selectedTime.replace(/\s?(AM|PM)/, '');
+                const [hour, minute] = timeString.split(':');
+                let hour24 = parseInt(hour);
+                
+                if (selectedTime.includes('PM') && hour24 !== 12) {
+                  hour24 += 12;
+                } else if (selectedTime.includes('AM') && hour24 === 12) {
+                  hour24 = 0;
+                }
+                
+                const isoDate = new Date(parseInt(year), parseInt(month) - 1, parseInt(day), hour24, parseInt(minute));
+                
                 // Create booking data for API 
                 const bookingData = {
                   branchId: selectedBranchData?.id,
                   packageId: selectedPackageData?.id,
                   voucherId: voucherId,
-                  date: `${selectedDate}T${selectedTime}:00.000Z`,
+                  date: isoDate.toISOString(),
                 };
 
                 // Submit booking to API
