@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 // import API
-import { getBookings } from '../../services/backendApi';
+import { getBookings } from '../../services/BackendApi';
 
 // import translation
 import { useTranslation } from '../../context/TranslationContext';

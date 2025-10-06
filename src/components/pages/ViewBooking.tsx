@@ -8,7 +8,7 @@ import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 
 // import API
-import { deleteBooking, getBookings } from '../../services/backendApi';
+import { deleteBooking, getBookings } from '../../services/BackendApi';
 
 // import translation
 import { useTranslation } from '../../context/TranslationContext';
@@ -204,7 +204,7 @@ function ViewBooking() {
           </ul>
 
           {/* Make a booking button */}
-          <button className={language === 'TH' ? 'mt-2 !bg-[#DCA900] text-white text-xs font-athiti font-bold self-center cursor-pointer py-1 px-2 rounded border-none hover:scale-110 hover:opacity-80 transition-all' : 'mt-2 !bg-[#DCA900] text-white text-xs font-tiroTamil self-center cursor-pointer py-1 px-2 rounded border-none hover:scale-110 hover:opacity-80 transition-all'} onClick={() => navigate('/booking/new')}>{t.makeBooking}</button>
+          <button className={language === 'TH' ? 'mt-2 !bg-[#DCA900] text-white text-xs font-athiti font-bold self-center cursor-pointer py-1 px-2 rounded border-none hover:scale-110 hover:opacity-80 transition-all' : 'mt-2 !bg-[#DCA900] text-white text-xs font-tiroTamil self-center cursor-pointer py-1 px-2 rounded border-none hover:scale-110 hover:opacity-80 transition-all'} onClick={() => navigate('/booking/create')}>{t.makeBooking}</button>
         </div>
       ) : (
         <div className="flex flex-col items-center gap-4 w-full">

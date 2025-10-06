@@ -1,8 +1,8 @@
 // import libraries
 import {
+    useContext,
     useEffect,
-    useState,
-    useContext
+    useState
 } from 'react'
 import { useNavigate } from 'react-router-dom'
 
@@ -13,7 +13,7 @@ import { useTranslation } from '../../context/TranslationContext'
 // import API
 import {
     getPackages,
-} from '../../services/backendApi'
+} from '../../services/BackendApi'
 
 // import styles
 import '../../App.css'
