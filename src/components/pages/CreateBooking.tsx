@@ -14,7 +14,7 @@ import {
   getBranches,
   getPackages,
   getVoucher
-} from '../../services/backendApi';
+} from '../../services/BackendApi';
 
 //import assets
 import arrow1 from '../../assets/arrow1.png';

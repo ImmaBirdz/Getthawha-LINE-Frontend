@@ -8,7 +8,7 @@ import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 
 // import API
-import { deleteBooking, getBookings } from '../../services/backendApi';
+import { deleteBooking, getBookings } from '../../services/BackendApi';
 
 // import translation
 import { useTranslation } from '../../context/TranslationContext';
