@@ -19,7 +19,7 @@ import {
 import '../../App.css'
 
 // import assets
-import Coupon from './Package'
+import Package from './Package'
 
 type Package = {
     id: string;
@@ -155,7 +155,7 @@ function Home() {
                                 </div>
                                 <ul className="flex flex-col gap-3 px-4 pb-2 list-none">
                                     {packages.filter(pkg => pkg.type === 'service').map((pkg) => (
-                                        <Coupon
+                                        <Package
                                             key={pkg.id}
                                             backgroundImage={pkg.pictureUrl}
                                             altText={pkg.title}
@@ -182,7 +182,7 @@ function Home() {
                                 </div>
                                 <ul className="flex flex-col gap-3 px-4 pb-2 list-none">
                                     {packages.filter(pkg => pkg.type === 'promotion').map((pkg) => (
-                                        <Coupon
+                                        <Package
                                             key={pkg.id}
                                             backgroundImage={pkg.pictureUrl}
                                             altText={pkg.title}

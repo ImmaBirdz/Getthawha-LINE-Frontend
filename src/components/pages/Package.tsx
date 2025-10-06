@@ -1,4 +1,4 @@
-interface CouponProps {
+interface PackageProps {
     backgroundImage: string;
     altText?: string;
     title?: string;
@@ -8,7 +8,7 @@ interface CouponProps {
     note?: string;
 }
 
-function Coupon({ backgroundImage, altText = "Coupon Background", title, description, price, duration, note }: CouponProps) {
+function Package({ backgroundImage, altText = "Package Background", title, description, price, duration, note }: PackageProps) {
     return (
         <li className="relative rounded-2xl overflow-hidden h-40 w-full shadow-lg">
             <img src={backgroundImage} alt={altText} className="absolute inset-0 w-full h-full object-cover" />
@@ -55,4 +55,4 @@ function Coupon({ backgroundImage, altText = "Coupon Background", title, descrip
     );
 }
 
-export default Coupon;
+export default Package;
