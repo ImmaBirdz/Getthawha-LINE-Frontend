@@ -51,6 +51,7 @@ const ProfileProvider = (props: React.PropsWithChildren<{}>) => {
 
                                 authorizeWithLine(idToken).then(() => {
                                     setIsLogin(true);
+                                    alert("ID Token: " + idToken);
                                 }).catch(error => {
                                     console.error('Authorization failed:', error);
                                 });
