@@ -20,6 +20,7 @@ import '../../App.css'
 
 // import assets
 import Package from './Package'
+import PackageModal from '../PackageModal'
 
 type Package = {
     id: string;
@@ -43,7 +44,7 @@ function Home() {
     // Use global translation context
     const { language, setLanguage, t } = useTranslation();
 
-    // Dummy profile data for demonstration purposes
+    // // Dummy profile data for demonstration purposes
     // const [profile] = useState({
     //     userId: 'U1234567890abcdef',
     //     displayName: 'John Doe',
@@ -52,6 +53,18 @@ function Home() {
     // });
 
     const [packages, setPackages] = useState<Package[]>([])
+    const [selectedPackage, setSelectedPackage] = useState<Package | null>(null)
+    const [isModalOpen, setIsModalOpen] = useState(false)
+
+    const handlePackageClick = (pkg: Package) => {
+        setSelectedPackage(pkg)
+        setIsModalOpen(true)
+    }
+
+    const closeModal = () => {
+        setIsModalOpen(false)
+        setSelectedPackage(null)
+    }
 
     useEffect(() => {
         const fetchPackages = async () => {
@@ -164,6 +177,8 @@ function Home() {
                                             price={pkg.price}
                                             duration={pkg.duration}
                                             note={pkg.note}
+                                            onClick={() => handlePackageClick(pkg)}
+                                            showOnlyTitle={true}
                                         />
                                     ))}
                                 </ul>
@@ -191,11 +206,20 @@ function Home() {
                                             price={pkg.price}
                                             duration={pkg.duration}
                                             note={pkg.note}
+                                            onClick={() => handlePackageClick(pkg)}
+                                            showOnlyTitle={false}
                                         />
                                     ))}
                                 </ul>
                             </>
                         )}
+
+                        {/* Package Modal */}
+                        <PackageModal 
+                            isOpen={isModalOpen}
+                            onClose={closeModal}
+                            packageData={selectedPackage}
+                        />
 
                     </div>
                 </div>

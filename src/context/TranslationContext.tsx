@@ -54,6 +54,16 @@ type Translations = {
   delete: string;
   edit: string;
   back: string;
+  close: string;
+  
+  // Package details
+  serviceDetails: string;
+  promotionDetails: string;
+  description: string;
+  price: string;
+  duration: string;
+  minutes: string;
+  note: string;
   
   // Alerts
   areYouSureDelete: string;
@@ -149,6 +159,16 @@ const translations: Record<Language, Translations> = {
     notFoundTitle: '404 - Page Not Found',
     notFoundMessage: 'Sorry, the page you are looking for does not exist.',
     notFoundGoBack: 'Go Back',
+    
+    // Package details  
+    close: 'Close',
+    serviceDetails: 'Service Details',
+    promotionDetails: 'Promotion Details',
+    description: 'Description',
+    price: 'Price',
+    duration: 'Duration',
+    minutes: 'minutes',
+    note: 'Note',
   },
   
   TH: {
@@ -222,6 +242,16 @@ const translations: Record<Language, Translations> = {
     notFoundTitle: '404 - ไม่พบหน้า',
     notFoundMessage: 'ขออภัย, ไม่พบหน้าที่คุณกำลังค้นหา',
     notFoundGoBack: 'ย้อนกลับ',
+    
+    // Package details
+    close: 'ปิด',
+    serviceDetails: 'รายละเอียดบริการ',
+    promotionDetails: 'รายละเอียดโปรโมชัน',
+    description: 'คำอธิบาย',
+    price: 'ราคา',
+    duration: 'ระยะเวลา',
+    minutes: 'นาที',
+    note: 'หมายเหตุ',
   },
 };
 
