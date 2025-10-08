@@ -83,9 +83,7 @@ const ProfileProvider = (props: React.PropsWithChildren<{}>) => {
 
     // Fetch profile from API
     useEffect(() => {
-        if (isLogin) {
-            fetchProfile();
-        }
+        fetchProfile();
     }, [isLogin]);
 
     return (
