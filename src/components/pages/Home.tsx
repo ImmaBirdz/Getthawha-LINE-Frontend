@@ -37,7 +37,7 @@ type Package = {
 function Home() {
     const {
         profile,
-        // isLiffLoaded
+        isLiffLoaded
     } = useContext(ProfileContext)
     const navigate = useNavigate();
 
@@ -92,7 +92,7 @@ function Home() {
 
     return (
         profile
-            // && isLiffLoaded
+            && isLiffLoaded
             ? (
                 <div className="App">
                     <div className="m-0 w-[360px] min-h-[90vh] bg-white flex flex-col relative">
@@ -226,6 +226,12 @@ function Home() {
             ) : (
                 <div className="m-0 w-[360px] min-h-[90vh] bg-white flex flex-col relative">
                     <p className={language === 'TH' ? 'text-[#7E4300] text-center mt-10 font-athiti font-black' : 'text-[#7E4300] text-center mt-10 font-tiroTamil'}>{t.loadingProfile}</p>
+                    {/* if liff is loaded show true, if not show false */}
+                    {isLiffLoaded ? (
+                        <p className="text-green-500 text-center mt-2">LIFF is loaded</p>
+                    ) : (
+                        <p className="text-red-500 text-center mt-2">LIFF is not loaded</p>
+                    )}
                 </div>
             )
     );

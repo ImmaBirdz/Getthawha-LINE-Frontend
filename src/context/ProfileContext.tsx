@@ -23,22 +23,22 @@ type Profile = {
 const ProfileContext = createContext<{
     profile: Profile | null;
     setProfile: React.Dispatch<React.SetStateAction<Profile | null>>;
-    // isLiffLoaded: boolean;
-    // setIsLiffLoaded: React.Dispatch<React.SetStateAction<boolean>>;
+    isLiffLoaded: boolean;
+    setIsLiffLoaded: React.Dispatch<React.SetStateAction<boolean>>;
     isLogin: boolean;
     setIsLogin: React.Dispatch<React.SetStateAction<boolean>>;
 }>({
     profile: null,
     setProfile: () => { },
-    // isLiffLoaded: false,
-    // setIsLiffLoaded: () => { },
+    isLiffLoaded: false,
+    setIsLiffLoaded: () => { },
     isLogin: false,
     setIsLogin: () => { }
 });
 
 const ProfileProvider = (props: React.PropsWithChildren<{}>) => {
     const [profile, setProfile] = useState<Profile | null>(null)
-    // const [isLiffLoaded, setIsLiffLoaded] = useState(false);
+    const [isLiffLoaded, setIsLiffLoaded] = useState(false);
     const [isLogin, setIsLogin] = useState(false);
 
     // initialize LIFF
@@ -62,7 +62,7 @@ const ProfileProvider = (props: React.PropsWithChildren<{}>) => {
                 .catch(err => {
                     console.error('LIFF initialization failed:', err)
                 })
-            // setIsLiffLoaded(true);
+            setIsLiffLoaded(true);
     }, [])
 
     // Fetch profile from API
@@ -88,8 +88,8 @@ const ProfileProvider = (props: React.PropsWithChildren<{}>) => {
         <ProfileContext.Provider value={{
             profile,
             setProfile,
-            // isLiffLoaded,
-            // setIsLiffLoaded,
+            isLiffLoaded,
+            setIsLiffLoaded,
             isLogin,
             setIsLogin
         }}>
