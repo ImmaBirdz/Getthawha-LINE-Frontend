@@ -37,7 +37,7 @@ type Package = {
 function Home() {
     const {
         profile,
-        isLiffLoaded
+        // isLiffLoaded
     } = useContext(ProfileContext)
     const navigate = useNavigate();
 
@@ -92,7 +92,7 @@ function Home() {
 
     return (
         profile
-            && isLiffLoaded
+            // && isLiffLoaded
             ? (
                 <div className="App">
                     <div className="m-0 w-[360px] min-h-[90vh] bg-white flex flex-col relative">
