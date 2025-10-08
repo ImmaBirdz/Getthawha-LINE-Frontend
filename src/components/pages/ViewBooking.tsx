@@ -191,11 +191,15 @@ function ViewBooking() {
                           day: 'numeric',
                           month: 'numeric',  
                           year: 'numeric'
-                        })}, {new Date(booking.date).toLocaleTimeString('en-US', { 
-                          hour: 'numeric', 
-                          minute: '2-digit',
-                          hour12: true
-                        })}
+                        })}, {(() => {
+                          const date = new Date(booking.date);
+                          const hours = date.getHours();
+                          const minutes = date.getMinutes();
+                          const ampm = hours >= 12 ? 'PM' : 'AM';
+                          const displayHours = hours % 12 || 12;
+                          const displayMinutes = minutes.toString().padStart(2, '0');
+                          return `${displayHours}:${displayMinutes} ${ampm}`;
+                        })()}
                       </span>
                     </div>
                   </div>
