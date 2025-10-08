@@ -326,25 +326,25 @@ function MakeBooking() {
               <input 
                 type="text"
                 value={selectedTime}
-                onChange={(e) => setSelectedTime(e.target.value)}
-                className={`w-40 px-3 py-1 bg-[#E7E7E7] border border-[#818181] rounded-full ${language === 'TH' ? 'font-athiti font-black' : 'font-tiroTamil'} text-[#000000] text-base focus:outline-none focus:ring-2 focus:ring-[#8B4513]`}
-                placeholder="--:--"
-                readOnly
-              />
-              <input 
-                type="time"
                 onChange={(e) => {
-                  const time = e.target.value;
-                  if (time) {
-                    setSelectedTime(time); // เก็บเป็น 24 ชั่วโมงตรงๆ (เช่น "14:30")
+                  // Allow manual input in HH:MM format
+                  const value = e.target.value;
+                  // Basic validation for 24-hour format
+                  if (/^\d{0,2}:?\d{0,2}$/.test(value) || value === '') {
+                    setSelectedTime(value);
                   }
                 }}
-                className="absolute inset-0 opacity-0 cursor-pointer"
+                className={`w-40 px-3 py-1 bg-[#E7E7E7] border border-[#818181] rounded-full ${language === 'TH' ? 'font-athiti font-black' : 'font-tiroTamil'} text-[#000000] text-base focus:outline-none focus:ring-2 focus:ring-[#8B4513]`}
+                placeholder="14:30 (24 ชม.)"
+                maxLength={5}
               />
               <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
                 <img src={clock} alt="Clock" className="w-4 h-4" />
               </div>
             </div>
+          </div>
+          <div className={`text-xs mt-1 ${language === 'TH' ? 'font-athiti' : 'font-tiroTamil'} text-gray-600`}>
+            {language === 'TH' ? 'กรอกเวลาแบบ 24 ชั่วโมง เช่น 09:30, 14:45' : 'Enter time in 24-hour format, e.g., 09:30, 14:45'}
           </div>
         </div>
 
@@ -380,6 +380,13 @@ function MakeBooking() {
                     !selectedDate || 
                     !selectedTime) {
                   alert('Please fill in all required fields. Choose either a service or promotion.');
+                  return;
+                }
+
+                // Validate time format (HH:MM in 24-hour format)
+                const timeRegex = /^([01]?[0-9]|2[0-3]):[0-5][0-9]$/;
+                if (!timeRegex.test(selectedTime)) {
+                  alert('Please enter time in correct 24-hour format (HH:MM), e.g., 09:30 or 14:45');
                   return;
                 }
 
