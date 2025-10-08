@@ -419,7 +419,6 @@ function MakeBooking() {
                 // Check for overlapping bookings
                 try {
                   const existingBookings = await getBookings();
-                  console.log('Existing bookings:', existingBookings);
                   const selectedBranchData = branches.find(b => b.name === selectedBranch);
                   let selectedPackageData = null;
                   if (selectedService !== t.chooseService) {
@@ -449,19 +448,8 @@ function MakeBooking() {
                       // Time overlap check
                       const timeOverlap = (newBookingDateTime < existingEndTime) && (newBookingEndTime > existingDateTime);
                       
-                      console.log('Checking booking:', {
-                        existingDate: existingDateTime,
-                        newDate: newBookingDateTime,
-                        sameBranch,
-                        sameDate,
-                        timeOverlap,
-                        conflict: sameBranch && sameDate && timeOverlap
-                      });
-                      
                       return sameBranch && sameDate && timeOverlap;
                     });
-
-                    console.log('Has conflict:', hasConflict);
 
                     if (hasConflict) {
                       MySwal.fire({
@@ -481,10 +469,9 @@ function MakeBooking() {
                   }
                 } catch (error) {
                   console.error('Failed to check existing bookings:', error);
-                  // If checking fails, still allow booking but log the error
                 }
 
-                // Find selected items from API data (reuse from conflict check)
+                // Find selected items from API data
                 const selectedBranchData = branches.find(b => b.name === selectedBranch);
                 let selectedPackageData = null;
                 if (selectedService !== t.chooseService) {
