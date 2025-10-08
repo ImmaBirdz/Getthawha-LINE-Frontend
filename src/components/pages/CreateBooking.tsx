@@ -4,6 +4,8 @@ import {
   useState
 } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
 
 // import translation
 import { useTranslation } from '../../context/TranslationContext';
@@ -46,6 +48,8 @@ type Package = {
 function MakeBooking() {
   const navigate = useNavigate();
   const { t, language } = useTranslation();
+  
+  const MySwal = withReactContent(Swal);
   
   const [selectedBranch, setSelectedBranch] = useState(t.chooseBranch);
   const [selectedService, setSelectedService] = useState(t.chooseService);
@@ -99,7 +103,7 @@ function MakeBooking() {
     <div className="w-[360px] min-h-screen bg-white flex flex-col">
       {/* Header with back arrow and title */}
       <div className="flex items-center justify-center px-4 py-3 relative">
-        <img src={backhome} alt="Back"  className="w-10 h-10 cursor-pointer hover:scale-110 hover:opacity-80 transition-all duration-200 absolute left-2" onClick={() => navigate('/viewbooking')}/>
+        <img src={backhome} alt="Back"  className="w-10 h-10 cursor-pointer hover:scale-110 hover:opacity-80 transition-all duration-200 absolute left-2" onClick={() => navigate('/booking')}/>
         <div className={language === 'TH' ? 'text-xl font-athiti font-black text-[#7E4300]' : 'text-xl font-tiroTamil text-[#7E4300]'}>{t.booking}</div>
       </div>
       
@@ -328,7 +332,7 @@ function MakeBooking() {
                 value={selectedTime}
                 onChange={(e) => setSelectedTime(e.target.value)}
                 className={`w-40 px-3 py-1 bg-[#E7E7E7] border border-[#818181] rounded-full ${language === 'TH' ? 'font-athiti font-black' : 'font-tiroTamil'} text-[#000000] text-base focus:outline-none focus:ring-2 focus:ring-[#8B4513]`}
-                placeholder="-- : -- --"
+                placeholder="08:00-21:30"
                 readOnly
               />
               <input 
@@ -336,12 +340,7 @@ function MakeBooking() {
                 onChange={(e) => {
                   const time = e.target.value;
                   if (time) {
-                    const [hours, minutes] = time.split(':');
-                    const hour = parseInt(hours);
-                    const ampm = hour >= 12 ? 'PM' : 'AM';
-                    const displayHour = hour === 0 ? 12 : hour > 12 ? hour - 12 : hour;
-                    const formattedTime = `${displayHour}:${minutes} ${ampm}`;
-                    setSelectedTime(formattedTime);
+                    setSelectedTime(time); // เก็บเป็น 24 ชั่วโมง (เช่น "14:30")
                   }
                 }}
                 className="absolute inset-0 opacity-0 cursor-pointer"
@@ -384,8 +383,34 @@ function MakeBooking() {
                     (selectedService === t.chooseService && selectedPromotion === t.choosePromotion) ||
                     !selectedDate || 
                     !selectedTime) {
-                  alert('Please fill in all required fields. Choose either a service or promotion.');
+                  MySwal.fire({
+                    title: <div className={language === 'TH' ? 'font-athiti font-black text-[#7E4300] text-lg' : 'font-tiroTamil text-[#7E4300] text-lg'}>{language === 'TH' ? 'ข้อมูลไม่ครบถ้วน' : 'Incomplete Information'}</div>,
+                    html: <div className={language === 'TH' ? 'font-athiti font-black text-[#6B4423] text-sm' : 'font-tiroTamil text-[#6B4423] text-sm'}>{language === 'TH' ? 'กรุณากรอกข้อมูลให้ครบถ้วน และเลือกบริการหรือโปรโมชัน' : 'Please fill in all required fields. Choose either a service or promotion.'}</div>,
+                    icon: "warning",
+                    confirmButtonColor: "#7E4300",
+                    confirmButtonText: <span className={language === 'TH' ? 'font-athiti font-black' : 'font-tiroTamil'}>OK</span>
+                  });
                   return;
+                }
+
+                // Validate time range (08:00 - 21:30) when confirming booking
+                if (selectedTime) {
+                  const [hours, minutes] = selectedTime.split(':');
+                  const hour = parseInt(hours);
+                  const minute = parseInt(minutes);
+                  
+                  const isValidTime = (hour >= 8 && hour < 21) || (hour === 21 && minute <= 30);
+                  
+                  if (!isValidTime) {
+                    MySwal.fire({
+                      title: <div className={language === 'TH' ? 'font-athiti font-black text-[#7E4300] text-lg' : 'font-tiroTamil text-[#7E4300] text-lg'}>{language === 'TH' ? 'เวลาไม่ถูกต้อง' : 'Invalid Time'}</div>,
+                      html: <div className={language === 'TH' ? 'font-athiti font-black text-[#6B4423] text-sm' : 'font-tiroTamil text-[#6B4423] text-sm'}>{language === 'TH' ? 'กรุณาเลือกเวลาระหว่าง 08:00 - 21:30 เท่านั้น' : 'Please select time between 08:00 - 21:30 only'}</div>,
+                      icon: "warning",
+                      confirmButtonColor: "#7E4300",
+                      confirmButtonText: <span className={language === 'TH' ? 'font-athiti font-black' : 'font-tiroTamil'}>OK</span>
+                    });
+                    return;
+                  }
                 }
 
                 setSubmitting(true);
@@ -407,8 +432,18 @@ function MakeBooking() {
                     voucherId = voucher?.id || null;
                   } catch (error) {
                     console.warn('Invalid voucher code:', error);
-                    const continueWithoutVoucher = confirm('Invalid voucher code. Do you want to continue booking without voucher?');
-                    if (!continueWithoutVoucher) {
+                    const result = await MySwal.fire({
+                      title: <div className={language === 'TH' ? 'font-athiti font-black text-[#7E4300] text-lg' : 'font-tiroTamil text-[#7E4300] text-lg'}>{language === 'TH' ? 'รหัสส่วนลดไม่ถูกต้อง' : 'Invalid Voucher Code'}</div>,
+                      html: <div className={language === 'TH' ? 'font-athiti font-black text-[#6B4423] text-sm' : 'font-tiroTamil text-[#6B4423] text-sm'}>{language === 'TH' ? 'คุณต้องการทำการจองโดยไม่ใช้รหัสส่วนลดหรือไม่?' : 'Do you want to continue booking without voucher?'}</div>,
+                      icon: "question",
+                      showCancelButton: true,
+                      confirmButtonColor: "#7E4300",
+                      cancelButtonColor: "#7E4300",
+                      confirmButtonText: <span className={language === 'TH' ? 'font-athiti font-black' : 'font-tiroTamil'}>{language === 'TH' ? 'ดำเนินการต่อ' : 'Continue'}</span>,
+                      cancelButtonText: <span className={language === 'TH' ? 'font-athiti font-black' : 'font-tiroTamil'}>{language === 'TH' ? 'ยกเลิก' : 'Cancel'}</span>
+                    });
+                    
+                    if (!result.isConfirmed) {
                       setSubmitting(false);
                       return;
                     }
@@ -418,17 +453,9 @@ function MakeBooking() {
 
                 // Convert date and time to proper ISO format
                 const [day, month, year] = selectedDate.split('/');
-                const timeString = selectedTime.replace(/\s?(AM|PM)/, '');
-                const [hour, minute] = timeString.split(':');
-                let hour24 = parseInt(hour);
+                const [hour, minute] = selectedTime.split(':'); // selectedTime is already in 24-hour format
                 
-                if (selectedTime.includes('PM') && hour24 !== 12) {
-                  hour24 += 12;
-                } else if (selectedTime.includes('AM') && hour24 === 12) {
-                  hour24 = 0;
-                }
-                
-                const isoDate = new Date(parseInt(year), parseInt(month) - 1, parseInt(day), hour24, parseInt(minute));
+                const isoDate = new Date(parseInt(year), parseInt(month) - 1, parseInt(day), parseInt(hour), parseInt(minute));
                 
                 // Create booking data for API 
                 const bookingData = {
@@ -441,12 +468,27 @@ function MakeBooking() {
                 // Submit booking to API
                 await createBooking(bookingData);
 
+                // Show success message
+                await MySwal.fire({
+                  title: <div className={language === 'TH' ? 'font-athiti font-black text-[#7E4300] text-lg' : 'font-tiroTamil text-[#7E4300] text-lg'}>{language === 'TH' ? 'จองเสร็จสิ้น!' : 'Booking Created!'}</div>,
+                  html: <div className={language === 'TH' ? 'font-athiti font-black text-[#6B4423] text-sm' : 'font-tiroTamil text-[#6B4423] text-sm'}>{language === 'TH' ? 'การจองของคุณถูกสร้างเรียบร้อยแล้ว' : 'Your booking has been created successfully'}</div>,
+                  icon: "success",
+                  confirmButtonColor: "#7E4300",
+                  confirmButtonText: <span className={language === 'TH' ? 'font-athiti font-black' : 'font-tiroTamil'}>OK</span>
+                });
+
                 // Navigate to view booking page
-                navigate('/viewbooking');
+                navigate('/booking');
 
               } catch (error) {
                 console.error('Failed to create booking:', error);
-                alert('Failed to create booking. Please try again.');
+                MySwal.fire({
+                  title: <div className={language === 'TH' ? 'font-athiti font-black text-[#7E4300] text-lg' : 'font-tiroTamil text-[#7E4300] text-lg'}>{language === 'TH' ? 'เกิดข้อผิดพลาด!' : 'Error!'}</div>,
+                  html: <div className={language === 'TH' ? 'font-athiti font-black text-[#6B4423] text-sm' : 'font-tiroTamil text-[#6B4423] text-sm'}>{language === 'TH' ? 'ไม่สามารถสร้างการจองได้ กรุณาลองใหม่อีกครั้ง' : 'Failed to create booking. Please try again.'}</div>,
+                  icon: "error",
+                  confirmButtonColor: "#7E4300",
+                  confirmButtonText: <span className={language === 'TH' ? 'font-athiti font-black' : 'font-tiroTamil'}>OK</span>
+                });
               } finally {
                 setSubmitting(false);
               }

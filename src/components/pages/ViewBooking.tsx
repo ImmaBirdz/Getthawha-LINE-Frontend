@@ -51,6 +51,12 @@ function ViewBooking() {
 
   const MySwal = withReactContent(Swal)
 
+  // Function to check if booking is expired/timeout
+  const isBookingTimeout = (bookingDate: string) => {
+    const now = new Date();
+    const bookingDateTime = new Date(bookingDate);
+    return bookingDateTime < now;
+  };
   const handleDeleteBooking = async (bookingId: string) => {
     MySwal.fire({
       title: <div className={language === 'TH' ? 'font-athiti font-black text-[#7E4300] text-lg' : 'font-tiroTamil text-[#7E4300] text-lg'}>{t.areYouSureDelete}</div>,
@@ -98,16 +104,14 @@ function ViewBooking() {
         setLoading(true);
         const data = await getBookings();
         
-        // Filter for pending bookings only - similar to History but opposite filter
+        // Filter for pending bookings and expired bookings 
         const pendingBookings = data.filter((booking: Booking) => {
-          // Only include pending bookings
+          // Include pending bookings and expired bookings (but not completed/cancelled)
           if (booking.status) {
             return booking.status.toLowerCase().includes('pending');
           }
-          // For bookings without status, use date logic - only future bookings (upcoming)
-          const now = new Date();
-          const bookingDateTime = new Date(booking.date);
-          return bookingDateTime >= now;
+          // For bookings without status, include both future and past bookings (exclude only if explicitly completed/cancelled)
+          return true;
         });
         
         const mappedData = pendingBookings.map((booking: Booking) => ({
@@ -158,10 +162,21 @@ function ViewBooking() {
                 <div className="flex justify-between items-start text-left relative">
                   {/* Left side - Status, Package and Branch info */}
                   <div className="flex flex-col gap-1 text-left">
-                    {/* Status - Pending */}
+                    {/* Status - Pending or Timeout */}
                     <div className="text-[#818181] font-medium text-sm mb-1 flex items-center gap-1">
-                      <div className="w-2 h-2 bg-[#FFA600] rounded-full animate-pulse shadow-[0_0_4px_#FFD381]"></div>
-                      <span className={language === 'TH' ? 'animate-pulse font-athiti font-black' : 'animate-pulse'}>{t.pending}</span>
+                      {isBookingTimeout(booking.date) ? (
+                        <>
+                          <div className="w-2 h-2 bg-[#FF4444] rounded-full animate-pulse shadow-[0_0_4px_#FF8888]"></div>
+                          <span className={language === 'TH' ? 'animate-pulse font-athiti font-black text-[#FF4444]' : 'animate-pulse text-[#FF4444]'}>
+                            {language === 'TH' ? 'หมดเวลา' : 'Timeout'}
+                          </span>
+                        </>
+                      ) : (
+                        <>
+                          <div className="w-2 h-2 bg-[#FFA600] rounded-full animate-pulse shadow-[0_0_4px_#FFD381]"></div>
+                          <span className={language === 'TH' ? 'animate-pulse font-athiti font-black' : 'animate-pulse'}>{t.pending}</span>
+                        </>
+                      )}
                     </div>
                     <div className="text-[#6B4423] font-medium text-left text-sm">
                       <span className={language === 'TH' ? 'font-athiti font-bold' : ''}>{t.package}:</span> <span className="font-medium text-[#D49F00]">{booking.package.title}</span>
@@ -175,11 +190,15 @@ function ViewBooking() {
                           day: 'numeric',
                           month: 'numeric',  
                           year: 'numeric'
-                        })}, {new Date(booking.date).toLocaleTimeString('en-US', { 
-                          hour: 'numeric', 
-                          minute: '2-digit',
-                          hour12: true
-                        })}
+                        })}, {(() => {
+                          const date = new Date(booking.date);
+                          const hours = date.getHours();
+                          const minutes = date.getMinutes();
+                          const ampm = hours >= 12 ? 'PM' : 'AM';
+                          const displayHours = hours % 12 || 12;
+                          const displayMinutes = minutes.toString().padStart(2, '0');
+                          return `${displayHours}:${displayMinutes} ${ampm}`;
+                        })()}
                       </span>
                     </div>
                   </div>
@@ -224,7 +243,7 @@ function ViewBooking() {
             <div className={language === 'TH' ? 'text-[#7E4300] text-lg font-athiti font-bold' : 'text-[#7E4300] text-lg font-tiroTamil'}>{t.noBookings}</div>
 
             {/* Make a booking button */}
-            <button className={language === 'TH' ? 'mt-2 !bg-[#DCA900] text-white text-xs font-athiti font-bold self-center cursor-pointer py-1 px-2 rounded border-none hover:scale-110 hover:opacity-80 transition-all disabled:opacity-50 disabled:cursor-not-allowed' : 'mt-2 !bg-[#DCA900] text-white text-xs font-tiroTamil self-center cursor-pointer py-1 px-2 rounded border-none hover:scale-110 hover:opacity-80 transition-all disabled:opacity-50 disabled:cursor-not-allowed'} onClick={() => navigate('/booking/new')}>{t.makeBooking}</button>
+            <button className={language === 'TH' ? 'mt-2 !bg-[#DCA900] text-white text-xs font-athiti font-bold self-center cursor-pointer py-1 px-2 rounded border-none hover:scale-110 hover:opacity-80 transition-all disabled:opacity-50 disabled:cursor-not-allowed' : 'mt-2 !bg-[#DCA900] text-white text-xs font-tiroTamil self-center cursor-pointer py-1 px-2 rounded border-none hover:scale-110 hover:opacity-80 transition-all disabled:opacity-50 disabled:cursor-not-allowed'} onClick={() => navigate('/booking/create')}>{t.makeBooking}</button>
           </div>
         </div>
       )}

@@ -91,11 +91,12 @@ function History() {
 
   const getFormattedTime = (dateString: string) => {
     const bookingDate = new Date(dateString);
-    return bookingDate.toLocaleTimeString('en-US', {
-      hour: 'numeric',
-      minute: '2-digit',
-      hour12: true
-    });
+    const hours = bookingDate.getHours();
+    const minutes = bookingDate.getMinutes();
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+    const displayHours = hours % 12 || 12;
+    const displayMinutes = minutes.toString().padStart(2, '0');
+    return `${displayHours}:${displayMinutes} ${ampm}`;
   };
 
   const getStatus = (booking: Booking): BookingStatus => {
