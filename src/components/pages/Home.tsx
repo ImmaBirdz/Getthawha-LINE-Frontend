@@ -35,23 +35,19 @@ type Package = {
 };
 
 function Home() {
+    // Profile context
     const {
         profile,
-        isLiffLoaded,
-        isLogin
+        isLiffLoaded
     } = useContext(ProfileContext)
+    // Translation context
+    const {
+        language,
+        setLanguage,
+        t
+    } = useTranslation();
+    
     const navigate = useNavigate();
-
-    // Use global translation context
-    const { language, setLanguage, t } = useTranslation();
-
-    // // Dummy profile data for demonstration purposes
-    // const [profile] = useState({
-    //     userId: 'U1234567890abcdef',
-    //     displayName: 'John Doe',
-    //     pictureUrl: 'https://via.placeholder.com/150',
-    //     email: 'john.doe@example.com'
-    // });
 
     const [packages, setPackages] = useState<Package[]>([])
     const [selectedPackage, setSelectedPackage] = useState<Package | null>(null)
@@ -92,9 +88,7 @@ function Home() {
     }, []);
 
     return (
-        profile
-            && isLiffLoaded
-            ? (
+        profile && isLiffLoaded ? (
                 <div className="App">
                     <div className="m-0 w-[360px] min-h-[90vh] bg-white flex flex-col relative">
                         <div className="px-6 py-4 text-[#D49F00] bg-white justify-evenly ">
@@ -214,30 +208,11 @@ function Home() {
                             onClose={closeModal}
                             packageData={selectedPackage}
                         />
-
                     </div>
                 </div>
             ) : (
                 <div className="m-0 w-[360px] min-h-[90vh] bg-white flex flex-col relative">
                     <p className={language === 'TH' ? 'text-[#7E4300] text-center mt-10 font-athiti font-black' : 'text-[#7E4300] text-center mt-10 font-tiroTamil'}>{t.loadingProfile}</p>
-                    {/* if liff is loaded show true, if not show false */}
-                    {isLiffLoaded ? (
-                        <p className="text-green-500 text-center mt-2">LIFF is loaded</p>
-                    ) : (
-                        <p className="text-red-500 text-center mt-2">LIFF is not loaded</p>
-                    )}
-                    {/* if profile is loaded show true, if not show false */}
-                    {profile ? (
-                        <p className="text-green-500 text-center mt-2">Profile is loaded</p>
-                    ) : (
-                        <p className="text-red-500 text-center mt-2">Profile is not loaded</p>
-                    )}
-                    {/* if user is logged in show true, if not show false */}
-                    {isLogin ? (
-                        <p className="text-green-500 text-center mt-2">User is logged in</p>
-                    ) : (
-                        <p className="text-red-500 text-center mt-2">User is not logged in</p>
-                    )}
                 </div>
             )
     );

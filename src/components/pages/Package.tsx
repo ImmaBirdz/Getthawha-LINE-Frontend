@@ -23,12 +23,8 @@ function Package({ backgroundImage, altText = "Package Background", title, descr
             />
 
             {/* Shimmer shine effect */}
-            <div className="absolute inset-0 w-16 h-full bg-gradient-to-r from-transparent via-white/40 to-transparent animate-shimmer-shine pointer-events-none"></div>
-
-            
+            <div className="absolute inset-0 w-16 h-full bg-gradient-to-r from-transparent via-white/40 to-transparent animate-shimmer-shine pointer-events-none"></div>         
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-black/40 rounded-2xl transition-opacity duration-300 group-hover:from-black/40 group-hover:via-black/10 group-hover:to-black/20"></div>
-            
-
             
             {/* Duration badge - top right corner */}
             {duration && (

@@ -33,7 +33,7 @@ type Booking = {
     id: string;
     code: string;
   };
-  status?: string; 
+  status?: string;
 };
 
 type BookingStatus = 'Completed' | 'Cancelled';
@@ -48,10 +48,10 @@ function History() {
     const fetchHistory = async () => {
       try {
         setLoading(true);
-        
+
         // Fetch real booking data from API
         const apiBookings: Booking[] = await getBookings();
-        
+
         // Since getStatus now only returns these two, we can show all results
         const historyBookings = apiBookings.filter(booking => {
           // Only include bookings that have a definitive status (not pending)
@@ -63,12 +63,12 @@ function History() {
           const bookingDateTime = new Date(booking.date);
           return bookingDateTime < now;
         });
-        
+
         setBookings(historyBookings);
-        
+
       } catch (error) {
         console.error('Failed to fetch booking history:', error);
-        
+
         // Fallback to empty array if API fails
         setBookings([]);
       } finally {
@@ -84,7 +84,7 @@ function History() {
     const bookingDate = new Date(dateString);
     return bookingDate.toLocaleDateString('en-US', {
       month: 'numeric',
-      day: 'numeric', 
+      day: 'numeric',
       year: 'numeric'
     });
   };
@@ -109,13 +109,13 @@ function History() {
         return 'Completed';
       }
     }
-    
+
     // Default logic if no status from API - assume completed bookings are successful
     return 'Completed';
   };
 
   const getStatusColor = (status: string) => {
-  if (status === 'Completed') return 'text-green-600';
+    if (status === 'Completed') return 'text-green-600';
     if (status === 'Cancelled') return 'text-red-600';
     return 'text-yellow-600'; // Pending
   };
@@ -130,20 +130,19 @@ function History() {
         <div className="flex flex-col items-center gap-2 w-full">
           {/* Header with back button and title */}
           <div className="flex items-center justify-center w-full relative px-4 py-3">
-            <img 
-              src={backhome} 
-              alt="Back" 
-              className="w-10 h-10 cursor-pointer hover:scale-110 hover:opacity-80 transition-all duration-200 absolute left-2" 
+            <img
+              src={backhome}
+              alt="Back"
+              className="w-10 h-10 cursor-pointer hover:scale-110 hover:opacity-80 transition-all duration-200 absolute left-2"
               onClick={() => navigate('/')}
             />
             <div className={language === 'TH' ? 'text-2xl font-athiti font-bold text-[#7E4300]' : 'text-2xl font-tiroTamil text-[#7E4300]'}>{t.history}</div>
           </div>
 
-           {/* border line */}
+          {/* border line */}
           <div className="w-100 px-7">
             <div className="h-1 bg-[#DEC33A] w-full"></div>
           </div>
-
 
           {/* History Items */}
           <div className="flex flex-col gap-4 w-full px-4 mt-4">
