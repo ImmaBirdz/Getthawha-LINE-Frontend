@@ -43,18 +43,19 @@ const ProfileProvider = (props: React.PropsWithChildren<{}>) => {
 
     // initialize LIFF
     useEffect(() => {
+        while (!isLogin) {
             // await liff.init({ liffId: '2007750755-nv6wlyNZ' }) // old
             liff.init({ liffId: '2007725317-GXv8QvO3' }) // yung's
                 .then(() => {
                     if (liff.isLoggedIn()) {
                         const idToken = liff.getIDToken() ?? '';
 
-                                authorizeWithLine(idToken).then(() => {
-                                    setIsLogin(true);
-                                }).catch(error => {
-                                    console.error('Authorization failed:', error);
-                                });
-                        
+                        authorizeWithLine(idToken).then(() => {
+                            setIsLogin(true);
+                        }).catch(error => {
+                            console.error('Authorization failed:', error);
+                        });
+
                     } else {
                         liff.login()
                     }
@@ -63,6 +64,8 @@ const ProfileProvider = (props: React.PropsWithChildren<{}>) => {
                     console.error('LIFF initialization failed:', err)
                 })
             setIsLiffLoaded(true);
+        }
+
     }, [])
 
     // Fetch profile from API
