@@ -48,22 +48,21 @@ const ProfileProvider = (props: React.PropsWithChildren<{}>) => {
                 .then(() => {
                     if (liff.isLoggedIn()) {
                         const idToken = liff.getIDToken() ?? '';
-                        
-                        authorizeWithLine(idToken).then(() => {
-                            setIsLogin(true);
-                        }).catch(error => {
-                            console.error('Authorization failed:', error);
-                        });
+
+                                authorizeWithLine(idToken).then(() => {
+                                    setIsLogin(true);
+                                }).catch(error => {
+                                    console.error('Authorization failed:', error);
+                                });
                         
                     } else {
                         liff.login()
                     }
-                    setIsLiffLoaded(true); // Only set on successful LIFF init
                 })
                 .catch(err => {
                     console.error('LIFF initialization failed:', err)
-                    setIsLiffLoaded(false); // Set to false on error
                 })
+            setIsLiffLoaded(true);
     }, [])
 
     // Fetch profile from API
@@ -83,7 +82,7 @@ const ProfileProvider = (props: React.PropsWithChildren<{}>) => {
             }
         };
         fetchProfile();
-    }, [isLogin]);
+    }, [isLogin, isLiffLoaded]);
 
     return (
         <ProfileContext.Provider value={{
@@ -103,4 +102,3 @@ export {
     ProfileContext,
     ProfileProvider
 };
-
