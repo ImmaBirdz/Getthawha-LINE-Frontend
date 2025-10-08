@@ -14,6 +14,7 @@ import { useTranslation } from '../../context/TranslationContext';
 import {
   createBooking,
   getBranches,
+  getBookings,
   getPackages,
   getVoucher
 } from '../../services/BackendApi';
@@ -414,6 +415,61 @@ function MakeBooking() {
                 }
 
                 setSubmitting(true);
+
+                // Check for overlapping bookings
+                try {
+                  const existingBookings = await getBookings();
+                  const selectedBranchData = branches.find(b => b.name === selectedBranch);
+                  let selectedPackageData = null;
+                  if (selectedService !== t.chooseService) {
+                    selectedPackageData = services.find(s => `${s.title} (${s.duration}min)` === selectedService);
+                  } else if (selectedPromotion !== t.choosePromotion) {
+                    selectedPackageData = promotions.find(p => p.title === selectedPromotion);
+                  }
+
+                  if (selectedBranchData && selectedPackageData) {
+                    // Convert selected date and time to proper format for comparison
+                    const [day, month, year] = selectedDate.split('/');
+                    const [hour, minute] = selectedTime.split(':');
+                    const newBookingDateTime = new Date(parseInt(year), parseInt(month) - 1, parseInt(day), parseInt(hour), parseInt(minute));
+                    const newBookingEndTime = new Date(newBookingDateTime.getTime() + (selectedPackageData.duration * 60000));
+
+                    // Check for conflicts with existing bookings
+                    const hasConflict = existingBookings.some((booking: any) => {
+                      const existingDateTime = new Date(booking.date);
+                      const existingEndTime = new Date(existingDateTime.getTime() + (booking.duration * 60000));
+                      
+                      // Same branch check
+                      const sameBranch = booking.branch.id === selectedBranchData.id;
+                      
+                      // Same date check
+                      const sameDate = existingDateTime.toDateString() === newBookingDateTime.toDateString();
+                      
+                      // Time overlap check
+                      const timeOverlap = (newBookingDateTime < existingEndTime) && (newBookingEndTime > existingDateTime);
+                      
+                      return sameBranch && sameDate && timeOverlap;
+                    });
+
+                    if (hasConflict) {
+                      MySwal.fire({
+                        title: <div className={language === 'TH' ? 'font-athiti font-black text-[#7E4300] text-lg' : 'font-tiroTamil text-[#7E4300] text-lg'}>{language === 'TH' ? 'เวลาจองซ้ำซ้อน' : 'Booking Conflict'}</div>,
+                        html: <div className={language === 'TH' ? 'font-athiti font-black text-[#6B4423] text-sm' : 'font-tiroTamil text-[#6B4423] text-sm'}>
+                          {language === 'TH' 
+                            ? 'ไม่สามารถจองได้เนื่องจากมีการจองในช่วงเวลาดังกล่าวแล้ว กรุณาเลือกเวลาอื่น' 
+                            : 'Cannot make booking due to existing booking in the selected time slot. Please choose a different time.'}
+                        </div>,
+                        icon: "error",
+                        confirmButtonColor: "#7E4300",
+                        confirmButtonText: <span className={language === 'TH' ? 'font-athiti font-black' : 'font-tiroTamil'}>OK</span>
+                      });
+                      setSubmitting(false);
+                      return;
+                    }
+                  }
+                } catch (error) {
+                  console.error('Failed to check existing bookings:', error);
+                }
 
                 // Find selected items from API data
                 const selectedBranchData = branches.find(b => b.name === selectedBranch);
