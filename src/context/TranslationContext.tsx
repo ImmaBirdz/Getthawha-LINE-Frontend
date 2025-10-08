@@ -70,6 +70,11 @@ type Translations = {
   // Header
   headerTitle: string;
   headerSubtitle: string;
+
+  // Not Found
+  notFoundTitle: string;
+  notFoundMessage: string;
+  notFoundGoBack: string;
 };
 
 const translations: Record<Language, Translations> = {
@@ -139,6 +144,11 @@ const translations: Record<Language, Translations> = {
     // Header
     headerTitle: 'GETTHAWHA',
     headerSubtitle: 'THAI MASSAGE',
+
+    // Not Found
+    notFoundTitle: '404 - Page Not Found',
+    notFoundMessage: 'Sorry, the page you are looking for does not exist.',
+    notFoundGoBack: 'Go Back',
   },
   
   TH: {
@@ -207,6 +217,11 @@ const translations: Record<Language, Translations> = {
     // Header
     headerTitle: 'เก็ดตะหว๋า',
     headerSubtitle: 'นวดแผนไทย',
+
+    // Not Found
+    notFoundTitle: '404 - ไม่พบหน้า',
+    notFoundMessage: 'ขออภัย, ไม่พบหน้าที่คุณกำลังค้นหา',
+    notFoundGoBack: 'ย้อนกลับ',
   },
 };
 
