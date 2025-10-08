@@ -62,7 +62,7 @@ const ProfileProvider = (props: React.PropsWithChildren<{}>) => {
                 .catch(err => {
                     console.error('LIFF initialization failed:', err)
                 })
-            if (isLogin) setIsLiffLoaded(true);
+            setIsLiffLoaded(true);
     }, [])
 
     // Fetch profile from API
