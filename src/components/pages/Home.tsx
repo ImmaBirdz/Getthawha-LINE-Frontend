@@ -37,7 +37,8 @@ type Package = {
 function Home() {
     const {
         profile,
-        isLiffLoaded
+        isLiffLoaded,
+        isLogin
     } = useContext(ProfileContext)
     const navigate = useNavigate();
 
@@ -231,6 +232,18 @@ function Home() {
                         <p className="text-green-500 text-center mt-2">LIFF is loaded</p>
                     ) : (
                         <p className="text-red-500 text-center mt-2">LIFF is not loaded</p>
+                    )}
+                    {/* if profile is loaded show true, if not show false */}
+                    {profile ? (
+                        <p className="text-green-500 text-center mt-2">Profile is loaded</p>
+                    ) : (
+                        <p className="text-red-500 text-center mt-2">Profile is not loaded</p>
+                    )}
+                    {/* if user is logged in show true, if not show false */}
+                    {isLogin ? (
+                        <p className="text-green-500 text-center mt-2">User is logged in</p>
+                    ) : (
+                        <p className="text-red-500 text-center mt-2">User is not logged in</p>
                     )}
                 </div>
             )
