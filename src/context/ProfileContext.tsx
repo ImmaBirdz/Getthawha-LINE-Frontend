@@ -43,10 +43,8 @@ const ProfileProvider = (props: React.PropsWithChildren<{}>) => {
 
     // initialize LIFF
     useEffect(() => {
-
-        const initializeLiff = async () => {
             // await liff.init({ liffId: '2007750755-nv6wlyNZ' }) // old
-            await liff.init({ liffId: '2007725317-GXv8QvO3' }) // yung's
+            liff.init({ liffId: '2007725317-GXv8QvO3' }) // yung's
                 .then(() => {
                     if (liff.isLoggedIn()) {
                         const idToken = liff.getIDToken() ?? '';
@@ -58,16 +56,13 @@ const ProfileProvider = (props: React.PropsWithChildren<{}>) => {
                                 });
                         
                     } else {
-                        liff.login();
+                        liff.login()
                     }
-                    alert("LIFF initialized");
                 })
                 .catch(err => {
                     console.error('LIFF initialization failed:', err)
                 })
-            setIsLiffLoaded(true);
-        };
-        initializeLiff();
+            if (isLogin) setIsLiffLoaded(true);
     }, [])
 
     // Fetch profile from API
@@ -87,7 +82,7 @@ const ProfileProvider = (props: React.PropsWithChildren<{}>) => {
             }
         };
         fetchProfile();
-    }, [isLogin, isLiffLoaded]);
+    }, [isLogin]);
 
     return (
         <ProfileContext.Provider value={{
