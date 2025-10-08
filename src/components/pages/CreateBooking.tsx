@@ -326,25 +326,30 @@ function MakeBooking() {
               <input 
                 type="text"
                 value={selectedTime}
+                onChange={(e) => setSelectedTime(e.target.value)}
+                className={`w-40 px-3 py-1 bg-[#E7E7E7] border border-[#818181] rounded-full ${language === 'TH' ? 'font-athiti font-black' : 'font-tiroTamil'} text-[#000000] text-base focus:outline-none focus:ring-2 focus:ring-[#8B4513]`}
+                placeholder="-- : -- --"
+                readOnly
+              />
+              <input 
+                type="time"
                 onChange={(e) => {
-                  // Allow manual input in HH:MM format
-                  const value = e.target.value;
-                  // Basic validation for 24-hour format
-                  if (/^\d{0,2}:?\d{0,2}$/.test(value) || value === '') {
-                    setSelectedTime(value);
+                  const time = e.target.value;
+                  if (time) {
+                    const [hours, minutes] = time.split(':');
+                    const hour = parseInt(hours);
+                    const ampm = hour >= 12 ? 'PM' : 'AM';
+                    const displayHour = hour === 0 ? 12 : hour > 12 ? hour - 12 : hour;
+                    const formattedTime = `${displayHour}:${minutes} ${ampm}`;
+                    setSelectedTime(formattedTime);
                   }
                 }}
-                className={`w-40 px-3 py-1 bg-[#E7E7E7] border border-[#818181] rounded-full ${language === 'TH' ? 'font-athiti font-black' : 'font-tiroTamil'} text-[#000000] text-base focus:outline-none focus:ring-2 focus:ring-[#8B4513]`}
-                placeholder="14:30 (24 ชม.)"
-                maxLength={5}
+                className="absolute inset-0 opacity-0 cursor-pointer"
               />
               <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
                 <img src={clock} alt="Clock" className="w-4 h-4" />
               </div>
             </div>
-          </div>
-          <div className={`text-xs mt-1 ${language === 'TH' ? 'font-athiti' : 'font-tiroTamil'} text-gray-600`}>
-            {language === 'TH' ? 'กรอกเวลาแบบ 24 ชั่วโมง เช่น 09:30, 14:45' : 'Enter time in 24-hour format, e.g., 09:30, 14:45'}
           </div>
         </div>
 
@@ -383,13 +388,6 @@ function MakeBooking() {
                   return;
                 }
 
-                // Validate time format (HH:MM in 24-hour format)
-                const timeRegex = /^([01]?[0-9]|2[0-3]):[0-5][0-9]$/;
-                if (!timeRegex.test(selectedTime)) {
-                  alert('Please enter time in correct 24-hour format (HH:MM), e.g., 09:30 or 14:45');
-                  return;
-                }
-
                 setSubmitting(true);
 
                 // Find selected items from API data
@@ -420,9 +418,17 @@ function MakeBooking() {
 
                 // Convert date and time to proper ISO format
                 const [day, month, year] = selectedDate.split('/');
-                const [hour, minute] = selectedTime.split(':'); // selectedTime is already in 24-hour format
+                const timeString = selectedTime.replace(/\s?(AM|PM)/, '');
+                const [hour, minute] = timeString.split(':');
+                let hour24 = parseInt(hour);
                 
-                const isoDate = new Date(parseInt(year), parseInt(month) - 1, parseInt(day), parseInt(hour), parseInt(minute));
+                if (selectedTime.includes('PM') && hour24 !== 12) {
+                  hour24 += 12;
+                } else if (selectedTime.includes('AM') && hour24 === 12) {
+                  hour24 = 0;
+                }
+                
+                const isoDate = new Date(parseInt(year), parseInt(month) - 1, parseInt(day), hour24, parseInt(minute));
                 
                 // Create booking data for API 
                 const bookingData = {
