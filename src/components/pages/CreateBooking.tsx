@@ -337,29 +337,9 @@ function MakeBooking() {
               />
               <input 
                 type="time"
-                min="08:00"
-                max="21:30"
                 onChange={(e) => {
                   const time = e.target.value;
                   if (time) {
-                    const [hours, minutes] = time.split(':');
-                    const hour = parseInt(hours);
-                    const minute = parseInt(minutes);
-                    
-                    // Validate time range (08:00 - 21:30)
-                    const isValidTime = (hour >= 8 && hour < 21) || (hour === 21 && minute <= 30);
-                    
-                    if (!isValidTime) {
-                      MySwal.fire({
-                        title: <div className={language === 'TH' ? 'font-athiti font-black text-[#7E4300] text-lg' : 'font-tiroTamil text-[#7E4300] text-lg'}>{language === 'TH' ? 'เวลาไม่ถูกต้อง' : 'Invalid Time'}</div>,
-                        html: <div className={language === 'TH' ? 'font-athiti font-black text-[#6B4423] text-sm' : 'font-tiroTamil text-[#6B4423] text-sm'}>{language === 'TH' ? 'กรุณาเลือกเวลาระหว่าง 08:00 - 21:30 เท่านั้น' : 'Please select time between 08:00 - 21:30 only'}</div>,
-                        icon: "warning",
-                        confirmButtonColor: "#7E4300",
-                        confirmButtonText: <span className={language === 'TH' ? 'font-athiti font-black' : 'font-tiroTamil'}>OK</span>
-                      });
-                      return;
-                    }
-                    
                     setSelectedTime(time); // เก็บเป็น 24 ชั่วโมง (เช่น "14:30")
                   }
                 }}
@@ -411,6 +391,26 @@ function MakeBooking() {
                     confirmButtonText: <span className={language === 'TH' ? 'font-athiti font-black' : 'font-tiroTamil'}>OK</span>
                   });
                   return;
+                }
+
+                // Validate time range (08:00 - 21:30) when confirming booking
+                if (selectedTime) {
+                  const [hours, minutes] = selectedTime.split(':');
+                  const hour = parseInt(hours);
+                  const minute = parseInt(minutes);
+                  
+                  const isValidTime = (hour >= 8 && hour < 21) || (hour === 21 && minute <= 30);
+                  
+                  if (!isValidTime) {
+                    MySwal.fire({
+                      title: <div className={language === 'TH' ? 'font-athiti font-black text-[#7E4300] text-lg' : 'font-tiroTamil text-[#7E4300] text-lg'}>{language === 'TH' ? 'เวลาไม่ถูกต้อง' : 'Invalid Time'}</div>,
+                      html: <div className={language === 'TH' ? 'font-athiti font-black text-[#6B4423] text-sm' : 'font-tiroTamil text-[#6B4423] text-sm'}>{language === 'TH' ? 'กรุณาเลือกเวลาระหว่าง 08:00 - 21:30 เท่านั้น' : 'Please select time between 08:00 - 21:30 only'}</div>,
+                      icon: "warning",
+                      confirmButtonColor: "#7E4300",
+                      confirmButtonText: <span className={language === 'TH' ? 'font-athiti font-black' : 'font-tiroTamil'}>OK</span>
+                    });
+                    return;
+                  }
                 }
 
                 setSubmitting(true);
