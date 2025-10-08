@@ -455,9 +455,7 @@ function MakeBooking() {
                       MySwal.fire({
                         title: <div className={language === 'TH' ? 'font-athiti font-black text-[#7E4300] text-lg' : 'font-tiroTamil text-[#7E4300] text-lg'}>{language === 'TH' ? 'เวลาจองซ้ำซ้อน' : 'Booking Conflict'}</div>,
                         html: <div className={language === 'TH' ? 'font-athiti font-black text-[#6B4423] text-sm' : 'font-tiroTamil text-[#6B4423] text-sm'}>
-                          {language === 'TH' 
-                            ? 'ไม่สามารถจองได้เนื่องจากมีการจองในช่วงเวลาดังกล่าวแล้ว กรุณาเลือกเวลาอื่น' 
-                            : 'Cannot make booking due to existing booking in the selected time slot. Please choose a different time.'}
+                            {t.conflictBookingNote}
                         </div>,
                         icon: "error",
                         confirmButtonColor: "#7E4300",
