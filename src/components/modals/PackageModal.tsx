@@ -139,8 +139,6 @@ function PackageModal({ isOpen, onClose, packageData }: PackageModalProps) {
                         </div>
                     )}
                 </div>
-
-
             </div>
         </div>
     );

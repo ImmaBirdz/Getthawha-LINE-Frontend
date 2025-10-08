@@ -20,7 +20,7 @@ import '../../App.css'
 
 // import assets
 import Package from './Package'
-import PackageModal from '../PackageModal'
+import PackageModal from '../modals/PackageModal'
 
 type Package = {
     id: string;
