@@ -51,6 +51,7 @@ const ProfileProvider = (props: React.PropsWithChildren<{}>) => {
 
                                 authorizeWithLine(idToken).then(() => {
                                     setIsLogin(true);
+                                    fetchProfile()
                                 }).catch(error => {
                                     console.error('Authorization failed:', error);
                                 });
@@ -65,9 +66,7 @@ const ProfileProvider = (props: React.PropsWithChildren<{}>) => {
             setIsLiffLoaded(true);
     }, [])
 
-    // Fetch profile from API
-    useEffect(() => {
-        const fetchProfile = async () => {
+    const fetchProfile = async () => {
             try {
                 const data = await getProfile();
                 const mappedData: Profile = {
@@ -81,7 +80,12 @@ const ProfileProvider = (props: React.PropsWithChildren<{}>) => {
                 console.error('Failed to fetch profile:', error);
             }
         };
-        fetchProfile();
+
+    // Fetch profile from API
+    useEffect(() => {
+        if (isLogin) {
+            fetchProfile();
+        }
     }, [isLogin]);
 
     return (
