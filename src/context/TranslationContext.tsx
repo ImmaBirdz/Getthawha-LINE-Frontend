@@ -22,6 +22,7 @@ type Translations = {
   noBookings: string;
   loadingBookings: string;
   loadingHistory: string;
+  conflictBookingNote: string;
   
   // Booking form
   selectPackage: string;
@@ -106,6 +107,7 @@ const translations: Record<Language, Translations> = {
     noBookings: 'You have no bookings',
     loadingBookings: 'Loading bookings...',
     loadingHistory: 'Loading history...',
+    conflictBookingNote: 'Cannot make booking due to existing booking in the selected time slot. Please choose a different time.',
     
     // Booking form
     selectPackage: 'Select Package',
@@ -189,6 +191,7 @@ const translations: Record<Language, Translations> = {
     noBookings: 'คุณไม่มีการจอง',
     loadingBookings: 'กำลังโหลดการจอง...',
     loadingHistory: 'กำลังโหลดประวัติ...',
+    conflictBookingNote: 'ไม่สามารถจองได้เนื่องจากมีการจองในช่วงเวลาดังกล่าวแล้ว กรุณาเลือกเวลาอื่น',
     
     // Booking form
     selectPackage: 'เลือกแพ็คเกจ',

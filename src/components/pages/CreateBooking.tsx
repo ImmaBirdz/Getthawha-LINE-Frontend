@@ -49,9 +49,9 @@ type Package = {
 function MakeBooking() {
   const navigate = useNavigate();
   const { t, language } = useTranslation();
-  
+
   const MySwal = withReactContent(Swal);
-  
+
   const [selectedBranch, setSelectedBranch] = useState(t.chooseBranch);
   const [selectedService, setSelectedService] = useState(t.chooseService);
   const [selectedPromotion, setSelectedPromotion] = useState(t.choosePromotion);
@@ -82,7 +82,7 @@ function MakeBooking() {
         // Separate services and promotions
         const servicePackages = packageData.filter((pkg: Package) => pkg.type === 'service');
         const promotionPackages = packageData.filter((pkg: Package) => pkg.type === 'promotion');
-        
+
         setServices(servicePackages);
         setPromotions(promotionPackages);
 
@@ -104,10 +104,10 @@ function MakeBooking() {
     <div className="w-[360px] min-h-screen bg-white flex flex-col">
       {/* Header with back arrow and title */}
       <div className="flex items-center justify-center px-4 py-3 relative">
-        <img src={backhome} alt="Back"  className="w-10 h-10 cursor-pointer hover:scale-110 hover:opacity-80 transition-all duration-200 absolute left-2" onClick={() => navigate('/booking')}/>
+        <img src={backhome} alt="Back" className="w-10 h-10 cursor-pointer hover:scale-110 hover:opacity-80 transition-all duration-200 absolute left-2" onClick={() => navigate('/booking')} />
         <div className={language === 'TH' ? 'text-xl font-athiti font-black text-[#7E4300]' : 'text-xl font-tiroTamil text-[#7E4300]'}>{t.booking}</div>
       </div>
-      
+
       {/* border line */}
       <div className="mx-2 h-1 bg-[#DEC33A]"></div>
 
@@ -117,308 +117,353 @@ function MakeBooking() {
         </div>
       ) : (
         <div className="flex-1 px-4 py-4 space-y-4">
-        {/* Select Branch */}
-        <div>
-          <label className={language === 'TH' ? 'block text-base font-athiti font-black text-[#000000] text-left mb-1' : 'block text-base font-tiroTamil text-[#000000] text-left mb-1'}>
-            {t.selectBranch}<span className="text-red-500">*</span>
-          </label>
-          <div className="relative">
-            <div 
-              onClick={() => {
-                setDropdownOpen(dropdownOpen === 'branch' ? null : 'branch');
-              }}
-              className={`w-full px-3 py-1 bg-[#E7E7E7] border border-[#818181] rounded-3xl ${language === 'TH' ? 'font-athiti font-bold' : 'font-tiroTamil'} text-base focus:outline-none cursor-pointer text-left ${
-                selectedBranch === t.chooseBranch ? 'text-[#999999]' : 'text-[#000000]'
-              }`}
-            >
-              {selectedBranch}
-            </div>
-            <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-              <img 
-                src={dropdownOpen === 'branch' ? arrow2 : arrow1} 
-                alt="Arrow" 
-                className={dropdownOpen === 'branch' ? "w-4 h-2" : "w-2 h-4"} 
-              />
-            </div>
-            {dropdownOpen === 'branch' && (
-              <div className="absolute top-full left-0 right-0 mt-1 bg-[#E7E7E7] border border-[#818181] rounded-2xl shadow-lg z-10">
-                <div
-                  onClick={() => {
-                    setSelectedBranch(t.chooseBranch);
-                    setDropdownOpen(null);
-                  }}
-                  className={language === 'TH' ? 'px-3 py-2 font-athiti font-black text-[#999999] text-base cursor-pointer rounded-full mx-2 my-1 text-left hover:bg-red-100 hover:text-red-600 italic' : 'px-3 py-2 font-tiroTamil text-[#999999] text-base cursor-pointer rounded-full mx-2 my-1 text-left hover:bg-red-100 hover:text-red-600 italic'}
-                >
-                  {t.clear}
-                </div>
-                {branchOptions.map((option) => (
-                  <div
-                    key={option}
-                    onClick={() => {
-                      setSelectedBranch(option);
-                      setDropdownOpen(null);
-                    }}
-                    className={`px-3 py-2 ${language === 'TH' ? 'font-athiti font-black' : 'font-tiroTamil'} text-[#000000] text-base cursor-pointer rounded-full mx-2 my-1 text-left ${
-                      selectedBranch === option 
-                        ? 'bg-[#E7E7E7] hover:bg-[#D7D7D7]' 
-                        : 'hover:bg-[#F5F5F5]'
-                    }`}
-                  >
-                    {option}
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-        </div>
-
-        {/* Select Service */}
-        <div className={selectedPromotion !== t.choosePromotion ? 'opacity-50 pointer-events-none' : ''}>
-          <label className={language === 'TH' ? 'block text-base font-athiti font-black text-[#000000] text-left mb-1' : 'block text-base font-tiroTamil text-[#000000] text-left mb-1'}>
-            {t.selectService}<span className="text-red-500">*</span>
-          </label>
-          <div className="relative">
-            <div 
-              onClick={() => {
-                setDropdownOpen(dropdownOpen === 'service' ? null : 'service');
-              }}
-              className={`w-full px-3 py-1 bg-[#E7E7E7] border border-[#818181] rounded-3xl ${language === 'TH' ? 'font-athiti font-black' : 'font-tiroTamil'} text-base focus:outline-none cursor-pointer text-left ${
-                selectedService === t.chooseService ? 'text-[#999999]' : 'text-[#000000]'
-              }`}
-            >
-              {selectedService}
-            </div>
-            <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-              <img 
-                src={dropdownOpen === 'service' ? arrow2 : arrow1} 
-                alt="Arrow" 
-                className={dropdownOpen === 'service' ? "w-4 h-2" : "w-2 h-4"} 
-              />
-            </div>
-            {dropdownOpen === 'service' && (
-              <div className="absolute top-full left-0 right-0 mt-1 bg-[#E7E7E7] border border-[#818181] rounded-2xl shadow-lg z-10">
-                <div
-                  onClick={() => {
-                    setSelectedService(t.chooseService);
-                    setSelectedPromotion(t.choosePromotion);
-                    setDropdownOpen(null);
-                  }}
-                  className={language === 'TH' ? 'px-3 py-2 font-athiti font-black text-[#999999] text-base cursor-pointer rounded-full mx-2 my-1 text-left hover:bg-red-100 hover:text-red-600 italic' : 'px-3 py-2 font-tiroTamil text-[#999999] text-base cursor-pointer rounded-full mx-2 my-1 text-left hover:bg-red-100 hover:text-red-600 italic'}
-                >
-                  {t.clear}
-                </div>
-                {serviceOptions.map((option) => (
-                  <div
-                    key={option}
-                    onClick={() => {
-                      setSelectedService(option);
-                      setSelectedPromotion(t.choosePromotion); // Reset promotion
-                      setDropdownOpen(null);
-                    }}
-                    className={`px-3 py-2 ${language === 'TH' ? 'font-athiti font-black' : 'font-tiroTamil'} text-[#000000] text-base cursor-pointer rounded-full mx-2 my-1 text-left ${
-                      selectedService === option 
-                        ? 'bg-[#E7E7E7] hover:bg-[#D7D7D7]' 
-                        : 'hover:bg-[#F5F5F5]'
-                    }`}
-                  >
-                    {option}
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-        </div>
-
-        {/* Select Promotion */}
-        <div className={selectedService !== t.chooseService ? 'opacity-50 pointer-events-none' : ''}>
-          <label className={language === 'TH' ? 'block text-base font-athiti font-black text-[#000000] text-left mb-1' : 'block text-base font-tiroTamil text-[#000000] text-left mb-1'}>
-            {t.selectPromotion}<span className="text-red-500">*</span>
-          </label>
-          <div className="relative">
-            <div 
-              onClick={() => {
-                setDropdownOpen(dropdownOpen === 'promotion' ? null : 'promotion');
-              }}
-              className={`w-full px-3 py-1 bg-[#E7E7E7] border border-[#818181] rounded-3xl ${language === 'TH' ? 'font-athiti font-black' : 'font-tiroTamil'} text-base focus:outline-none cursor-pointer text-left ${
-                selectedPromotion === t.choosePromotion ? 'text-[#999999]' : 'text-[#000000]'
-              }`}
-            >
-              {selectedPromotion}
-            </div>
-            <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-              <img 
-                src={dropdownOpen === 'promotion' ? arrow2 : arrow1} 
-                alt="Arrow" 
-                className={dropdownOpen === 'promotion' ? "w-4 h-2" : "w-2 h-4"} 
-              />
-            </div>
-            {dropdownOpen === 'promotion' && (
-              <div className="absolute top-full left-0 right-0 mt-1 bg-[#E7E7E7] border border-[#818181] rounded-2xl shadow-lg z-10">
-                <div
-                  onClick={() => {
-                    setSelectedPromotion(t.choosePromotion);
-                    setSelectedService(t.chooseService);
-                    setDropdownOpen(null);
-                  }}
-                  className={language === 'TH' ? 'px-3 py-2 font-athiti font-black text-[#999999] text-base cursor-pointer rounded-full mx-2 my-1 text-left hover:bg-red-100 hover:text-red-600 italic' : 'px-3 py-2 font-tiroTamil text-[#999999] text-base cursor-pointer rounded-full mx-2 my-1 text-left hover:bg-red-100 hover:text-red-600 italic'}
-                >
-                  {t.clear}
-                </div>
-                {promotionOptions.map((option) => (
-                  <div
-                    key={option}
-                    onClick={() => {
-                      setSelectedPromotion(option);
-                      setSelectedService(t.chooseService); // Reset service  
-                      setDropdownOpen(null);
-                    }}
-                    className={`px-3 py-2 ${language === 'TH' ? 'font-athiti font-black' : 'font-tiroTamil'} text-[#000000] text-base cursor-pointer rounded-full mx-2 my-1 text-left ${
-                      selectedPromotion === option 
-                        ? 'bg-[#E7E7E7] hover:bg-[#D7D7D7]' 
-                        : 'hover:bg-[#F5F5F5]'
-                    }`}
-                  >
-                    {option}
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-        </div>
-
-        {/* Date */}
-        <div>
-          <label className={language === 'TH' ? 'block text-base font-athiti font-black text-[#000000] text-left mb-1' : 'block text-base font-tiroTamil text-[#000000] text-left mb-1'}>
-            {t.date}<span className="text-red-500">*</span>
-          </label>
-          <div className="flex justify-start">
-            <div className="relative inline-block">
-              <input 
-                type="text"
-                value={selectedDate}
-                onChange={(e) => setSelectedDate(e.target.value)}
-                className={`w-40 px-3 py-1 bg-[#E7E7E7] border border-[#818181] rounded-full ${language === 'TH' ? 'font-athiti font-black' : 'font-tiroTamil'} text-[#000000] text-base focus:outline-none focus:ring-2 focus:ring-[#8B4513]`}
-                placeholder="DD/MM/YYYY"
-                readOnly
-              />
-              <input 
-                type="date"
-                onChange={(e) => {
-                  const date = new Date(e.target.value);
-                  const formattedDate = date.toLocaleDateString('en-GB', {
-                    day: '2-digit',
-                    month: '2-digit',
-                    year: 'numeric'
-                  });
-                  setSelectedDate(formattedDate);
+          {/* Select Branch */}
+          <div>
+            <label className={language === 'TH' ? 'block text-base font-athiti font-black text-[#000000] text-left mb-1' : 'block text-base font-tiroTamil text-[#000000] text-left mb-1'}>
+              {t.selectBranch}<span className="text-red-500">*</span>
+            </label>
+            <div className="relative">
+              <div
+                onClick={() => {
+                  setDropdownOpen(dropdownOpen === 'branch' ? null : 'branch');
                 }}
-                className="absolute inset-0 opacity-0 cursor-pointer"
-              />
-              <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none -mt-1">
-                <img src={calendar} alt="Calendar" className="w-4 h-4 " />
+                className={`w-full px-3 py-1 bg-[#E7E7E7] border border-[#818181] rounded-3xl ${language === 'TH' ? 'font-athiti font-bold' : 'font-tiroTamil'} text-base focus:outline-none cursor-pointer text-left ${selectedBranch === t.chooseBranch ? 'text-[#999999]' : 'text-[#000000]'
+                  }`}
+              >
+                {selectedBranch}
               </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Time */}
-        <div>
-          <label className={language === 'TH' ? 'block text-base font-athiti font-black text-[#000000] text-left mb-1' : 'block text-base font-tiroTamil text-[#000000] text-left mb-1'}>
-            {t.selectTime.replace('Select ', '')}<span className="text-red-500">*</span>
-          </label>
-          <div className="flex justify-start">
-            <div className="relative inline-block">
-              <input 
-                type="text"
-                value={selectedTime}
-                onChange={(e) => setSelectedTime(e.target.value)}
-                className={`w-40 px-3 py-1 bg-[#E7E7E7] border border-[#818181] rounded-full ${language === 'TH' ? 'font-athiti font-black' : 'font-tiroTamil'} text-[#000000] text-base focus:outline-none focus:ring-2 focus:ring-[#8B4513]`}
-                placeholder="08:00-21:30"
-                readOnly
-              />
-              <input 
-                type="time"
-                onChange={(e) => {
-                  const time = e.target.value;
-                  if (time) {
-                    setSelectedTime(time); // เก็บเป็น 24 ชั่วโมง (เช่น "14:30")
-                  }
-                }}
-                className="absolute inset-0 opacity-0 cursor-pointer"
-              />
               <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-                <img src={clock} alt="Clock" className="w-4 h-4" />
+                <img
+                  src={dropdownOpen === 'branch' ? arrow2 : arrow1}
+                  alt="Arrow"
+                  className={dropdownOpen === 'branch' ? "w-4 h-2" : "w-2 h-4"}
+                />
+              </div>
+              {dropdownOpen === 'branch' && (
+                <div className="absolute top-full left-0 right-0 mt-1 bg-[#E7E7E7] border border-[#818181] rounded-2xl shadow-lg z-10">
+                  <div
+                    onClick={() => {
+                      setSelectedBranch(t.chooseBranch);
+                      setDropdownOpen(null);
+                    }}
+                    className={language === 'TH' ? 'px-3 py-2 font-athiti font-black text-[#999999] text-base cursor-pointer rounded-full mx-2 my-1 text-left hover:bg-red-100 hover:text-red-600 italic' : 'px-3 py-2 font-tiroTamil text-[#999999] text-base cursor-pointer rounded-full mx-2 my-1 text-left hover:bg-red-100 hover:text-red-600 italic'}
+                  >
+                    {t.clear}
+                  </div>
+                  {branchOptions.map((option) => (
+                    <div
+                      key={option}
+                      onClick={() => {
+                        setSelectedBranch(option);
+                        setDropdownOpen(null);
+                      }}
+                      className={`px-3 py-2 ${language === 'TH' ? 'font-athiti font-black' : 'font-tiroTamil'} text-[#000000] text-base cursor-pointer rounded-full mx-2 my-1 text-left ${selectedBranch === option
+                          ? 'bg-[#E7E7E7] hover:bg-[#D7D7D7]'
+                          : 'hover:bg-[#F5F5F5]'
+                        }`}
+                    >
+                      {option}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Select Service */}
+          <div className={selectedPromotion !== t.choosePromotion ? 'opacity-50 pointer-events-none' : ''}>
+            <label className={language === 'TH' ? 'block text-base font-athiti font-black text-[#000000] text-left mb-1' : 'block text-base font-tiroTamil text-[#000000] text-left mb-1'}>
+              {t.selectService}<span className="text-red-500">*</span>
+            </label>
+            <div className="relative">
+              <div
+                onClick={() => {
+                  setDropdownOpen(dropdownOpen === 'service' ? null : 'service');
+                }}
+                className={`w-full px-3 py-1 bg-[#E7E7E7] border border-[#818181] rounded-3xl ${language === 'TH' ? 'font-athiti font-black' : 'font-tiroTamil'} text-base focus:outline-none cursor-pointer text-left ${selectedService === t.chooseService ? 'text-[#999999]' : 'text-[#000000]'
+                  }`}
+              >
+                {selectedService}
+              </div>
+              <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                <img
+                  src={dropdownOpen === 'service' ? arrow2 : arrow1}
+                  alt="Arrow"
+                  className={dropdownOpen === 'service' ? "w-4 h-2" : "w-2 h-4"}
+                />
+              </div>
+              {dropdownOpen === 'service' && (
+                <div className="absolute top-full left-0 right-0 mt-1 bg-[#E7E7E7] border border-[#818181] rounded-2xl shadow-lg z-10">
+                  <div
+                    onClick={() => {
+                      setSelectedService(t.chooseService);
+                      setSelectedPromotion(t.choosePromotion);
+                      setDropdownOpen(null);
+                    }}
+                    className={language === 'TH' ? 'px-3 py-2 font-athiti font-black text-[#999999] text-base cursor-pointer rounded-full mx-2 my-1 text-left hover:bg-red-100 hover:text-red-600 italic' : 'px-3 py-2 font-tiroTamil text-[#999999] text-base cursor-pointer rounded-full mx-2 my-1 text-left hover:bg-red-100 hover:text-red-600 italic'}
+                  >
+                    {t.clear}
+                  </div>
+                  {serviceOptions.map((option) => (
+                    <div
+                      key={option}
+                      onClick={() => {
+                        setSelectedService(option);
+                        setSelectedPromotion(t.choosePromotion); // Reset promotion
+                        setDropdownOpen(null);
+                      }}
+                      className={`px-3 py-2 ${language === 'TH' ? 'font-athiti font-black' : 'font-tiroTamil'} text-[#000000] text-base cursor-pointer rounded-full mx-2 my-1 text-left ${selectedService === option
+                          ? 'bg-[#E7E7E7] hover:bg-[#D7D7D7]'
+                          : 'hover:bg-[#F5F5F5]'
+                        }`}
+                    >
+                      {option}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Select Promotion */}
+          <div className={selectedService !== t.chooseService ? 'opacity-50 pointer-events-none' : ''}>
+            <label className={language === 'TH' ? 'block text-base font-athiti font-black text-[#000000] text-left mb-1' : 'block text-base font-tiroTamil text-[#000000] text-left mb-1'}>
+              {t.selectPromotion}<span className="text-red-500">*</span>
+            </label>
+            <div className="relative">
+              <div
+                onClick={() => {
+                  setDropdownOpen(dropdownOpen === 'promotion' ? null : 'promotion');
+                }}
+                className={`w-full px-3 py-1 bg-[#E7E7E7] border border-[#818181] rounded-3xl ${language === 'TH' ? 'font-athiti font-black' : 'font-tiroTamil'} text-base focus:outline-none cursor-pointer text-left ${selectedPromotion === t.choosePromotion ? 'text-[#999999]' : 'text-[#000000]'
+                  }`}
+              >
+                {selectedPromotion}
+              </div>
+              <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                <img
+                  src={dropdownOpen === 'promotion' ? arrow2 : arrow1}
+                  alt="Arrow"
+                  className={dropdownOpen === 'promotion' ? "w-4 h-2" : "w-2 h-4"}
+                />
+              </div>
+              {dropdownOpen === 'promotion' && (
+                <div className="absolute top-full left-0 right-0 mt-1 bg-[#E7E7E7] border border-[#818181] rounded-2xl shadow-lg z-10">
+                  <div
+                    onClick={() => {
+                      setSelectedPromotion(t.choosePromotion);
+                      setSelectedService(t.chooseService);
+                      setDropdownOpen(null);
+                    }}
+                    className={language === 'TH' ? 'px-3 py-2 font-athiti font-black text-[#999999] text-base cursor-pointer rounded-full mx-2 my-1 text-left hover:bg-red-100 hover:text-red-600 italic' : 'px-3 py-2 font-tiroTamil text-[#999999] text-base cursor-pointer rounded-full mx-2 my-1 text-left hover:bg-red-100 hover:text-red-600 italic'}
+                  >
+                    {t.clear}
+                  </div>
+                  {promotionOptions.map((option) => (
+                    <div
+                      key={option}
+                      onClick={() => {
+                        setSelectedPromotion(option);
+                        setSelectedService(t.chooseService);
+                        setDropdownOpen(null);
+                      }}
+                      className={`px-3 py-2 ${language === 'TH' ? 'font-athiti font-black' : 'font-tiroTamil'} text-[#000000] text-base cursor-pointer rounded-full mx-2 my-1 text-left ${selectedPromotion === option
+                          ? 'bg-[#E7E7E7] hover:bg-[#D7D7D7]'
+                          : 'hover:bg-[#F5F5F5]'
+                        }`}
+                    >
+                      {option}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Date */}
+          <div>
+            <label className={language === 'TH' ? 'block text-base font-athiti font-black text-[#000000] text-left mb-1' : 'block text-base font-tiroTamil text-[#000000] text-left mb-1'}>
+              {t.date}<span className="text-red-500">*</span>
+            </label>
+            <div className="flex justify-start">
+              <div className="relative inline-block">
+                <input
+                  type="text"
+                  value={selectedDate}
+                  onChange={(e) => setSelectedDate(e.target.value)}
+                  className={`w-40 px-3 py-1 bg-[#E7E7E7] border border-[#818181] rounded-full ${language === 'TH' ? 'font-athiti font-black' : 'font-tiroTamil'} text-[#000000] text-base focus:outline-none focus:ring-2 focus:ring-[#8B4513]`}
+                  placeholder="DD/MM/YYYY"
+                  readOnly
+                />
+                <input
+                  type="date"
+                  onChange={(e) => {
+                    const date = new Date(e.target.value);
+                    const formattedDate = date.toLocaleDateString('en-GB', {
+                      day: '2-digit',
+                      month: '2-digit',
+                      year: 'numeric'
+                    });
+                    setSelectedDate(formattedDate);
+                  }}
+                  className="absolute inset-0 opacity-0 cursor-pointer"
+                />
+                <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none -mt-1">
+                  <img src={calendar} alt="Calendar" className="w-4 h-4 " />
+                </div>
               </div>
             </div>
           </div>
-        </div>
 
-        {/* Voucher Code */}
-        <div>
-          <label className={language === 'TH' ? 'block text-base font-athiti font-black text-[#000000] text-left mb-1' : 'block text-base font-tiroTamil text-[#000000] text-left mb-1'}>
-            {t.voucherCode} <span className="text-gray-500 text-sm">({t.optional})</span>
-          </label>
-          <div className="relative">
-            <input 
-              type="text"
-              value={voucherCode}
-              onChange={(e) => setVoucherCode(e.target.value)}
-              className={`w-full px-3 py-1 bg-[#E7E7E7] border border-[#818181] rounded-full ${language === 'TH' ? 'font-athiti font-black' : 'font-tiroTamil'} text-[#000000] text-base focus:outline-none focus:ring-2 focus:ring-[#8B4513]`}
-              placeholder={t.enterVoucherCode}
-            />
-            <div className="absolute inset-y-0 right-0 flex items-center pr-3">
-              <img src={edit} alt="Edit" className="w-4 h-4" />
+          {/* Time */}
+          <div>
+            <label className={language === 'TH' ? 'block text-base font-athiti font-black text-[#000000] text-left mb-1' : 'block text-base font-tiroTamil text-[#000000] text-left mb-1'}>
+              {t.selectTime.replace('Select ', '')}<span className="text-red-500">*</span>
+            </label>
+            <div className="flex justify-start">
+              <div className="relative inline-block">
+                <input
+                  type="text"
+                  value={selectedTime}
+                  onChange={(e) => setSelectedTime(e.target.value)}
+                  className={`w-40 px-3 py-1 bg-[#E7E7E7] border border-[#818181] rounded-full ${language === 'TH' ? 'font-athiti font-black' : 'font-tiroTamil'} text-[#000000] text-base focus:outline-none focus:ring-2 focus:ring-[#8B4513]`}
+                  placeholder="08:00-21:30"
+                  readOnly
+                />
+                <input
+                  type="time"
+                  onChange={(e) => {
+                    const time = e.target.value;
+                    if (time) {
+                      setSelectedTime(time);
+                    }
+                  }}
+                  className="absolute inset-0 opacity-0 cursor-pointer"
+                />
+                <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                  <img src={clock} alt="Clock" className="w-4 h-4" />
+                </div>
+              </div>
             </div>
           </div>
-        </div>
 
-        {/* Booking Button */}
-        <div className="pt-4 flex justify-center">
-          <button 
-            className={language === 'TH' ? 'mt-2 !bg-[#DCA900] text-white text-xs font-athiti font-black self-center cursor-pointer py-1 px-2 rounded border-none hover:scale-110 hover:opacity-80 transition-all disabled:opacity-50 disabled:cursor-not-allowed' : 'mt-2 !bg-[#DCA900] text-white text-xs font-tiroTamil self-center cursor-pointer py-1 px-2 rounded border-none hover:scale-110 hover:opacity-80 transition-all disabled:opacity-50 disabled:cursor-not-allowed'}
-            disabled={submitting}
-            onClick={async () => {
-              try {
-                // Validate required fields
-                if (selectedBranch === t.chooseBranch || 
+          {/* Voucher Code */}
+          <div>
+            <label className={language === 'TH' ? 'block text-base font-athiti font-black text-[#000000] text-left mb-1' : 'block text-base font-tiroTamil text-[#000000] text-left mb-1'}>
+              {t.voucherCode} <span className="text-gray-500 text-sm">({t.optional})</span>
+            </label>
+            <div className="relative">
+              <input
+                type="text"
+                value={voucherCode}
+                onChange={(e) => setVoucherCode(e.target.value)}
+                className={`w-full px-3 py-1 bg-[#E7E7E7] border border-[#818181] rounded-full ${language === 'TH' ? 'font-athiti font-black' : 'font-tiroTamil'} text-[#000000] text-base focus:outline-none focus:ring-2 focus:ring-[#8B4513]`}
+                placeholder={t.enterVoucherCode}
+              />
+              <div className="absolute inset-y-0 right-0 flex items-center pr-3">
+                <img src={edit} alt="Edit" className="w-4 h-4" />
+              </div>
+            </div>
+          </div>
+
+          {/* Booking Button */}
+          <div className="pt-4 flex justify-center">
+            <button
+              className={language === 'TH' ? 'mt-2 !bg-[#DCA900] text-white text-xs font-athiti font-black self-center cursor-pointer py-1 px-2 rounded border-none hover:scale-110 hover:opacity-80 transition-all disabled:opacity-50 disabled:cursor-not-allowed' : 'mt-2 !bg-[#DCA900] text-white text-xs font-tiroTamil self-center cursor-pointer py-1 px-2 rounded border-none hover:scale-110 hover:opacity-80 transition-all disabled:opacity-50 disabled:cursor-not-allowed'}
+              disabled={submitting}
+              onClick={async () => {
+                try {
+                  // Validate required fields
+                  if (selectedBranch === t.chooseBranch ||
                     (selectedService === t.chooseService && selectedPromotion === t.choosePromotion) ||
-                    !selectedDate || 
+                    !selectedDate ||
                     !selectedTime) {
-                  MySwal.fire({
-                    title: <div className={language === 'TH' ? 'font-athiti font-black text-[#7E4300] text-lg' : 'font-tiroTamil text-[#7E4300] text-lg'}>{language === 'TH' ? 'ข้อมูลไม่ครบถ้วน' : 'Incomplete Information'}</div>,
-                    html: <div className={language === 'TH' ? 'font-athiti font-black text-[#6B4423] text-sm' : 'font-tiroTamil text-[#6B4423] text-sm'}>{language === 'TH' ? 'กรุณากรอกข้อมูลให้ครบถ้วน และเลือกบริการหรือโปรโมชัน' : 'Please fill in all required fields. Choose either a service or promotion.'}</div>,
-                    icon: "warning",
-                    confirmButtonColor: "#7E4300",
-                    confirmButtonText: <span className={language === 'TH' ? 'font-athiti font-black' : 'font-tiroTamil'}>OK</span>
-                  });
-                  return;
-                }
-
-                // Validate time range (08:00 - 21:30) when confirming booking
-                if (selectedTime) {
-                  const [hours, minutes] = selectedTime.split(':');
-                  const hour = parseInt(hours);
-                  const minute = parseInt(minutes);
-                  
-                  const isValidTime = (hour >= 8 && hour < 21) || (hour === 21 && minute <= 30);
-                  
-                  if (!isValidTime) {
                     MySwal.fire({
-                      title: <div className={language === 'TH' ? 'font-athiti font-black text-[#7E4300] text-lg' : 'font-tiroTamil text-[#7E4300] text-lg'}>{language === 'TH' ? 'เวลาไม่ถูกต้อง' : 'Invalid Time'}</div>,
-                      html: <div className={language === 'TH' ? 'font-athiti font-black text-[#6B4423] text-sm' : 'font-tiroTamil text-[#6B4423] text-sm'}>{language === 'TH' ? 'กรุณาเลือกเวลาระหว่าง 08:00 - 21:30 เท่านั้น' : 'Please select time between 08:00 - 21:30 only'}</div>,
+                      title: <div className={language === 'TH' ? 'font-athiti font-black text-[#7E4300] text-lg' : 'font-tiroTamil text-[#7E4300] text-lg'}>{language === 'TH' ? 'ข้อมูลไม่ครบถ้วน' : 'Incomplete Information'}</div>,
+                      html: <div className={language === 'TH' ? 'font-athiti font-black text-[#6B4423] text-sm' : 'font-tiroTamil text-[#6B4423] text-sm'}>{language === 'TH' ? 'กรุณากรอกข้อมูลให้ครบถ้วน และเลือกบริการหรือโปรโมชัน' : 'Please fill in all required fields. Choose either a service or promotion.'}</div>,
                       icon: "warning",
                       confirmButtonColor: "#7E4300",
                       confirmButtonText: <span className={language === 'TH' ? 'font-athiti font-black' : 'font-tiroTamil'}>OK</span>
                     });
                     return;
                   }
-                }
 
-                setSubmitting(true);
+                  // Validate time range (08:00 - 21:30) when confirming booking
+                  if (selectedTime) {
+                    const [hours, minutes] = selectedTime.split(':');
+                    const hour = parseInt(hours);
+                    const minute = parseInt(minutes);
 
-                // Check for overlapping bookings
-                try {
-                  const existingBookings = await getBookings();
+                    const isValidTime = (hour >= 8 && hour < 21) || (hour === 21 && minute <= 30);
+
+                    if (!isValidTime) {
+                      MySwal.fire({
+                        title: <div className={language === 'TH' ? 'font-athiti font-black text-[#7E4300] text-lg' : 'font-tiroTamil text-[#7E4300] text-lg'}>{language === 'TH' ? 'เวลาไม่ถูกต้อง' : 'Invalid Time'}</div>,
+                        html: <div className={language === 'TH' ? 'font-athiti font-black text-[#6B4423] text-sm' : 'font-tiroTamil text-[#6B4423] text-sm'}>{language === 'TH' ? 'กรุณาเลือกเวลาระหว่าง 08:00 - 21:30 เท่านั้น' : 'Please select time between 08:00 - 21:30 only'}</div>,
+                        icon: "warning",
+                        confirmButtonColor: "#7E4300",
+                        confirmButtonText: <span className={language === 'TH' ? 'font-athiti font-black' : 'font-tiroTamil'}>OK</span>
+                      });
+                      return;
+                    }
+                  }
+
+                  setSubmitting(true);
+
+                  // Check for overlapping bookings
+                  try {
+                    const existingBookings = await getBookings();
+                    const selectedBranchData = branches.find(b => b.name === selectedBranch);
+                    let selectedPackageData = null;
+                    if (selectedService !== t.chooseService) {
+                      selectedPackageData = services.find(s => `${s.title} (${s.duration}min)` === selectedService);
+                    } else if (selectedPromotion !== t.choosePromotion) {
+                      selectedPackageData = promotions.find(p => p.title === selectedPromotion);
+                    }
+
+                    if (selectedBranchData && selectedPackageData) {
+                      // Convert selected date and time to proper format for comparison
+                      const [day, month, year] = selectedDate.split('/');
+                      const [hour, minute] = selectedTime.split(':');
+                      const newBookingDateTime = new Date(parseInt(year), parseInt(month) - 1, parseInt(day), parseInt(hour), parseInt(minute));
+                      const newBookingEndTime = new Date(newBookingDateTime.getTime() + (selectedPackageData.duration * 60000));
+
+                      // Check for conflicts with existing bookings
+                      const hasConflict = existingBookings.some((booking: any) => {
+                        const existingDateTime = new Date(booking.date);
+                        const existingEndTime = new Date(existingDateTime.getTime() + (booking.duration * 60000));
+
+                        // Same branch check
+                        const sameBranch = booking.branch.id === selectedBranchData.id;
+
+                        // Same date check
+                        const sameDate = existingDateTime.toDateString() === newBookingDateTime.toDateString();
+
+                        // Time overlap check
+                        const timeOverlap = (newBookingDateTime < existingEndTime) && (newBookingEndTime > existingDateTime);
+
+                        return sameBranch && sameDate && timeOverlap;
+                      });
+
+                      if (hasConflict) {
+                        MySwal.fire({
+                          title: <div className={language === 'TH' ? 'font-athiti font-black text-[#7E4300] text-lg' : 'font-tiroTamil text-[#7E4300] text-lg'}>{language === 'TH' ? 'เวลาจองซ้ำซ้อน' : 'Booking Conflict'}</div>,
+                          html: <div className={language === 'TH' ? 'font-athiti font-black text-[#6B4423] text-sm' : 'font-tiroTamil text-[#6B4423] text-sm'}>
+                            {t.conflictBookingNote}
+                          </div>,
+                          icon: "error",
+                          confirmButtonColor: "#7E4300",
+                          confirmButtonText: <span className={language === 'TH' ? 'font-athiti font-black' : 'font-tiroTamil'}>OK</span>
+                        });
+                        setSubmitting(false);
+                        return;
+                      }
+                    }
+                  } catch (error) {
+                    console.error('Failed to check existing bookings:', error);
+                  }
+
+                  // Find selected items from API data
                   const selectedBranchData = branches.find(b => b.name === selectedBranch);
                   let selectedPackageData = null;
                   if (selectedService !== t.chooseService) {
@@ -427,132 +472,79 @@ function MakeBooking() {
                     selectedPackageData = promotions.find(p => p.title === selectedPromotion);
                   }
 
-                  if (selectedBranchData && selectedPackageData) {
-                    // Convert selected date and time to proper format for comparison
-                    const [day, month, year] = selectedDate.split('/');
-                    const [hour, minute] = selectedTime.split(':');
-                    const newBookingDateTime = new Date(parseInt(year), parseInt(month) - 1, parseInt(day), parseInt(hour), parseInt(minute));
-                    const newBookingEndTime = new Date(newBookingDateTime.getTime() + (selectedPackageData.duration * 60000));
-
-                    // Check for conflicts with existing bookings
-                    const hasConflict = existingBookings.some((booking: any) => {
-                      const existingDateTime = new Date(booking.date);
-                      const existingEndTime = new Date(existingDateTime.getTime() + (booking.duration * 60000));
-                      
-                      // Same branch check
-                      const sameBranch = booking.branch.id === selectedBranchData.id;
-                      
-                      // Same date check
-                      const sameDate = existingDateTime.toDateString() === newBookingDateTime.toDateString();
-                      
-                      // Time overlap check
-                      const timeOverlap = (newBookingDateTime < existingEndTime) && (newBookingEndTime > existingDateTime);
-                      
-                      return sameBranch && sameDate && timeOverlap;
-                    });
-
-                    if (hasConflict) {
-                      MySwal.fire({
-                        title: <div className={language === 'TH' ? 'font-athiti font-black text-[#7E4300] text-lg' : 'font-tiroTamil text-[#7E4300] text-lg'}>{language === 'TH' ? 'เวลาจองซ้ำซ้อน' : 'Booking Conflict'}</div>,
-                        html: <div className={language === 'TH' ? 'font-athiti font-black text-[#6B4423] text-sm' : 'font-tiroTamil text-[#6B4423] text-sm'}>
-                          {language === 'TH' 
-                            ? 'ไม่สามารถจองได้เนื่องจากมีการจองในช่วงเวลาดังกล่าวแล้ว กรุณาเลือกเวลาอื่น' 
-                            : 'Cannot make booking due to existing booking in the selected time slot. Please choose a different time.'}
-                        </div>,
-                        icon: "error",
+                  // Get voucherId if voucherCode is provided and valid
+                  let voucherId = null;
+                  if (voucherCode) {
+                    try {
+                      const voucher = await getVoucher(voucherCode);
+                      voucherId = voucher?.id || null;
+                    } catch (error) {
+                      console.warn('Invalid voucher code:', error);
+                      const result = await MySwal.fire({
+                        title: <div className={language === 'TH' ? 'font-athiti font-black text-[#7E4300] text-lg' : 'font-tiroTamil text-[#7E4300] text-lg'}>{language === 'TH' ? 'รหัสส่วนลดไม่ถูกต้อง' : 'Invalid Voucher Code'}</div>,
+                        html: <div className={language === 'TH' ? 'font-athiti font-black text-[#6B4423] text-sm' : 'font-tiroTamil text-[#6B4423] text-sm'}>{language === 'TH' ? 'คุณต้องการทำการจองโดยไม่ใช้รหัสส่วนลดหรือไม่?' : 'Do you want to continue booking without voucher?'}</div>,
+                        icon: "question",
+                        showCancelButton: true,
                         confirmButtonColor: "#7E4300",
-                        confirmButtonText: <span className={language === 'TH' ? 'font-athiti font-black' : 'font-tiroTamil'}>OK</span>
+                        cancelButtonColor: "#7E4300",
+                        confirmButtonText: <span className={language === 'TH' ? 'font-athiti font-black' : 'font-tiroTamil'}>{language === 'TH' ? 'ดำเนินการต่อ' : 'Continue'}</span>,
+                        cancelButtonText: <span className={language === 'TH' ? 'font-athiti font-black' : 'font-tiroTamil'}>{language === 'TH' ? 'ยกเลิก' : 'Cancel'}</span>
                       });
-                      setSubmitting(false);
-                      return;
+
+                      if (!result.isConfirmed) {
+                        setSubmitting(false);
+                        return;
+                      }
+                      setVoucherCode('');
                     }
                   }
+
+                  // Convert date and time to proper ISO format
+                  const [day, month, year] = selectedDate.split('/');
+                  const [hour, minute] = selectedTime.split(':');
+
+                  const isoDate = new Date(parseInt(year), parseInt(month) - 1, parseInt(day), parseInt(hour), parseInt(minute));
+
+                  // Create booking data for API 
+                  const bookingData = {
+                    branchId: selectedBranchData?.id,
+                    packageId: selectedPackageData?.id,
+                    voucherId: voucherId,
+                    date: isoDate.toISOString(),
+                  };
+
+                  // Submit booking to API
+                  await createBooking(bookingData);
+
+                  // Show success message
+                  await MySwal.fire({
+                    title: <div className={language === 'TH' ? 'font-athiti font-black text-[#7E4300] text-lg' : 'font-tiroTamil text-[#7E4300] text-lg'}>{language === 'TH' ? 'จองเสร็จสิ้น!' : 'Booking Created!'}</div>,
+                    html: <div className={language === 'TH' ? 'font-athiti font-black text-[#6B4423] text-sm' : 'font-tiroTamil text-[#6B4423] text-sm'}>{language === 'TH' ? 'การจองของคุณถูกสร้างเรียบร้อยแล้ว' : 'Your booking has been created successfully'}</div>,
+                    icon: "success",
+                    confirmButtonColor: "#7E4300",
+                    confirmButtonText: <span className={language === 'TH' ? 'font-athiti font-black' : 'font-tiroTamil'}>OK</span>
+                  });
+
+                  // Navigate to view booking page
+                  navigate('/booking');
+
                 } catch (error) {
-                  console.error('Failed to check existing bookings:', error);
+                  console.error('Failed to create booking:', error);
+                  MySwal.fire({
+                    title: <div className={language === 'TH' ? 'font-athiti font-black text-[#7E4300] text-lg' : 'font-tiroTamil text-[#7E4300] text-lg'}>{language === 'TH' ? 'เกิดข้อผิดพลาด!' : 'Error!'}</div>,
+                    html: <div className={language === 'TH' ? 'font-athiti font-black text-[#6B4423] text-sm' : 'font-tiroTamil text-[#6B4423] text-sm'}>{language === 'TH' ? 'ไม่สามารถสร้างการจองได้ กรุณาลองใหม่อีกครั้ง' : 'Failed to create booking. Please try again.'}</div>,
+                    icon: "error",
+                    confirmButtonColor: "#7E4300",
+                    confirmButtonText: <span className={language === 'TH' ? 'font-athiti font-black' : 'font-tiroTamil'}>OK</span>
+                  });
+                } finally {
+                  setSubmitting(false);
                 }
-
-                // Find selected items from API data
-                const selectedBranchData = branches.find(b => b.name === selectedBranch);
-                let selectedPackageData = null;
-                if (selectedService !== t.chooseService) {
-                  selectedPackageData = services.find(s => `${s.title} (${s.duration}min)` === selectedService);
-                } else if (selectedPromotion !== t.choosePromotion) {
-                  selectedPackageData = promotions.find(p => p.title === selectedPromotion);
-                }
-
-                // Get voucherId if voucherCode is provided and valid
-                let voucherId = null;
-                if (voucherCode) {
-                  try {
-                    const voucher = await getVoucher(voucherCode);
-                    voucherId = voucher?.id || null;
-                  } catch (error) {
-                    console.warn('Invalid voucher code:', error);
-                    const result = await MySwal.fire({
-                      title: <div className={language === 'TH' ? 'font-athiti font-black text-[#7E4300] text-lg' : 'font-tiroTamil text-[#7E4300] text-lg'}>{language === 'TH' ? 'รหัสส่วนลดไม่ถูกต้อง' : 'Invalid Voucher Code'}</div>,
-                      html: <div className={language === 'TH' ? 'font-athiti font-black text-[#6B4423] text-sm' : 'font-tiroTamil text-[#6B4423] text-sm'}>{language === 'TH' ? 'คุณต้องการทำการจองโดยไม่ใช้รหัสส่วนลดหรือไม่?' : 'Do you want to continue booking without voucher?'}</div>,
-                      icon: "question",
-                      showCancelButton: true,
-                      confirmButtonColor: "#7E4300",
-                      cancelButtonColor: "#7E4300",
-                      confirmButtonText: <span className={language === 'TH' ? 'font-athiti font-black' : 'font-tiroTamil'}>{language === 'TH' ? 'ดำเนินการต่อ' : 'Continue'}</span>,
-                      cancelButtonText: <span className={language === 'TH' ? 'font-athiti font-black' : 'font-tiroTamil'}>{language === 'TH' ? 'ยกเลิก' : 'Cancel'}</span>
-                    });
-                    
-                    if (!result.isConfirmed) {
-                      setSubmitting(false);
-                      return;
-                    }
-                    setVoucherCode('');
-                  }
-                }
-
-                // Convert date and time to proper ISO format
-                const [day, month, year] = selectedDate.split('/');
-                const [hour, minute] = selectedTime.split(':'); // selectedTime is already in 24-hour format
-                
-                const isoDate = new Date(parseInt(year), parseInt(month) - 1, parseInt(day), parseInt(hour), parseInt(minute));
-                
-                // Create booking data for API 
-                const bookingData = {
-                  branchId: selectedBranchData?.id,
-                  packageId: selectedPackageData?.id,
-                  voucherId: voucherId,
-                  date: isoDate.toISOString(),
-                };
-
-                // Submit booking to API
-                await createBooking(bookingData);
-
-                // Show success message
-                await MySwal.fire({
-                  title: <div className={language === 'TH' ? 'font-athiti font-black text-[#7E4300] text-lg' : 'font-tiroTamil text-[#7E4300] text-lg'}>{language === 'TH' ? 'จองเสร็จสิ้น!' : 'Booking Created!'}</div>,
-                  html: <div className={language === 'TH' ? 'font-athiti font-black text-[#6B4423] text-sm' : 'font-tiroTamil text-[#6B4423] text-sm'}>{language === 'TH' ? 'การจองของคุณถูกสร้างเรียบร้อยแล้ว' : 'Your booking has been created successfully'}</div>,
-                  icon: "success",
-                  confirmButtonColor: "#7E4300",
-                  confirmButtonText: <span className={language === 'TH' ? 'font-athiti font-black' : 'font-tiroTamil'}>OK</span>
-                });
-
-                // Navigate to view booking page
-                navigate('/booking');
-
-              } catch (error) {
-                console.error('Failed to create booking:', error);
-                MySwal.fire({
-                  title: <div className={language === 'TH' ? 'font-athiti font-black text-[#7E4300] text-lg' : 'font-tiroTamil text-[#7E4300] text-lg'}>{language === 'TH' ? 'เกิดข้อผิดพลาด!' : 'Error!'}</div>,
-                  html: <div className={language === 'TH' ? 'font-athiti font-black text-[#6B4423] text-sm' : 'font-tiroTamil text-[#6B4423] text-sm'}>{language === 'TH' ? 'ไม่สามารถสร้างการจองได้ กรุณาลองใหม่อีกครั้ง' : 'Failed to create booking. Please try again.'}</div>,
-                  icon: "error",
-                  confirmButtonColor: "#7E4300",
-                  confirmButtonText: <span className={language === 'TH' ? 'font-athiti font-black' : 'font-tiroTamil'}>OK</span>
-                });
-              } finally {
-                setSubmitting(false);
-              }
-            }}
-          >
-            {submitting ? t.creating : t.confirmBooking}
-          </button>
-        </div>
+              }}
+            >
+              {submitting ? t.creating : t.confirmBooking}
+            </button>
+          </div>
         </div>
       )}
     </div>

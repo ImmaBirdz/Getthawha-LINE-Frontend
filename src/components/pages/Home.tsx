@@ -20,7 +20,7 @@ import '../../App.css'
 
 // import assets
 import Package from './Package'
-import PackageModal from '../PackageModal'
+import PackageModal from '../modals/PackageModal'
 
 type Package = {
     id: string;
@@ -35,22 +35,19 @@ type Package = {
 };
 
 function Home() {
+    // Profile context
     const {
         profile,
         isLiffLoaded
     } = useContext(ProfileContext)
+    // Translation context
+    const {
+        language,
+        setLanguage,
+        t
+    } = useTranslation();
+    
     const navigate = useNavigate();
-
-    // Use global translation context
-    const { language, setLanguage, t } = useTranslation();
-
-    // // Dummy profile data for demonstration purposes
-    // const [profile] = useState({
-    //     userId: 'U1234567890abcdef',
-    //     displayName: 'John Doe',
-    //     pictureUrl: 'https://via.placeholder.com/150',
-    //     email: 'john.doe@example.com'
-    // });
 
     const [packages, setPackages] = useState<Package[]>([])
     const [selectedPackage, setSelectedPackage] = useState<Package | null>(null)
@@ -91,9 +88,7 @@ function Home() {
     }, []);
 
     return (
-        profile
-            && isLiffLoaded
-            ? (
+        profile && isLiffLoaded ? (
                 <div className="App">
                     <div className="m-0 w-[360px] min-h-[90vh] bg-white flex flex-col relative">
                         <div className="px-6 py-4 text-[#D49F00] bg-white justify-evenly ">
@@ -213,7 +208,6 @@ function Home() {
                             onClose={closeModal}
                             packageData={selectedPackage}
                         />
-
                     </div>
                 </div>
             ) : (

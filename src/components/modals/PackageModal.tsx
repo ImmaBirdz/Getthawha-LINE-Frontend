@@ -1,5 +1,5 @@
 // import assets
-import closeIcon from '../assets/close.png';
+import closeIcon from '../../assets/close.png';
 
 // Fixed English labels for consistency
 const labels = {
@@ -139,8 +139,6 @@ function PackageModal({ isOpen, onClose, packageData }: PackageModalProps) {
                         </div>
                     )}
                 </div>
-
-
             </div>
         </div>
     );
