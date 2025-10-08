@@ -51,8 +51,6 @@ function ViewBooking() {
 
   const MySwal = withReactContent(Swal)
 
-
-
   const handleDeleteBooking = async (bookingId: string) => {
     MySwal.fire({
       title: <div className={language === 'TH' ? 'font-athiti font-black text-[#7E4300] text-lg' : 'font-tiroTamil text-[#7E4300] text-lg'}>{t.areYouSureDelete}</div>,
@@ -100,14 +98,16 @@ function ViewBooking() {
         setLoading(true);
         const data = await getBookings();
         
-        // Filter for pending bookings and expired bookings 
+        // Filter for pending bookings only - similar to History but opposite filter
         const pendingBookings = data.filter((booking: Booking) => {
-          // Include pending bookings and expired bookings (but not completed/cancelled)
+          // Only include pending bookings
           if (booking.status) {
             return booking.status.toLowerCase().includes('pending');
           }
-          // For bookings without status, include both future and past bookings (exclude only if explicitly completed/cancelled)
-          return true;
+          // For bookings without status, use date logic - only future bookings (upcoming)
+          const now = new Date();
+          const bookingDateTime = new Date(booking.date);
+          return bookingDateTime >= now;
         });
         
         const mappedData = pendingBookings.map((booking: Booking) => ({
@@ -175,15 +175,11 @@ function ViewBooking() {
                           day: 'numeric',
                           month: 'numeric',  
                           year: 'numeric'
-                        })}, {(() => {
-                          const date = new Date(booking.date);
-                          const hours = date.getHours();
-                          const minutes = date.getMinutes();
-                          const ampm = hours >= 12 ? 'PM' : 'AM';
-                          const displayHours = hours % 12 || 12;
-                          const displayMinutes = minutes.toString().padStart(2, '0');
-                          return `${displayHours}:${displayMinutes} ${ampm}`;
-                        })()}
+                        })}, {new Date(booking.date).toLocaleTimeString('en-US', { 
+                          hour: 'numeric', 
+                          minute: '2-digit',
+                          hour12: true
+                        })}
                       </span>
                     </div>
                   </div>
@@ -228,7 +224,7 @@ function ViewBooking() {
             <div className={language === 'TH' ? 'text-[#7E4300] text-lg font-athiti font-bold' : 'text-[#7E4300] text-lg font-tiroTamil'}>{t.noBookings}</div>
 
             {/* Make a booking button */}
-            <button className={language === 'TH' ? 'mt-2 !bg-[#DCA900] text-white text-xs font-athiti font-bold self-center cursor-pointer py-1 px-2 rounded border-none hover:scale-110 hover:opacity-80 transition-all disabled:opacity-50 disabled:cursor-not-allowed' : 'mt-2 !bg-[#DCA900] text-white text-xs font-tiroTamil self-center cursor-pointer py-1 px-2 rounded border-none hover:scale-110 hover:opacity-80 transition-all disabled:opacity-50 disabled:cursor-not-allowed'} onClick={() => navigate('/booking/create')}>{t.makeBooking}</button>
+            <button className={language === 'TH' ? 'mt-2 !bg-[#DCA900] text-white text-xs font-athiti font-bold self-center cursor-pointer py-1 px-2 rounded border-none hover:scale-110 hover:opacity-80 transition-all disabled:opacity-50 disabled:cursor-not-allowed' : 'mt-2 !bg-[#DCA900] text-white text-xs font-tiroTamil self-center cursor-pointer py-1 px-2 rounded border-none hover:scale-110 hover:opacity-80 transition-all disabled:opacity-50 disabled:cursor-not-allowed'} onClick={() => navigate('/booking/new')}>{t.makeBooking}</button>
           </div>
         </div>
       )}
