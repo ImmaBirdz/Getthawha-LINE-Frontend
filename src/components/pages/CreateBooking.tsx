@@ -332,20 +332,35 @@ function MakeBooking() {
                 value={selectedTime}
                 onChange={(e) => setSelectedTime(e.target.value)}
                 className={`w-40 px-3 py-1 bg-[#E7E7E7] border border-[#818181] rounded-full ${language === 'TH' ? 'font-athiti font-black' : 'font-tiroTamil'} text-[#000000] text-base focus:outline-none focus:ring-2 focus:ring-[#8B4513]`}
-                placeholder="-- : -- --"
+                placeholder="08:00-21:30"
                 readOnly
               />
               <input 
                 type="time"
+                min="08:00"
+                max="21:30"
                 onChange={(e) => {
                   const time = e.target.value;
                   if (time) {
                     const [hours, minutes] = time.split(':');
                     const hour = parseInt(hours);
-                    const ampm = hour >= 12 ? 'PM' : 'AM';
-                    const displayHour = hour === 0 ? 12 : hour > 12 ? hour - 12 : hour;
-                    const formattedTime = `${displayHour}:${minutes} ${ampm}`;
-                    setSelectedTime(formattedTime);
+                    const minute = parseInt(minutes);
+                    
+                    // Validate time range (08:00 - 21:30)
+                    const isValidTime = (hour >= 8 && hour < 21) || (hour === 21 && minute <= 30);
+                    
+                    if (!isValidTime) {
+                      MySwal.fire({
+                        title: <div className={language === 'TH' ? 'font-athiti font-black text-[#7E4300] text-lg' : 'font-tiroTamil text-[#7E4300] text-lg'}>{language === 'TH' ? 'เวลาไม่ถูกต้อง' : 'Invalid Time'}</div>,
+                        html: <div className={language === 'TH' ? 'font-athiti font-black text-[#6B4423] text-sm' : 'font-tiroTamil text-[#6B4423] text-sm'}>{language === 'TH' ? 'กรุณาเลือกเวลาระหว่าง 08:00 - 21:30 เท่านั้น' : 'Please select time between 08:00 - 21:30 only'}</div>,
+                        icon: "warning",
+                        confirmButtonColor: "#7E4300",
+                        confirmButtonText: <span className={language === 'TH' ? 'font-athiti font-black' : 'font-tiroTamil'}>OK</span>
+                      });
+                      return;
+                    }
+                    
+                    setSelectedTime(time); // เก็บเป็น 24 ชั่วโมง (เช่น "14:30")
                   }
                 }}
                 className="absolute inset-0 opacity-0 cursor-pointer"
@@ -438,17 +453,9 @@ function MakeBooking() {
 
                 // Convert date and time to proper ISO format
                 const [day, month, year] = selectedDate.split('/');
-                const timeString = selectedTime.replace(/\s?(AM|PM)/, '');
-                const [hour, minute] = timeString.split(':');
-                let hour24 = parseInt(hour);
+                const [hour, minute] = selectedTime.split(':'); // selectedTime is already in 24-hour format
                 
-                if (selectedTime.includes('PM') && hour24 !== 12) {
-                  hour24 += 12;
-                } else if (selectedTime.includes('AM') && hour24 === 12) {
-                  hour24 = 0;
-                }
-                
-                const isoDate = new Date(parseInt(year), parseInt(month) - 1, parseInt(day), hour24, parseInt(minute));
+                const isoDate = new Date(parseInt(year), parseInt(month) - 1, parseInt(day), parseInt(hour), parseInt(minute));
                 
                 // Create booking data for API 
                 const bookingData = {
