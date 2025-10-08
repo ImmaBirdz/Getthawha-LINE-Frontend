@@ -51,12 +51,7 @@ function ViewBooking() {
 
   const MySwal = withReactContent(Swal)
 
-  // Function to check if booking is expired/timeout
-  const isBookingTimeout = (bookingDate: string) => {
-    const now = new Date();
-    const bookingDateTime = new Date(bookingDate);
-    return bookingDateTime < now;
-  };
+
 
   const handleDeleteBooking = async (bookingId: string) => {
     MySwal.fire({
@@ -163,21 +158,10 @@ function ViewBooking() {
                 <div className="flex justify-between items-start text-left relative">
                   {/* Left side - Status, Package and Branch info */}
                   <div className="flex flex-col gap-1 text-left">
-                    {/* Status - Pending or Timeout */}
+                    {/* Status - Pending */}
                     <div className="text-[#818181] font-medium text-sm mb-1 flex items-center gap-1">
-                      {isBookingTimeout(booking.date) ? (
-                        <>
-                          <div className="w-2 h-2 bg-[#FF4444] rounded-full animate-pulse shadow-[0_0_4px_#FF8888]"></div>
-                          <span className={language === 'TH' ? 'animate-pulse font-athiti font-black text-[#FF4444]' : 'animate-pulse text-[#FF4444]'}>
-                            {language === 'TH' ? 'หมดเวลา' : 'Timeout'}
-                          </span>
-                        </>
-                      ) : (
-                        <>
-                          <div className="w-2 h-2 bg-[#FFA600] rounded-full animate-pulse shadow-[0_0_4px_#FFD381]"></div>
-                          <span className={language === 'TH' ? 'animate-pulse font-athiti font-black' : 'animate-pulse'}>{t.pending}</span>
-                        </>
-                      )}
+                      <div className="w-2 h-2 bg-[#FFA600] rounded-full animate-pulse shadow-[0_0_4px_#FFD381]"></div>
+                      <span className={language === 'TH' ? 'animate-pulse font-athiti font-black' : 'animate-pulse'}>{t.pending}</span>
                     </div>
                     <div className="text-[#6B4423] font-medium text-left text-sm">
                       <span className={language === 'TH' ? 'font-athiti font-bold' : ''}>{t.package}:</span> <span className="font-medium text-[#D49F00]">{booking.package.title}</span>
