@@ -4,6 +4,8 @@ import {
   useState
 } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
 
 // import translation
 import { useTranslation } from '../../context/TranslationContext';
@@ -46,6 +48,8 @@ type Package = {
 function MakeBooking() {
   const navigate = useNavigate();
   const { t, language } = useTranslation();
+  
+  const MySwal = withReactContent(Swal);
   
   const [selectedBranch, setSelectedBranch] = useState(t.chooseBranch);
   const [selectedService, setSelectedService] = useState(t.chooseService);
@@ -384,7 +388,13 @@ function MakeBooking() {
                     (selectedService === t.chooseService && selectedPromotion === t.choosePromotion) ||
                     !selectedDate || 
                     !selectedTime) {
-                  alert('Please fill in all required fields. Choose either a service or promotion.');
+                  MySwal.fire({
+                    title: <div className={language === 'TH' ? 'font-athiti font-black text-[#7E4300] text-lg' : 'font-tiroTamil text-[#7E4300] text-lg'}>{language === 'TH' ? 'ข้อมูลไม่ครบถ้วน' : 'Incomplete Information'}</div>,
+                    html: <div className={language === 'TH' ? 'font-athiti font-black text-[#6B4423] text-sm' : 'font-tiroTamil text-[#6B4423] text-sm'}>{language === 'TH' ? 'กรุณากรอกข้อมูลให้ครบถ้วน และเลือกบริการหรือโปรโมชัน' : 'Please fill in all required fields. Choose either a service or promotion.'}</div>,
+                    icon: "warning",
+                    confirmButtonColor: "#7E4300",
+                    confirmButtonText: <span className={language === 'TH' ? 'font-athiti font-black' : 'font-tiroTamil'}>OK</span>
+                  });
                   return;
                 }
 
@@ -407,8 +417,18 @@ function MakeBooking() {
                     voucherId = voucher?.id || null;
                   } catch (error) {
                     console.warn('Invalid voucher code:', error);
-                    const continueWithoutVoucher = confirm('Invalid voucher code. Do you want to continue booking without voucher?');
-                    if (!continueWithoutVoucher) {
+                    const result = await MySwal.fire({
+                      title: <div className={language === 'TH' ? 'font-athiti font-black text-[#7E4300] text-lg' : 'font-tiroTamil text-[#7E4300] text-lg'}>{language === 'TH' ? 'รหัสส่วนลดไม่ถูกต้อง' : 'Invalid Voucher Code'}</div>,
+                      html: <div className={language === 'TH' ? 'font-athiti font-black text-[#6B4423] text-sm' : 'font-tiroTamil text-[#6B4423] text-sm'}>{language === 'TH' ? 'คุณต้องการทำการจองโดยไม่ใช้รหัสส่วนลดหรือไม่?' : 'Do you want to continue booking without voucher?'}</div>,
+                      icon: "question",
+                      showCancelButton: true,
+                      confirmButtonColor: "#7E4300",
+                      cancelButtonColor: "#7E4300",
+                      confirmButtonText: <span className={language === 'TH' ? 'font-athiti font-black' : 'font-tiroTamil'}>{language === 'TH' ? 'ดำเนินการต่อ' : 'Continue'}</span>,
+                      cancelButtonText: <span className={language === 'TH' ? 'font-athiti font-black' : 'font-tiroTamil'}>{language === 'TH' ? 'ยกเลิก' : 'Cancel'}</span>
+                    });
+                    
+                    if (!result.isConfirmed) {
                       setSubmitting(false);
                       return;
                     }
@@ -441,12 +461,27 @@ function MakeBooking() {
                 // Submit booking to API
                 await createBooking(bookingData);
 
+                // Show success message
+                await MySwal.fire({
+                  title: <div className={language === 'TH' ? 'font-athiti font-black text-[#7E4300] text-lg' : 'font-tiroTamil text-[#7E4300] text-lg'}>{language === 'TH' ? 'จองเสร็จสิ้น!' : 'Booking Created!'}</div>,
+                  html: <div className={language === 'TH' ? 'font-athiti font-black text-[#6B4423] text-sm' : 'font-tiroTamil text-[#6B4423] text-sm'}>{language === 'TH' ? 'การจองของคุณถูกสร้างเรียบร้อยแล้ว' : 'Your booking has been created successfully'}</div>,
+                  icon: "success",
+                  confirmButtonColor: "#7E4300",
+                  confirmButtonText: <span className={language === 'TH' ? 'font-athiti font-black' : 'font-tiroTamil'}>OK</span>
+                });
+
                 // Navigate to view booking page
                 navigate('/booking');
 
               } catch (error) {
                 console.error('Failed to create booking:', error);
-                alert('Failed to create booking. Please try again.');
+                MySwal.fire({
+                  title: <div className={language === 'TH' ? 'font-athiti font-black text-[#7E4300] text-lg' : 'font-tiroTamil text-[#7E4300] text-lg'}>{language === 'TH' ? 'เกิดข้อผิดพลาด!' : 'Error!'}</div>,
+                  html: <div className={language === 'TH' ? 'font-athiti font-black text-[#6B4423] text-sm' : 'font-tiroTamil text-[#6B4423] text-sm'}>{language === 'TH' ? 'ไม่สามารถสร้างการจองได้ กรุณาลองใหม่อีกครั้ง' : 'Failed to create booking. Please try again.'}</div>,
+                  icon: "error",
+                  confirmButtonColor: "#7E4300",
+                  confirmButtonText: <span className={language === 'TH' ? 'font-athiti font-black' : 'font-tiroTamil'}>OK</span>
+                });
               } finally {
                 setSubmitting(false);
               }
