@@ -442,7 +442,7 @@ function MakeBooking() {
                 await createBooking(bookingData);
 
                 // Navigate to view booking page
-                navigate('/viewbooking');
+                navigate('/booking');
 
               } catch (error) {
                 console.error('Failed to create booking:', error);
