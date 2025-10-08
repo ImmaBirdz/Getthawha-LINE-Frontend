@@ -14,6 +14,7 @@ import { useTranslation } from '../../context/TranslationContext';
 import {
   createBooking,
   getBranches,
+  getBookings,
   getPackages,
   getVoucher
 } from '../../services/BackendApi';
@@ -413,16 +414,91 @@ function MakeBooking() {
                   }
                 }
 
-                setSubmitting(true);
-
                 // Find selected items from API data
                 const selectedBranchData = branches.find(b => b.name === selectedBranch);
                 let selectedPackageData = null;
+                let serviceDuration = 0;
+                
                 if (selectedService !== t.chooseService) {
                   selectedPackageData = services.find(s => `${s.title} (${s.duration}min)` === selectedService);
+                  serviceDuration = selectedPackageData?.duration || 0;
                 } else if (selectedPromotion !== t.choosePromotion) {
                   selectedPackageData = promotions.find(p => p.title === selectedPromotion);
+                  serviceDuration = selectedPackageData?.duration || 0;
                 }
+
+                // Check for booking conflicts
+                try {
+                  const existingBookings = await getBookings();
+
+                  // Convert selected date and time to Date object
+                  const [day, month, year] = selectedDate.split('/');
+                  const [hour, minute] = selectedTime.split(':');
+                  const selectedDateTime = new Date(parseInt(year), parseInt(month) - 1, parseInt(day), parseInt(hour), parseInt(minute));
+                  const selectedEndTime = new Date(selectedDateTime.getTime() + serviceDuration * 60000); // Add duration in milliseconds
+
+                  // Check for conflicts with existing bookings (only for the same branch)
+                  for (const booking of existingBookings) {
+                    if (booking.branchId === selectedBranchData?.id && 
+                        booking.status !== 'cancelled' && 
+                        booking.status !== 'completed') {
+                      
+                      const bookingDate = new Date(booking.date);
+                      const bookingEndTime = new Date(bookingDate.getTime() + (booking.package?.duration || 60) * 60000);
+                      
+                      // Check if the selected date is the same day as existing booking
+                      const isSameDay = (
+                        selectedDateTime.getFullYear() === bookingDate.getFullYear() &&
+                        selectedDateTime.getMonth() === bookingDate.getMonth() &&
+                        selectedDateTime.getDate() === bookingDate.getDate()
+                      );
+
+                      if (isSameDay) {
+                        // Check if times overlap (with 15-minute buffer for cleanup/setup)
+                        const bufferTime = 15 * 60000; // 15 minutes in milliseconds
+                        const bufferedBookingStart = new Date(bookingDate.getTime() - bufferTime);
+                        const bufferedBookingEnd = new Date(bookingEndTime.getTime() + bufferTime);
+                        
+                        const hasConflict = (
+                          (selectedDateTime >= bufferedBookingStart && selectedDateTime < bufferedBookingEnd) ||
+                          (selectedEndTime > bufferedBookingStart && selectedEndTime <= bufferedBookingEnd) ||
+                          (selectedDateTime <= bufferedBookingStart && selectedEndTime >= bufferedBookingEnd)
+                        );
+
+                        if (hasConflict) {
+                          const conflictTime = bookingDate.toLocaleTimeString('th-TH', { 
+                            hour: '2-digit', 
+                            minute: '2-digit', 
+                            hour12: false 
+                          });
+                          const conflictEndTime = bookingEndTime.toLocaleTimeString('th-TH', { 
+                            hour: '2-digit', 
+                            minute: '2-digit', 
+                            hour12: false 
+                          });
+
+                          MySwal.fire({
+                            title: <div className={language === 'TH' ? 'font-athiti font-black text-[#7E4300] text-lg' : 'font-tiroTamil text-[#7E4300] text-lg'}>{language === 'TH' ? 'เวลาซ้อนทับ!' : 'Time Conflict!'}</div>,
+                            html: <div className={language === 'TH' ? 'font-athiti font-black text-[#6B4423] text-sm' : 'font-tiroTamil text-[#6B4423] text-sm'}>
+                              {language === 'TH' 
+                                ? `มีการจองในช่วงเวลา ${conflictTime} - ${conflictEndTime} แล้ว กรุณาเลือกเวลาอื่น (ต้องห่างอย่างน้อย 15 นาที)` 
+                                : `There is already a booking from ${conflictTime} - ${conflictEndTime}. Please choose another time (minimum 15 minutes gap required).`}
+                            </div>,
+                            icon: "warning",
+                            confirmButtonColor: "#7E4300",
+                            confirmButtonText: <span className={language === 'TH' ? 'font-athiti font-black' : 'font-tiroTamil'}>OK</span>
+                          });
+                          return;
+                        }
+                      }
+                    }
+                  }
+                } catch (error) {
+                  console.error('Failed to check booking conflicts:', error);
+                  // Continue with booking if conflict check fails
+                }
+
+                setSubmitting(true);
 
                 // Get voucherId if voucherCode is provided and valid
                 let voucherId = null;
