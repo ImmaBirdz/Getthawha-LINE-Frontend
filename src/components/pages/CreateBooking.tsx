@@ -439,10 +439,16 @@ function MakeBooking() {
                 };
 
                 // Submit booking to API
-                await createBooking(bookingData);
+                const result = await createBooking(bookingData);
+                console.log('Booking created successfully:', result);
 
-                // Navigate to view booking page
-                navigate('/booking');
+                // Show success message and navigate
+                alert('Booking created successfully!');
+                
+                // Navigate to view booking page after a short delay
+                setTimeout(() => {
+                  navigate('/booking', { replace: true });
+                }, 100);
 
               } catch (error) {
                 console.error('Failed to create booking:', error);
