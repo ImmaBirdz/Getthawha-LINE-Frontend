@@ -33,7 +33,7 @@ function Header() {
                       : 'text-[30px] text-[#DEC33A] font-artifika cursor-pointer'
                   }
                 >
-                  {createAnimatedText(t.headerTitle, 'animate-char-dance')}
+                  {createAnimatedText(t.headerTitle, 'animate-char-float')}
                 </div>
                 <div
                   className={
@@ -42,7 +42,7 @@ function Header() {
                       : 'text-[20px] text-[#B9A43B] relative bottom-2 font-arya cursor-pointer'
                   }
                 >
-                  {createAnimatedText(t.headerSubtitle, 'animate-char-wobble')}
+                  {createAnimatedText(t.headerSubtitle, 'animate-char-breathe')}
                 </div>
             </div>
         </div>
