@@ -16,8 +16,8 @@ function Header() {
                 <div
                   className={
                     language === 'TH'
-                      ? 'text-[30px] text-[#DEC33A] font-athiti font-bold'
-                      : 'text-[30px] text-[#DEC33A] font-artifika'
+                      ? 'text-[30px] text-[#DEC33A] font-athiti font-bold animate-cute-wobble hover-wobble cursor-pointer'
+                      : 'text-[30px] text-[#DEC33A] font-artifika animate-cute-wobble hover-wobble cursor-pointer'
                   }
                 >
                   {t.headerTitle}
@@ -25,8 +25,8 @@ function Header() {
                 <div
                   className={
                     language === 'TH'
-                      ? 'text-[20px] text-[#B9A43B] relative bottom-2 font-athiti font-bold'
-                      : 'text-[20px] text-[#B9A43B] relative bottom-2 font-arya'
+                      ? 'text-[20px] text-[#B9A43B] relative bottom-2 font-athiti font-bold animate-gentle-sway hover-sway cursor-pointer'
+                      : 'text-[20px] text-[#B9A43B] relative bottom-2 font-arya animate-gentle-sway hover-sway cursor-pointer'
                   }
                 >
                   {t.headerSubtitle}
