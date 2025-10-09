@@ -1,5 +1,6 @@
 //import libraries
 import {
+  useContext,
   useEffect,
   useState
 } from 'react';
@@ -9,6 +10,7 @@ import withReactContent from 'sweetalert2-react-content';
 
 // import translation
 import { useTranslation } from '../../context/TranslationContext';
+import { ProfileContext } from '../../context/ProfileContext';
 
 // import API
 import {
@@ -48,7 +50,17 @@ type Package = {
 
 function MakeBooking() {
   const navigate = useNavigate();
-  const { t, language } = useTranslation();
+  // Translation Context
+  const { 
+    t,
+    language
+  } = useTranslation();
+
+  // Profile Context
+  const {
+    profile,
+    isLiffLoaded
+  } = useContext(ProfileContext);
 
   const MySwal = withReactContent(Swal);
 
@@ -101,6 +113,7 @@ function MakeBooking() {
   const promotionOptions = promotions.map(promotion => promotion.title);
 
   return (
+    profile && isLiffLoaded ? (
     <div className="w-[360px] min-h-screen bg-white flex flex-col">
       {/* Header with back arrow and title */}
       <div className="flex items-center justify-center px-4 py-3 relative">
@@ -548,7 +561,13 @@ function MakeBooking() {
         </div>
       )}
     </div>
-  );
+  ) : (
+    <div className="w-[360px] min-h-screen bg-white flex items-center justify-center">
+      <div className={language === 'TH' ? 'text-[#7E4300] text-lg font-athiti font-black' : 'text-[#7E4300] text-lg font-tiroTamil'}>{t.loading}</div>
+
+    </div>
+  )
+
 }
 
 export default MakeBooking;
