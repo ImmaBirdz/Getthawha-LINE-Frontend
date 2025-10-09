@@ -390,31 +390,31 @@
 }
 
 .animate-char-wobble .char {
-  animation: char-wobble 1.8s ease-in-out infinite;
+  animation: char-wobble 2s ease-in-out infinite;
 }
 
 .animate-char-bounce .char {
-  animation: char-bounce 1.2s ease-in-out infinite;
+  animation: char-bounce 1.5s ease-in-out infinite;
 }
 
 .animate-char-dance .char {
-  animation: char-dance 2s ease-in-out infinite;
+  animation: char-dance 2.5s ease-in-out infinite;
 }
 
 .animate-char-wiggle .char {
-  animation: char-wiggle 2.2s ease-in-out infinite;
+  animation: char-wiggle 3s ease-in-out infinite;
 }
 
 .animate-char-breathe .char {
-  animation: char-breathe 2.8s ease-in-out infinite;
+  animation: char-breathe 4s ease-in-out infinite;
 }
 
 .animate-char-float .char {
-  animation: char-float 3.5s ease-in-out infinite;
+  animation: char-float 5s ease-in-out infinite;
 }
 
 .animate-char-pulse .char {
-  animation: char-pulse 2.5s ease-in-out infinite;
+  animation: char-pulse 3.5s ease-in-out infinite;
 }
 
 /* Environment-friendly staggered delays (reduced intensity) */
