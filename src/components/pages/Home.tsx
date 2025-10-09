@@ -52,6 +52,8 @@ function Home() {
     const [packages, setPackages] = useState<Package[]>([])
     const [selectedPackage, setSelectedPackage] = useState<Package | null>(null)
     const [isModalOpen, setIsModalOpen] = useState(false)
+    const [draggedItem, setDraggedItem] = useState<Package | null>(null)
+    const [draggedOverItem, setDraggedOverItem] = useState<Package | null>(null)
 
     const handlePackageClick = (pkg: Package) => {
         setSelectedPackage(pkg)
@@ -61,6 +63,55 @@ function Home() {
     const closeModal = () => {
         setIsModalOpen(false)
         setSelectedPackage(null)
+    }
+
+    // Drag and drop handlers
+    const handleDragStart = (e: React.DragEvent, pkg: Package) => {
+        setDraggedItem(pkg)
+        e.dataTransfer.effectAllowed = 'move'
+        e.dataTransfer.setData('text/html', pkg.id)
+    }
+
+    const handleDragEnd = () => {
+        setDraggedItem(null)
+        setDraggedOverItem(null)
+    }
+
+    const handleDragOver = (e: React.DragEvent, pkg: Package) => {
+        e.preventDefault()
+        e.dataTransfer.dropEffect = 'move'
+        setDraggedOverItem(pkg)
+    }
+
+    const handleDragLeave = () => {
+        setDraggedOverItem(null)
+    }
+
+    const handleDrop = (e: React.DragEvent, dropTarget: Package) => {
+        e.preventDefault()
+        
+        if (!draggedItem || draggedItem.id === dropTarget.id) {
+            return
+        }
+
+        // Only allow reordering within the same type (service or promotion)
+        if (draggedItem.type !== dropTarget.type) {
+            return
+        }
+
+        const updatedPackages = [...packages]
+        
+        // Find indices
+        const draggedIndex = updatedPackages.findIndex(pkg => pkg.id === draggedItem.id)
+        const targetIndex = updatedPackages.findIndex(pkg => pkg.id === dropTarget.id)
+        
+        // Remove dragged item and insert at new position
+        const [draggedPackage] = updatedPackages.splice(draggedIndex, 1)
+        updatedPackages.splice(targetIndex, 0, draggedPackage)
+        
+        setPackages(updatedPackages)
+        setDraggedItem(null)
+        setDraggedOverItem(null)
     }
 
     useEffect(() => {
@@ -153,6 +204,13 @@ function Home() {
                                             ? 'text-[#7E4300] text-xl font-athiti font-black mb-1'
                                             : 'text-[#7E4300] text-xl font-tiroTamil mb-1'
                                     }>{t.services}</div>
+                                    <div className={
+                                        language === 'TH'
+                                            ? 'text-[#A66B00] text-xs font-athiti font-medium mb-2'
+                                            : 'text-[#A66B00] text-xs font-tiroTamil mb-2'
+                                    }>
+                                        {language === 'TH' ? '🔄 ลากเพื่อจัดเรียงลำดับ' : '🔄 Drag to reorder'}
+                                    </div>
                                 </div>
                                 <ul className="flex flex-col gap-3 px-4 pb-2 list-none">
                                     {packages.filter(pkg => pkg.type === 'service').map((pkg) => (
@@ -167,6 +225,14 @@ function Home() {
                                             note={pkg.note}
                                             onClick={() => handlePackageClick(pkg)}
                                             showOnlyTitle={true}
+                                            draggable={true}
+                                            onDragStart={(e) => handleDragStart(e, pkg)}
+                                            onDragEnd={handleDragEnd}
+                                            onDragOver={(e) => handleDragOver(e, pkg)}
+                                            onDragLeave={handleDragLeave}
+                                            onDrop={(e) => handleDrop(e, pkg)}
+                                            isDragging={draggedItem?.id === pkg.id}
+                                            isDraggedOver={draggedOverItem?.id === pkg.id}
                                         />
                                     ))}
                                 </ul>
@@ -182,6 +248,13 @@ function Home() {
                                             ? 'text-[#7E4300] text-xl font-athiti font-black mb-1'
                                             : 'text-[#7E4300] text-xl font-tiroTamil mb-1'
                                     }>{t.promotions}</div>
+                                    <div className={
+                                        language === 'TH'
+                                            ? 'text-[#A66B00] text-xs font-athiti font-medium mb-2'
+                                            : 'text-[#A66B00] text-xs font-tiroTamil mb-2'
+                                    }>
+                                        {language === 'TH' ? '🔄 ลากเพื่อจัดเรียงลำดับ' : '🔄 Drag to reorder'}
+                                    </div>
                                 </div>
                                 <ul className="flex flex-col gap-3 px-4 pb-2 list-none">
                                     {packages.filter(pkg => pkg.type === 'promotion').map((pkg) => (
@@ -196,6 +269,14 @@ function Home() {
                                             note={pkg.note}
                                             onClick={() => handlePackageClick(pkg)}
                                             showOnlyTitle={false}
+                                            draggable={true}
+                                            onDragStart={(e) => handleDragStart(e, pkg)}
+                                            onDragEnd={handleDragEnd}
+                                            onDragOver={(e) => handleDragOver(e, pkg)}
+                                            onDragLeave={handleDragLeave}
+                                            onDrop={(e) => handleDrop(e, pkg)}
+                                            isDragging={draggedItem?.id === pkg.id}
+                                            isDraggedOver={draggedOverItem?.id === pkg.id}
                                         />
                                     ))}
                                 </ul>
