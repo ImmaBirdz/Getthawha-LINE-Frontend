@@ -109,7 +109,6 @@ function MakeBooking() {
   }, []);
 
   const branchOptions = branches.map(branch => branch.name);
-  const promotionOptions = promotions.map(promotion => promotion.title);
 
   return (
     profile && isLiffLoaded ? (
@@ -272,20 +271,21 @@ function MakeBooking() {
                     >
                       {t.clear}
                     </div>
-                    {promotionOptions.map((option) => (
+                    {promotions.map((promotion) => (
                       <div
-                        key={option}
+                        key={promotion.title}
                         onClick={() => {
-                          setSelectedPromotion(option);
+                          setSelectedPromotion(promotion.title);
                           setSelectedService(t.chooseService);
                           setDropdownOpen(null);
                         }}
-                        className={`px-3 py-2 ${language === 'TH' ? 'font-athiti font-black' : 'font-tiroTamil'} text-[#000000] text-base cursor-pointer rounded-full mx-2 my-1 text-left ${selectedPromotion === option
+                        className={`px-3 py-2 ${language === 'TH' ? 'font-athiti font-black' : 'font-tiroTamil'} text-[#000000] text-base cursor-pointer rounded-full mx-2 my-1 text-left flex justify-between items-center ${selectedPromotion === promotion.title
                           ? 'bg-[#E7E7E7] hover:bg-[#D7D7D7]'
                           : 'hover:bg-[#F5F5F5]'
                           }`}
                       >
-                        {option}
+                        <span>{promotion.title}</span>
+                        <span className="text-sm text-gray-600">({promotion.duration}min)</span>
                       </div>
                     ))}
                   </div>
