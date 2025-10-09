@@ -8,13 +8,50 @@ interface PackageProps {
     note?: string;
     onClick?: () => void;
     showOnlyTitle?: boolean;
+    // Drag and drop props
+    draggable?: boolean;
+    onDragStart?: (e: React.DragEvent) => void;
+    onDragEnd?: () => void;
+    onDragOver?: (e: React.DragEvent) => void;
+    onDragLeave?: () => void;
+    onDrop?: (e: React.DragEvent) => void;
+    isDragging?: boolean;
+    isDraggedOver?: boolean;
 }
 
-function Package({ backgroundImage, altText = "Package Background", title, description, price, duration, note, onClick, showOnlyTitle = false }: PackageProps) {
+function Package({ 
+    backgroundImage, 
+    altText = "Package Background", 
+    title, 
+    description, 
+    price, 
+    duration, 
+    note, 
+    onClick, 
+    showOnlyTitle = false,
+    draggable = false,
+    onDragStart,
+    onDragEnd,
+    onDragOver,
+    onDragLeave,
+    onDrop,
+    isDragging = false,
+    isDraggedOver = false
+}: PackageProps) {
     return (
         <li 
-            className="relative rounded-2xl overflow-hidden h-40 w-full shadow-lg cursor-pointer hover:scale-105 hover:shadow-2xl transition-all duration-300 ease-out group"
+            className={`relative rounded-2xl overflow-hidden h-40 w-full shadow-lg cursor-pointer hover:scale-105 hover:shadow-2xl transition-all duration-300 ease-out group ${
+                isDragging ? 'opacity-50 scale-95' : ''
+            } ${
+                isDraggedOver ? 'ring-4 ring-blue-400 ring-opacity-60 scale-105' : ''
+            }`}
             onClick={onClick}
+            draggable={draggable}
+            onDragStart={onDragStart}
+            onDragEnd={onDragEnd}
+            onDragOver={onDragOver}
+            onDragLeave={onDragLeave}
+            onDrop={onDrop}
         >
             <img 
                 src={backgroundImage} 
@@ -26,9 +63,18 @@ function Package({ backgroundImage, altText = "Package Background", title, descr
             <div className="absolute inset-0 w-16 h-full bg-gradient-to-r from-transparent via-white/40 to-transparent animate-shimmer-shine pointer-events-none"></div>         
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-black/40 rounded-2xl transition-opacity duration-300 group-hover:from-black/40 group-hover:via-black/10 group-hover:to-black/20"></div>
             
-            {/* Duration badge - top right corner */}
+            {/* Drag handle - top right corner when draggable */}
+            {draggable && (
+                <div className="absolute top-3 right-3 z-10 bg-black/70 rounded-full p-2 transition-all duration-300 group-hover:bg-black/80 group-hover:scale-110">
+                    <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z"/>
+                    </svg>
+                </div>
+            )}
+
+            {/* Duration badge - top right corner (moved when draggable) */}
             {duration && (
-                <div className="absolute top-3 right-3 flex items-center gap-1 bg-black/70 rounded-full px-3 py-1 transition-all duration-300 group-hover:bg-black/80 group-hover:scale-110 animate-pulse animate-slide-in-right delay-200">
+                <div className={`absolute top-3 ${draggable ? 'right-14' : 'right-3'} flex items-center gap-1 bg-black/70 rounded-full px-3 py-1 transition-all duration-300 group-hover:bg-black/80 group-hover:scale-110 animate-pulse animate-slide-in-right delay-200`}>
                     <svg className="w-4 h-4 text-white transition-transform duration-300 group-hover:rotate-12" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clipRule="evenodd" />
                     </svg>
