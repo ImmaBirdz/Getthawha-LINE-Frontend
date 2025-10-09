@@ -220,58 +220,101 @@
   }
 }
 
-/* Character-by-character animations */
+/* Environment-friendly character animations */
 @keyframes char-wobble {
   0%, 100% {
     transform: rotate(0deg) translateY(0px) scale(1);
+    filter: brightness(1);
   }
   25% {
-    transform: rotate(-8deg) translateY(-3px) scale(1.1);
+    transform: rotate(-3deg) translateY(-1px) scale(1.02);
+    filter: brightness(1.1);
   }
   75% {
-    transform: rotate(8deg) translateY(-2px) scale(1.05);
+    transform: rotate(3deg) translateY(-1px) scale(1.01);
+    filter: brightness(1.05);
   }
 }
 
 @keyframes char-bounce {
   0%, 100% {
     transform: translateY(0px) scale(1);
+    opacity: 1;
   }
   50% {
-    transform: translateY(-8px) scale(1.2);
+    transform: translateY(-3px) scale(1.05);
+    opacity: 0.9;
   }
 }
 
 @keyframes char-dance {
   0% {
-    transform: rotate(0deg) translateY(0px);
+    transform: rotate(0deg) translateY(0px) scale(1);
+    filter: hue-rotate(0deg);
   }
-  20% {
-    transform: rotate(-10deg) translateY(-4px);
+  25% {
+    transform: rotate(-2deg) translateY(-1px) scale(1.02);
+    filter: hue-rotate(5deg);
   }
-  40% {
-    transform: rotate(5deg) translateY(-2px);
+  50% {
+    transform: rotate(1deg) translateY(-2px) scale(1.03);
+    filter: hue-rotate(-3deg);
   }
-  60% {
-    transform: rotate(-3deg) translateY(-6px);
-  }
-  80% {
-    transform: rotate(2deg) translateY(-1px);
+  75% {
+    transform: rotate(-1deg) translateY(-1px) scale(1.01);
+    filter: hue-rotate(2deg);
   }
   100% {
-    transform: rotate(0deg) translateY(0px);
+    transform: rotate(0deg) translateY(0px) scale(1);
+    filter: hue-rotate(0deg);
   }
 }
 
 @keyframes char-wiggle {
   0%, 100% {
-    transform: rotate(0deg);
+    transform: rotate(0deg) scale(1);
+    text-shadow: 0 0 0 rgba(222, 195, 58, 0);
   }
-  25% {
-    transform: rotate(-5deg) scale(1.05);
+  50% {
+    transform: rotate(-1deg) scale(1.01);
+    text-shadow: 0 0 5px rgba(222, 195, 58, 0.3);
   }
-  75% {
-    transform: rotate(5deg) scale(0.95);
+}
+
+/* Breathing animation for natural feel */
+@keyframes char-breathe {
+  0%, 100% {
+    transform: scale(1) translateY(0px);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.02) translateY(-0.5px);
+    opacity: 0.95;
+  }
+}
+
+/* Floating like leaves */
+@keyframes char-float {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  33% {
+    transform: translateY(-1px) rotate(-0.5deg);
+  }
+  66% {
+    transform: translateY(-2px) rotate(0.5deg);
+  }
+}
+
+/* Subtle pulse animation */
+@keyframes char-pulse {
+  0%, 100% {
+    transform: scale(1);
+    filter: brightness(1);
+  }
+  50% {
+    transform: scale(1.01);
+    filter: brightness(1.05);
   }
 }
 
@@ -352,30 +395,63 @@
 }
 
 .animate-char-wiggle .char {
-  animation: char-wiggle 1.8s ease-in-out infinite;
+  animation: char-wiggle 3s ease-in-out infinite;
 }
 
-/* Staggered delay for characters */
+.animate-char-breathe .char {
+  animation: char-breathe 4s ease-in-out infinite;
+}
+
+.animate-char-float .char {
+  animation: char-float 5s ease-in-out infinite;
+}
+
+.animate-char-pulse .char {
+  animation: char-pulse 3.5s ease-in-out infinite;
+}
+
+/* Environment-friendly staggered delays (reduced intensity) */
 .char:nth-child(1) { animation-delay: 0s; }
-.char:nth-child(2) { animation-delay: 0.1s; }
-.char:nth-child(3) { animation-delay: 0.2s; }
-.char:nth-child(4) { animation-delay: 0.3s; }
-.char:nth-child(5) { animation-delay: 0.4s; }
-.char:nth-child(6) { animation-delay: 0.5s; }
-.char:nth-child(7) { animation-delay: 0.6s; }
-.char:nth-child(8) { animation-delay: 0.7s; }
-.char:nth-child(9) { animation-delay: 0.8s; }
-.char:nth-child(10) { animation-delay: 0.9s; }
-.char:nth-child(11) { animation-delay: 1s; }
-.char:nth-child(12) { animation-delay: 1.1s; }
-.char:nth-child(13) { animation-delay: 1.2s; }
-.char:nth-child(14) { animation-delay: 1.3s; }
-.char:nth-child(15) { animation-delay: 1.4s; }
-.char:nth-child(16) { animation-delay: 1.5s; }
-.char:nth-child(17) { animation-delay: 1.6s; }
-.char:nth-child(18) { animation-delay: 1.7s; }
-.char:nth-child(19) { animation-delay: 1.8s; }
-.char:nth-child(20) { animation-delay: 1.9s; }
+.char:nth-child(2) { animation-delay: 0.08s; }
+.char:nth-child(3) { animation-delay: 0.16s; }
+.char:nth-child(4) { animation-delay: 0.24s; }
+.char:nth-child(5) { animation-delay: 0.32s; }
+.char:nth-child(6) { animation-delay: 0.4s; }
+.char:nth-child(7) { animation-delay: 0.48s; }
+.char:nth-child(8) { animation-delay: 0.56s; }
+.char:nth-child(9) { animation-delay: 0.64s; }
+.char:nth-child(10) { animation-delay: 0.72s; }
+.char:nth-child(11) { animation-delay: 0.8s; }
+.char:nth-child(12) { animation-delay: 0.88s; }
+.char:nth-child(13) { animation-delay: 0.96s; }
+.char:nth-child(14) { animation-delay: 1.04s; }
+.char:nth-child(15) { animation-delay: 1.12s; }
+.char:nth-child(16) { animation-delay: 1.2s; }
+.char:nth-child(17) { animation-delay: 1.28s; }
+.char:nth-child(18) { animation-delay: 1.36s; }
+.char:nth-child(19) { animation-delay: 1.44s; }
+.char:nth-child(20) { animation-delay: 1.52s; }
+
+/* Responsive animation control */
+@media (prefers-reduced-motion: reduce) {
+  .animated-text .char {
+    animation: none;
+    transform: none;
+    filter: none;
+  }
+  
+  .animated-text {
+    opacity: 1;
+  }
+}
+
+/* Battery-saving mode for mobile */
+@media (max-width: 768px) and (max-resolution: 150dpi) {
+  .animated-text .char {
+    animation-duration: 4s;
+    animation-iteration-count: 3;
+  }
+}
 
 /* Delay classes for staggered animations */
 .delay-100 {
