@@ -44,7 +44,10 @@ const ProfileProvider = (props: React.PropsWithChildren<{}>) => {
     // initialize LIFF
     useEffect(() => {
             // await liff.init({ liffId: '2007750755-nv6wlyNZ' }) // old
-            liff.init({ liffId: '2007725317-GXv8QvO3' }) // yung's
+            liff.init({
+                liffId: '2007725317-GXv8QvO3',
+                withLoginOnExternalBrowser: true
+            }) // yung's
                 .then(() => {
                     if (liff.isLoggedIn()) {
                         const idToken = liff.getIDToken() ?? '';
