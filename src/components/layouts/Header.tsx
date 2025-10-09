@@ -5,6 +5,19 @@ import border2 from '../../assets/border2.png';
 
 function Header() {
     const { t, language } = useTranslation();
+    
+    // Function to split text into animated characters
+    const createAnimatedText = (text: string, animationType: string) => {
+        return (
+            <span className={`animated-text ${animationType}`}>
+                {text.split('').map((char, index) => (
+                    <span key={index} className="char">
+                        {char === ' ' ? '\u00A0' : char}
+                    </span>
+                ))}
+            </span>
+        );
+    };
     return (
         <div className="m-0 w-[360px] h-fit bg-[linear-gradient(90deg,#4C2B00_0%,#2D1406_100%)] flex flex-col relative">
             {/* Thai pattern at the top corner */}
@@ -16,20 +29,20 @@ function Header() {
                 <div
                   className={
                     language === 'TH'
-                      ? 'text-[30px] text-[#DEC33A] font-athiti font-bold animate-cute-wobble hover-wobble cursor-pointer'
-                      : 'text-[30px] text-[#DEC33A] font-artifika animate-cute-wobble hover-wobble cursor-pointer'
+                      ? 'text-[30px] text-[#DEC33A] font-athiti font-bold cursor-pointer'
+                      : 'text-[30px] text-[#DEC33A] font-artifika cursor-pointer'
                   }
                 >
-                  {t.headerTitle}
+                  {createAnimatedText(t.headerTitle, 'animate-char-dance')}
                 </div>
                 <div
                   className={
                     language === 'TH'
-                      ? 'text-[20px] text-[#B9A43B] relative bottom-2 font-athiti font-bold animate-gentle-sway hover-sway cursor-pointer'
-                      : 'text-[20px] text-[#B9A43B] relative bottom-2 font-arya animate-gentle-sway hover-sway cursor-pointer'
+                      ? 'text-[20px] text-[#B9A43B] relative bottom-2 font-athiti font-bold cursor-pointer'
+                      : 'text-[20px] text-[#B9A43B] relative bottom-2 font-arya cursor-pointer'
                   }
                 >
-                  {t.headerSubtitle}
+                  {createAnimatedText(t.headerSubtitle, 'animate-char-wobble')}
                 </div>
             </div>
         </div>

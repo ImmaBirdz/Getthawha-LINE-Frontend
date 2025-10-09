@@ -220,6 +220,61 @@
   }
 }
 
+/* Character-by-character animations */
+@keyframes char-wobble {
+  0%, 100% {
+    transform: rotate(0deg) translateY(0px) scale(1);
+  }
+  25% {
+    transform: rotate(-8deg) translateY(-3px) scale(1.1);
+  }
+  75% {
+    transform: rotate(8deg) translateY(-2px) scale(1.05);
+  }
+}
+
+@keyframes char-bounce {
+  0%, 100% {
+    transform: translateY(0px) scale(1);
+  }
+  50% {
+    transform: translateY(-8px) scale(1.2);
+  }
+}
+
+@keyframes char-dance {
+  0% {
+    transform: rotate(0deg) translateY(0px);
+  }
+  20% {
+    transform: rotate(-10deg) translateY(-4px);
+  }
+  40% {
+    transform: rotate(5deg) translateY(-2px);
+  }
+  60% {
+    transform: rotate(-3deg) translateY(-6px);
+  }
+  80% {
+    transform: rotate(2deg) translateY(-1px);
+  }
+  100% {
+    transform: rotate(0deg) translateY(0px);
+  }
+}
+
+@keyframes char-wiggle {
+  0%, 100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(-5deg) scale(1.05);
+  }
+  75% {
+    transform: rotate(5deg) scale(0.95);
+  }
+}
+
 /* Animation utility classes */
 .animate-shimmer-flow {
   animation: shimmer-flow 3s ease-in-out infinite;
@@ -272,6 +327,55 @@
 .hover-sway:hover {
   animation: gentle-sway 1.5s ease-in-out;
 }
+
+/* Character animation classes */
+.animated-text {
+  display: inline-block;
+}
+
+.animated-text .char {
+  display: inline-block;
+  animation-fill-mode: both;
+  transform-origin: center bottom;
+}
+
+.animate-char-wobble .char {
+  animation: char-wobble 2s ease-in-out infinite;
+}
+
+.animate-char-bounce .char {
+  animation: char-bounce 1.5s ease-in-out infinite;
+}
+
+.animate-char-dance .char {
+  animation: char-dance 2.5s ease-in-out infinite;
+}
+
+.animate-char-wiggle .char {
+  animation: char-wiggle 1.8s ease-in-out infinite;
+}
+
+/* Staggered delay for characters */
+.char:nth-child(1) { animation-delay: 0s; }
+.char:nth-child(2) { animation-delay: 0.1s; }
+.char:nth-child(3) { animation-delay: 0.2s; }
+.char:nth-child(4) { animation-delay: 0.3s; }
+.char:nth-child(5) { animation-delay: 0.4s; }
+.char:nth-child(6) { animation-delay: 0.5s; }
+.char:nth-child(7) { animation-delay: 0.6s; }
+.char:nth-child(8) { animation-delay: 0.7s; }
+.char:nth-child(9) { animation-delay: 0.8s; }
+.char:nth-child(10) { animation-delay: 0.9s; }
+.char:nth-child(11) { animation-delay: 1s; }
+.char:nth-child(12) { animation-delay: 1.1s; }
+.char:nth-child(13) { animation-delay: 1.2s; }
+.char:nth-child(14) { animation-delay: 1.3s; }
+.char:nth-child(15) { animation-delay: 1.4s; }
+.char:nth-child(16) { animation-delay: 1.5s; }
+.char:nth-child(17) { animation-delay: 1.6s; }
+.char:nth-child(18) { animation-delay: 1.7s; }
+.char:nth-child(19) { animation-delay: 1.8s; }
+.char:nth-child(20) { animation-delay: 1.9s; }
 
 /* Delay classes for staggered animations */
 .delay-100 {
