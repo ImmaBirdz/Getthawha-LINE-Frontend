@@ -204,13 +204,6 @@ function Home() {
                                             ? 'text-[#7E4300] text-xl font-athiti font-black mb-1'
                                             : 'text-[#7E4300] text-xl font-tiroTamil mb-1'
                                     }>{t.services}</div>
-                                    <div className={
-                                        language === 'TH'
-                                            ? 'text-[#A66B00] text-xs font-athiti font-medium mb-2'
-                                            : 'text-[#A66B00] text-xs font-tiroTamil mb-2'
-                                    }>
-                                        {language === 'TH' ? '🔄 ลากเพื่อจัดเรียงลำดับ' : '🔄 Drag to reorder'}
-                                    </div>
                                 </div>
                                 <ul className="flex flex-col gap-3 px-4 pb-2 list-none">
                                     {packages.filter(pkg => pkg.type === 'service').map((pkg) => (
@@ -248,13 +241,6 @@ function Home() {
                                             ? 'text-[#7E4300] text-xl font-athiti font-black mb-1'
                                             : 'text-[#7E4300] text-xl font-tiroTamil mb-1'
                                     }>{t.promotions}</div>
-                                    <div className={
-                                        language === 'TH'
-                                            ? 'text-[#A66B00] text-xs font-athiti font-medium mb-2'
-                                            : 'text-[#A66B00] text-xs font-tiroTamil mb-2'
-                                    }>
-                                        {language === 'TH' ? '🔄 ลากเพื่อจัดเรียงลำดับ' : '🔄 Drag to reorder'}
-                                    </div>
                                 </div>
                                 <ul className="flex flex-col gap-3 px-4 pb-2 list-none">
                                     {packages.filter(pkg => pkg.type === 'promotion').map((pkg) => (
