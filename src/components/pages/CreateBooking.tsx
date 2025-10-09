@@ -109,7 +109,6 @@ function MakeBooking() {
   }, []);
 
   const branchOptions = branches.map(branch => branch.name);
-  const serviceOptions = services.map(service => `${service.title} (${service.duration}min)`);
   const promotionOptions = promotions.map(promotion => promotion.title);
 
   return (
@@ -217,20 +216,21 @@ function MakeBooking() {
                     >
                       {t.clear}
                     </div>
-                    {serviceOptions.map((option) => (
+                    {services.map((service) => (
                       <div
-                        key={option}
+                        key={service.title}
                         onClick={() => {
-                          setSelectedService(option);
+                          setSelectedService(service.title);
                           setSelectedPromotion(t.choosePromotion); // Reset promotion
                           setDropdownOpen(null);
                         }}
-                        className={`px-3 py-2 ${language === 'TH' ? 'font-athiti font-black' : 'font-tiroTamil'} text-[#000000] text-base cursor-pointer rounded-full mx-2 my-1 text-left ${selectedService === option
+                        className={`px-3 py-2 ${language === 'TH' ? 'font-athiti font-black' : 'font-tiroTamil'} text-[#000000] text-base cursor-pointer rounded-full mx-2 my-1 text-left flex justify-between items-center ${selectedService === service.title
                           ? 'bg-[#E7E7E7] hover:bg-[#D7D7D7]'
                           : 'hover:bg-[#F5F5F5]'
                           }`}
                       >
-                        {option}
+                        <span>{service.title}</span>
+                        <span className="text-sm text-gray-600">({service.duration}min)</span>
                       </div>
                     ))}
                   </div>
@@ -429,7 +429,7 @@ function MakeBooking() {
                       const selectedBranchData = branches.find(b => b.name === selectedBranch);
                       let selectedPackageData = null;
                       if (selectedService !== t.chooseService) {
-                        selectedPackageData = services.find(s => `${s.title} (${s.duration}min)` === selectedService);
+                        selectedPackageData = services.find(s => s.title === selectedService);
                       } else if (selectedPromotion !== t.choosePromotion) {
                         selectedPackageData = promotions.find(p => p.title === selectedPromotion);
                       }
@@ -480,7 +480,7 @@ function MakeBooking() {
                     const selectedBranchData = branches.find(b => b.name === selectedBranch);
                     let selectedPackageData = null;
                     if (selectedService !== t.chooseService) {
-                      selectedPackageData = services.find(s => `${s.title} (${s.duration}min)` === selectedService);
+                      selectedPackageData = services.find(s => s.title === selectedService);
                     } else if (selectedPromotion !== t.choosePromotion) {
                       selectedPackageData = promotions.find(p => p.title === selectedPromotion);
                     }
