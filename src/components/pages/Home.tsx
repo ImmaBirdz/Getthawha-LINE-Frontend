@@ -130,7 +130,18 @@ function Home() {
                     type: pkg.type,
                     isActive: pkg.isActive,
                 }));
-                setPackages(mappedPackages);
+                
+                // Sort packages by price (lowest to highest) within each type
+                const sortedPackages = mappedPackages.sort((a: Package, b: Package) => {
+                    // First sort by type to keep services and promotions grouped
+                    if (a.type !== b.type) {
+                        return a.type.localeCompare(b.type);
+                    }
+                    // Then sort by price within each type (lowest to highest)
+                    return a.price - b.price;
+                });
+                
+                setPackages(sortedPackages);
             } catch (error) {
                 console.error('Failed to fetch packages:', error);
             }
