@@ -143,6 +143,83 @@
   }
 }
 
+@keyframes cute-wobble {
+  0% {
+    transform: rotate(0deg) scale(1);
+  }
+  15% {
+    transform: rotate(-8deg) scale(1.02);
+  }
+  30% {
+    transform: rotate(6deg) scale(1.01);
+  }
+  45% {
+    transform: rotate(-4deg) scale(1.03);
+  }
+  60% {
+    transform: rotate(3deg) scale(1.01);
+  }
+  75% {
+    transform: rotate(-2deg) scale(1.02);
+  }
+  90% {
+    transform: rotate(1deg) scale(1.01);
+  }
+  100% {
+    transform: rotate(0deg) scale(1);
+  }
+}
+
+/* Gentle sway animation */
+@keyframes gentle-sway {
+  0%, 100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(-3deg);
+  }
+  75% {
+    transform: rotate(3deg);
+  }
+}
+
+/* Playful bounce wobble */
+@keyframes bounce-wobble {
+  0% {
+    transform: rotate(0deg) translateY(0px);
+  }
+  10% {
+    transform: rotate(-5deg) translateY(-2px);
+  }
+  20% {
+    transform: rotate(4deg) translateY(-1px);
+  }
+  30% {
+    transform: rotate(-3deg) translateY(-2px);
+  }
+  40% {
+    transform: rotate(2deg) translateY(-1px);
+  }
+  50% {
+    transform: rotate(-1deg) translateY(-2px);
+  }
+  60% {
+    transform: rotate(1deg) translateY(-1px);
+  }
+  70% {
+    transform: rotate(-0.5deg) translateY(-1px);
+  }
+  80% {
+    transform: rotate(0.5deg) translateY(0px);
+  }
+  90% {
+    transform: rotate(-0.2deg) translateY(0px);
+  }
+  100% {
+    transform: rotate(0deg) translateY(0px);
+  }
+}
+
 /* Animation utility classes */
 .animate-shimmer-flow {
   animation: shimmer-flow 3s ease-in-out infinite;
@@ -174,6 +251,26 @@
 
 .animate-fade-in-up {
   animation: fade-in-up 0.6s ease-out forwards;
+}
+
+.animate-cute-wobble {
+  animation: cute-wobble 2.5s ease-in-out infinite;
+}
+
+.animate-gentle-sway {
+  animation: gentle-sway 3s ease-in-out infinite;
+}
+
+.animate-bounce-wobble {
+  animation: bounce-wobble 2s ease-in-out infinite;
+}
+
+.hover-wobble:hover {
+  animation: cute-wobble 1s ease-in-out;
+}
+
+.hover-sway:hover {
+  animation: gentle-sway 1.5s ease-in-out;
 }
 
 /* Delay classes for staggered animations */
