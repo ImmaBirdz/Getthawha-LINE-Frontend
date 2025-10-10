@@ -310,6 +310,7 @@ function MakeBooking() {
                   />
                   <input
                     type="date"
+                    min={new Date().toISOString().split('T')[0]}
                     onChange={(e) => {
                       const date = new Date(e.target.value);
                       const formattedDate = date.toLocaleDateString('en-GB', {
@@ -399,6 +400,25 @@ function MakeBooking() {
                         confirmButtonText: <span className={language === 'TH' ? 'font-athiti font-black' : 'font-tiroTamil'}>OK</span>
                       });
                       return;
+                    }
+
+                    // Validate past date (cannot book on past dates)
+                    if (selectedDate && selectedTime) {
+                      const [day, month, year] = selectedDate.split('/');
+                      const [hours, minutes] = selectedTime.split(':');
+                      const selectedDateTime = new Date(parseInt(year), parseInt(month) - 1, parseInt(day), parseInt(hours), parseInt(minutes));
+                      const now = new Date();
+
+                      if (selectedDateTime < now) {
+                        MySwal.fire({
+                          title: <div className={language === 'TH' ? 'font-athiti font-black text-[#7E4300] text-lg' : 'font-tiroTamil text-[#7E4300] text-lg'}>{language === 'TH' ? 'วันที่ไม่ถูกต้อง' : 'Invalid Date'}</div>,
+                          html: <div className={language === 'TH' ? 'font-athiti font-black text-[#6B4423] text-sm' : 'font-tiroTamil text-[#6B4423] text-sm'}>{language === 'TH' ? 'ไม่สามารถจองในวันที่ผ่านมาแล้วได้ กรุณาเลือกวันที่และเวลาในอนาคต' : 'Cannot book on past dates. Please select a future date and time.'}</div>,
+                          icon: "warning",
+                          confirmButtonColor: "#7E4300",
+                          confirmButtonText: <span className={language === 'TH' ? 'font-athiti font-black' : 'font-tiroTamil'}>OK</span>
+                        });
+                        return;
+                      }
                     }
 
                     // Validate time range (08:00 - 21:30) when confirming booking
