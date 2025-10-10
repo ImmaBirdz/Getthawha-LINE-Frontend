@@ -5,7 +5,7 @@ import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 
 // import API
-import { getBookings } from '../../services/BackendApi';
+import { getBookings, deleteBooking } from '../../services/BackendApi';
 
 // import translation
 import { useTranslation } from '../../context/TranslationContext';
@@ -220,19 +220,55 @@ function History() {
                   });
 
                   if (result.isConfirmed) {
-                    setBookings([]);
-                    // Show success message
-                    MySwal.fire({
-                      title: <div className={language === 'TH' ? 'font-athiti font-black text-[#7E4300] text-lg' : 'font-tiroTamil text-[#7E4300] text-lg'}>
-                        {language === 'TH' ? 'ลบสำเร็จ!' : 'Cleared!'}
-                      </div>,
-                      html: <div className={language === 'TH' ? 'font-athiti font-black text-[#6B4423] text-sm' : 'font-tiroTamil text-[#6B4423] text-sm'}>
-                        {language === 'TH' ? 'ประวัติการจองทั้งหมดถูกลบแล้ว' : 'All booking history has been cleared'}
-                      </div>,
-                      icon: "success",
-                      confirmButtonColor: "#7E4300",
-                      confirmButtonText: <span className={language === 'TH' ? 'font-athiti font-black' : 'font-tiroTamil'}>OK</span>
-                    });
+                    try {
+                      // Show loading
+                      MySwal.fire({
+                        title: <div className={language === 'TH' ? 'font-athiti font-black text-[#7E4300] text-lg' : 'font-tiroTamil text-[#7E4300] text-lg'}>
+                          {language === 'TH' ? 'กำลังลบ...' : 'Deleting...'}
+                        </div>,
+                        html: <div className={language === 'TH' ? 'font-athiti font-black text-[#6B4423] text-sm' : 'font-tiroTamil text-[#6B4423] text-sm'}>
+                          {language === 'TH' ? 'กรุณารอสักครู่' : 'Please wait...'}
+                        </div>,
+                        allowOutsideClick: false,
+                        didOpen: () => {
+                          MySwal.showLoading();
+                        }
+                      });
+
+                      // Delete all bookings from API
+                      const deletePromises = bookings.map(booking => deleteBooking(booking.id));
+                      await Promise.all(deletePromises);
+
+                      // Clear local state
+                      setBookings([]);
+                      
+                      // Show success message
+                      MySwal.fire({
+                        title: <div className={language === 'TH' ? 'font-athiti font-black text-[#7E4300] text-lg' : 'font-tiroTamil text-[#7E4300] text-lg'}>
+                          {language === 'TH' ? 'ลบสำเร็จ!' : 'Cleared!'}
+                        </div>,
+                        html: <div className={language === 'TH' ? 'font-athiti font-black text-[#6B4423] text-sm' : 'font-tiroTamil text-[#6B4423] text-sm'}>
+                          {language === 'TH' ? 'ประวัติการจองทั้งหมดถูกลบออกจากระบบแล้ว' : 'All booking history has been permanently deleted from the system'}
+                        </div>,
+                        icon: "success",
+                        confirmButtonColor: "#7E4300",
+                        confirmButtonText: <span className={language === 'TH' ? 'font-athiti font-black' : 'font-tiroTamil'}>OK</span>
+                      });
+                    } catch (error) {
+                      console.error('Failed to delete bookings:', error);
+                      // Show error message
+                      MySwal.fire({
+                        title: <div className={language === 'TH' ? 'font-athiti font-black text-[#7E4300] text-lg' : 'font-tiroTamil text-[#7E4300] text-lg'}>
+                          {language === 'TH' ? 'เกิดข้อผิดพลาด!' : 'Error!'}
+                        </div>,
+                        html: <div className={language === 'TH' ? 'font-athiti font-black text-[#6B4423] text-sm' : 'font-tiroTamil text-[#6B4423] text-sm'}>
+                          {language === 'TH' ? 'ไม่สามารถลบประวัติได้ กรุณาลองใหม่อีกครั้ง' : 'Failed to delete history. Please try again.'}
+                        </div>,
+                        icon: "error",
+                        confirmButtonColor: "#7E4300",
+                        confirmButtonText: <span className={language === 'TH' ? 'font-athiti font-black' : 'font-tiroTamil'}>OK</span>
+                      });
+                    }
                   }
                 }}
               >
