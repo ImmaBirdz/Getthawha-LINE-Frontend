@@ -195,8 +195,8 @@ function History() {
               <button 
                 className={
                   language === 'TH'
-                    ? 'w-full !bg-[#DCA900] text-white text-sm font-athiti font-black cursor-pointer py-2 px-4 rounded-lg border-none hover:scale-105 hover:opacity-90 transition-all'
-                    : 'w-full !bg-[#DCA900] text-white text-sm font-tiroTamil cursor-pointer py-2 px-4 rounded-lg border-none hover:scale-105 hover:opacity-90 transition-all'
+                    ? 'w-full !bg-[#DCA900] text-white text-sm font-athiti font-black cursor-pointer py-1 px-2 rounded-lg border-none hover:scale-105 hover:opacity-90 transition-all'
+                    : 'w-full !bg-[#DCA900] text-white text-sm font-tiroTamil cursor-pointer py-1 px-2 rounded-lg border-none hover:scale-105 hover:opacity-90 transition-all'
                 }
                 onClick={async () => {
                   // Show confirmation dialog before clearing all
