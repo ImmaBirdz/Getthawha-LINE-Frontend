@@ -1,6 +1,8 @@
 // import libraries
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
 
 // import API
 import { getBookings } from '../../services/BackendApi';
@@ -43,6 +45,8 @@ function History() {
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [loading, setLoading] = useState(true);
   const { t, language } = useTranslation();
+  
+  const MySwal = withReactContent(Swal);
 
   useEffect(() => {
     const fetchHistory = async () => {
@@ -184,6 +188,58 @@ function History() {
               </div>
             )}
           </div>
+
+          {/* Clear All Button - Only show if there are bookings - Placed at bottom */}
+          {bookings.length > 0 && (
+            <div className="w-full px-4 mt-6 mb-4">
+              <button 
+                className={
+                  language === 'TH'
+                    ? 'w-full !bg-[#DC3545] text-white text-sm font-athiti font-black cursor-pointer py-2 px-4 rounded-lg border-none hover:scale-105 hover:opacity-90 transition-all'
+                    : 'w-full !bg-[#DC3545] text-white text-sm font-tiroTamil cursor-pointer py-2 px-4 rounded-lg border-none hover:scale-105 hover:opacity-90 transition-all'
+                }
+                onClick={async () => {
+                  // Show confirmation dialog before clearing all
+                  const result = await MySwal.fire({
+                    title: <div className={language === 'TH' ? 'font-athiti font-black text-[#7E4300] text-lg' : 'font-tiroTamil text-[#7E4300] text-lg'}>
+                      {language === 'TH' ? 'ยืนยันการลบ' : 'Confirm Delete'}
+                    </div>,
+                    html: <div className={language === 'TH' ? 'font-athiti font-black text-[#6B4423] text-sm' : 'font-tiroTamil text-[#6B4423] text-sm'}>
+                      {language === 'TH' ? 'ต้องการลบประวัติการจองทั้งหมดหรือไม่? การดำเนินการนี้ไม่สามารถยกเลิกได้' : 'Are you sure you want to clear all history? This action cannot be undone.'}
+                    </div>,
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DC3545",
+                    cancelButtonColor: "#7E4300",
+                    confirmButtonText: <span className={language === 'TH' ? 'font-athiti font-black' : 'font-tiroTamil'}>
+                      {language === 'TH' ? 'ลบทั้งหมด' : 'Clear All'}
+                    </span>,
+                    cancelButtonText: <span className={language === 'TH' ? 'font-athiti font-black' : 'font-tiroTamil'}>
+                      {language === 'TH' ? 'ยกเลิก' : 'Cancel'}
+                    </span>
+                  });
+
+                  if (result.isConfirmed) {
+                    setBookings([]);
+                    // Show success message
+                    MySwal.fire({
+                      title: <div className={language === 'TH' ? 'font-athiti font-black text-[#7E4300] text-lg' : 'font-tiroTamil text-[#7E4300] text-lg'}>
+                        {language === 'TH' ? 'ลบสำเร็จ!' : 'Cleared!'}
+                      </div>,
+                      html: <div className={language === 'TH' ? 'font-athiti font-black text-[#6B4423] text-sm' : 'font-tiroTamil text-[#6B4423] text-sm'}>
+                        {language === 'TH' ? 'ประวัติการจองทั้งหมดถูกลบแล้ว' : 'All booking history has been cleared'}
+                      </div>,
+                      icon: "success",
+                      confirmButtonColor: "#7E4300",
+                      confirmButtonText: <span className={language === 'TH' ? 'font-athiti font-black' : 'font-tiroTamil'}>OK</span>
+                    });
+                  }
+                }}
+              >
+                {language === 'TH' ? 'ลบประวัติทั้งหมด' : 'Clear All History'}
+              </button>
+            </div>
+          )}
         </div>
       )}
     </div>
