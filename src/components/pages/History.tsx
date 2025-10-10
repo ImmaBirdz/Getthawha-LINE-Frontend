@@ -191,7 +191,7 @@ function History() {
 
           {/* Clear All Button - Only show if there are bookings - Placed at bottom */}
           {bookings.length > 0 && (
-            <div className="w-full px-4 mt-6 mb-4">
+            <div className="w-full px-8 mt-6 mb-4">
               <button 
                 className={
                   language === 'TH'
