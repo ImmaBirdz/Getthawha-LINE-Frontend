@@ -446,6 +446,8 @@ function MakeBooking() {
                     // Check for overlapping bookings
                     try {
                       const existingBookings = await getBookings();
+                      console.log('Existing bookings:', existingBookings);
+                      
                       const selectedBranchData = branches.find(b => b.name === selectedBranch);
                       let selectedPackageData = null;
                       if (selectedService !== t.chooseService) {
@@ -453,6 +455,9 @@ function MakeBooking() {
                       } else if (selectedPromotion !== t.choosePromotion) {
                         selectedPackageData = promotions.find(p => p.title === selectedPromotion);
                       }
+
+                      console.log('Selected branch:', selectedBranchData);
+                      console.log('Selected package:', selectedPackageData);
 
                       if (selectedBranchData && selectedPackageData) {
                         // Convert selected date and time to proper format for comparison
@@ -464,16 +469,39 @@ function MakeBooking() {
                         // Check for conflicts with existing bookings
                         const hasConflict = existingBookings.some((booking: any) => {
                           const existingDateTime = new Date(booking.date);
-                          const existingEndTime = new Date(existingDateTime.getTime() + (booking.duration * 60000));
+                          
+                          // Get duration from booking package data or default to 60 minutes
+                          let existingDuration = 60; // default 60 minutes
+                          if (booking.package && booking.package.duration) {
+                            existingDuration = booking.package.duration;
+                          } else if (booking.duration) {
+                            existingDuration = booking.duration;
+                          }
+                          
+                          const existingEndTime = new Date(existingDateTime.getTime() + (existingDuration * 60000));
 
-                          // Same branch check
-                          const sameBranch = booking.branch.id === selectedBranchData.id;
+                          // Same branch check - handle both id and name comparison
+                          const sameBranch = booking.branch && (
+                            booking.branch.id === selectedBranchData.id || 
+                            booking.branch.name === selectedBranchData.name
+                          );
 
                           // Same date check
                           const sameDate = existingDateTime.toDateString() === newBookingDateTime.toDateString();
 
-                          // Time overlap check
+                          // Time overlap check - more precise overlap detection
                           const timeOverlap = (newBookingDateTime < existingEndTime) && (newBookingEndTime > existingDateTime);
+
+                          console.log('Booking conflict check:', {
+                            existingDateTime: existingDateTime.toISOString(),
+                            existingEndTime: existingEndTime.toISOString(),
+                            newBookingDateTime: newBookingDateTime.toISOString(),
+                            newBookingEndTime: newBookingEndTime.toISOString(),
+                            sameBranch,
+                            sameDate,
+                            timeOverlap,
+                            conflict: sameBranch && sameDate && timeOverlap
+                          });
 
                           return sameBranch && sameDate && timeOverlap;
                         });
