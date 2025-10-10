@@ -338,10 +338,10 @@ function MakeBooking() {
                 <div className="relative inline-block">
                   <input
                     type="text"
-                    value={selectedTime}
+                    value={selectedTime ? "--:--" : ""}
                     onChange={(e) => setSelectedTime(e.target.value)}
                     className={`w-40 px-3 py-1 bg-[#E7E7E7] border border-[#818181] rounded-full ${language === 'TH' ? 'font-athiti font-black' : 'font-tiroTamil'} text-[#000000] text-base focus:outline-none focus:ring-2 focus:ring-[#8B4513]`}
-                    placeholder="08:00-21:30"
+                    placeholder="--:--"
                     readOnly
                   />
                   <input
