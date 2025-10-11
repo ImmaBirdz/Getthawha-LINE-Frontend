@@ -533,3 +533,80 @@
 .read-the-docs {
   color: #888;
 }
+
+/* SweetAlert2 responsive styles for better web page integration */
+.swal2-popup {
+  width: 90vw !important;
+  max-width: 600px !important;
+  min-height: 200px !important;
+  padding: 2rem !important;
+  border-radius: 1rem !important;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3) !important;
+}
+
+.swal2-title {
+  font-size: clamp(1.25rem, 3vw, 1.5rem) !important;
+  margin-bottom: 1rem !important;
+  line-height: 1.4 !important;
+}
+
+.swal2-html-container {
+  font-size: clamp(0.875rem, 2.5vw, 1rem) !important;
+  line-height: 1.5 !important;
+  margin: 1rem 0 !important;
+}
+
+.swal2-actions {
+  margin-top: 2rem !important;
+  justify-content: center !important;
+  gap: 1rem !important;
+}
+
+.swal2-confirm,
+.swal2-cancel {
+  min-width: 120px !important;
+  padding: 0.75rem 1.5rem !important;
+  font-size: clamp(0.875rem, 2.5vw, 1rem) !important;
+  border-radius: 0.5rem !important;
+  font-weight: 600 !important;
+}
+
+/* Mobile responsive adjustments */
+@media (max-width: 768px) {
+  .swal2-popup {
+    width: 95vw !important;
+    padding: 1.5rem !important;
+    margin: 1rem !important;
+  }
+  
+  .swal2-title {
+    font-size: 1.125rem !important;
+  }
+  
+  .swal2-html-container {
+    font-size: 0.875rem !important;
+  }
+  
+  .swal2-confirm,
+  .swal2-cancel {
+    min-width: 100px !important;
+    padding: 0.625rem 1.25rem !important;
+    font-size: 0.875rem !important;
+  }
+}
+
+/* Large screen adjustments */
+@media (min-width: 1024px) {
+  .swal2-popup {
+    max-width: 700px !important;
+    padding: 2.5rem !important;
+  }
+  
+  .swal2-title {
+    font-size: 1.75rem !important;
+  }
+  
+  .swal2-html-container {
+    font-size: 1.125rem !important;
+  }
+}
