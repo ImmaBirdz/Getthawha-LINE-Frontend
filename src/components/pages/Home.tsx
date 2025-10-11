@@ -5,24 +5,6 @@ import {
     useState
 } from 'react'
 import { useNavigate } from 'react-router-dom'
-import Swal from 'sweetalert2'
-import withReactContent from 'sweetalert2-react-content'
-
-// Extend Window interface for LIFF
-declare global {
-    interface Window {
-        liff: {
-            init: (config: any) => Promise<void>;
-            login: (config?: any) => void;
-            logout: () => Promise<void>;
-            isLoggedIn: () => boolean;
-            isInClient: () => boolean;
-            closeWindow: () => void;
-            getProfile: () => Promise<any>;
-            getAccessToken: () => string;
-        };
-    }
-}
 
 // import context
 import { ProfileContext } from '../../context/ProfileContext'
@@ -59,13 +41,6 @@ function Home() {
         isLiffLoaded
     } = useContext(ProfileContext)
     
-    // // Dummy profile for testing
-    // const profile = {
-    //     displayName: "John Doe",
-    //     pictureUrl: "https://via.placeholder.com/64x64/FF6B6B/FFFFFF?text=JD"
-    // };
-    // const isLiffLoaded = true;
-    
     // Translation context
     const {
         language,
@@ -75,85 +50,11 @@ function Home() {
     
     const navigate = useNavigate();
 
-    const MySwal = withReactContent(Swal);
-
     const [packages, setPackages] = useState<Package[]>([])
     const [selectedPackage, setSelectedPackage] = useState<Package | null>(null)
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [draggedItem, setDraggedItem] = useState<Package | null>(null)
     const [draggedOverItem, setDraggedOverItem] = useState<Package | null>(null)
-
-    // Proper logout function for LINE app (phone/iPad)
-    const handleLogout = async () => {
-        try {
-            // Show loading indicator
-            MySwal.fire({
-                title: <div className={language === 'TH' ? 'font-athiti font-black text-[#7E4300] text-lg' : 'font-tiroTamil text-[#7E4300] text-lg'}>
-                    {language === 'TH' ? 'กำลังออกจากระบบ...' : 'Logging out...'}
-                </div>,
-                allowOutsideClick: false,
-                showConfirmButton: false,
-                didOpen: () => {
-                    MySwal.showLoading();
-                }
-            });
-
-            // Check if LIFF is available and user is logged in
-            if (window.liff && window.liff.isLoggedIn()) {
-                // Perform LIFF logout
-                await window.liff.logout();
-
-                // Device-specific handling
-                if (window.liff.isInClient()) {
-                    // Running inside LINE app (phone/iPad)
-                    MySwal.fire({
-                        title: <div className={language === 'TH' ? 'font-athiti font-black text-[#7E4300] text-lg' : 'font-tiroTamil text-[#7E4300] text-lg'}>
-                            {language === 'TH' ? 'ออกจากระบบสำเร็จ' : 'Logged out successfully'}
-                        </div>,
-                        icon: 'success',
-                        timer: 1500,
-                        showConfirmButton: false,
-                        confirmButtonColor: "#7E4300"
-                    }).then(() => {
-                        // Close LIFF window for mobile devices
-                        window.liff.closeWindow();
-                    });
-                } else {
-                    // Running in external browser
-                    MySwal.fire({
-                        title: <div className={language === 'TH' ? 'font-athiti font-black text-[#7E4300] text-lg' : 'font-tiroTamil text-[#7E4300] text-lg'}>
-                            {language === 'TH' ? 'ออกจากระบบสำเร็จ' : 'Logged out successfully'}
-                        </div>,
-                        icon: 'success',
-                        timer: 1500,
-                        showConfirmButton: false,
-                        confirmButtonColor: "#7E4300"
-                    }).then(() => {
-                        // Redirect to home page
-                        window.location.href = '/';
-                    });
-                }
-            } else {
-                // Fallback when LIFF is not available or user not logged in
-                console.log('LIFF not available or user not logged in');
-                MySwal.close();
-                window.location.href = '/';
-            }
-        } catch (error) {
-            console.error('Logout error:', error);
-            MySwal.fire({
-                title: <div className={language === 'TH' ? 'font-athiti font-black text-[#7E4300] text-lg' : 'font-tiroTamil text-[#7E4300] text-lg'}>
-                    {language === 'TH' ? 'เกิดข้อผิดพลาด' : 'Error'}
-                </div>,
-                html: <div className={language === 'TH' ? 'font-athiti font-black text-[#6B4423] text-sm' : 'font-tiroTamil text-[#6B4423] text-sm'}>
-                    {language === 'TH' ? 'ไม่สามารถออกจากระบบได้ กรุณาลองใหม่อีกครั้ง' : 'Unable to logout. Please try again.'}
-                </div>,
-                icon: 'error',
-                confirmButtonColor: "#7E4300",
-                confirmButtonText: <span className={language === 'TH' ? 'font-athiti font-black' : 'font-tiroTamil'}>OK</span>
-            });
-        }
-    };
 
     const handlePackageClick = (pkg: Package) => {
         setSelectedPackage(pkg)
@@ -260,7 +161,7 @@ function Home() {
                             <div className="text-left pb-8">
                                 {/* Profile picture and name section */}
                                 <div className="flex items-center gap-4 mb-4 relative">
-                                    {/* Language selector and Logout */}
+                                    {/* Language selector */}
                                     <div className="absolute top-0 -right-4 flex flex-col items-end gap-2">
                                         {/* Language Selector */}
                                         <div className="text-sm text-[#673F00] font-tiroTamil">
@@ -277,46 +178,6 @@ function Home() {
                                             >
                                                 EN
                                             </span>
-                                        </div>
-                                        
-                                        {/* Logout Button */}
-                                        <div
-                                            onClick={() => {
-                                                MySwal.fire({
-                                                    title: <div className={language === 'TH' ? 'font-athiti font-black text-[#7E4300] text-lg' : 'font-tiroTamil text-[#7E4300] text-lg'}>
-                                                        {language === 'TH' ? 'ออกจากระบบ?' : 'Logout?'}
-                                                    </div>,
-                                                    html: <div className={language === 'TH' ? 'font-athiti font-black text-[#6B4423] text-sm' : 'font-tiroTamil text-[#6B4423] text-sm'}>
-                                                        {language === 'TH' ? 'คุณต้องการออกจากระบบหรือไม่?' : 'Do you want to logout?'}
-                                                    </div>,
-                                                    icon: "question",
-                                                    showCancelButton: true,
-                                                    confirmButtonColor: "#7E4300",
-                                                    cancelButtonColor: "#7E4300",
-                                                    confirmButtonText: <span className={language === 'TH' ? 'font-athiti font-black' : 'font-tiroTamil'}>
-                                                        {language === 'TH' ? 'ออกจากระบบ' : 'Yes, Logout'}
-                                                    </span>,
-                                                    cancelButtonText: <span className={language === 'TH' ? 'font-athiti font-black' : 'font-tiroTamil'}>
-                                                        {language === 'TH' ? 'ยกเลิก' : 'Cancel'}
-                                                    </span>
-                                                }).then((result) => {
-                                                    if (result.isConfirmed) {
-                                                        handleLogout();
-                                                    }
-                                                });
-                                            }}
-                                            className="flex items-center gap-1.5 px-2.5 py-1.5 bg-red-500 hover:bg-red-600 hover:scale-110 active:scale-95 active:bg-red-700 text-white text-xs rounded-full shadow-md hover:shadow-lg transition-all duration-200 cursor-pointer"
-                                            title={language === 'TH' ? 'ออกจากระบบ' : 'Logout'}
-                                        >
-                                            {/* Logout Icon */}
-                                            <svg 
-                                                className="w-3 h-3" 
-                                                fill="none" 
-                                                stroke="currentColor" 
-                                                viewBox="0 0 24 24"
-                                            >
-                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-                                            </svg>
                                         </div>
                                     </div>
 
