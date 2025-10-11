@@ -62,13 +62,6 @@ function MakeBooking() {
     isLiffLoaded
   } = useContext(ProfileContext);
 
-  // // Dummy profile for testing
-  // const profile = {
-  //   displayName: "John Doe",
-  //   pictureUrl: "https://via.placeholder.com/64x64/FF6B6B/FFFFFF?text=JD"
-  // };
-  // const isLiffLoaded = true;
-
   const MySwal = withReactContent(Swal);
 
   const [selectedBranch, setSelectedBranch] = useState(t.chooseBranch);
