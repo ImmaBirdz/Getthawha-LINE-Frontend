@@ -1,7 +1,7 @@
 // import libraries
 import { useNavigate } from 'react-router-dom';
 
-// import translation
+// import context
 import { useTranslation } from '../../context/TranslationContext';
 
 function NotFound() {
