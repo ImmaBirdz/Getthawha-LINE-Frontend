@@ -563,7 +563,7 @@
   bottom: 0 !important;
   width: 100vw !important;
   height: 100vh !important;
-  padding-left: 35vw !important;
+  padding-right: 15vw !important;
 }
 
 .swal2-container * {
