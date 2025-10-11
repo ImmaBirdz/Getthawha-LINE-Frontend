@@ -612,7 +612,7 @@
   
   .swal2-container {
     padding: 1rem !important;
-    justify-content: flex-start !important;
+    justify-content: center !important;
     padding-right: 60vw !important;
   }
   
@@ -653,7 +653,7 @@
   
   .swal2-container {
     padding: 1rem !important;
-    justify-content: flex-start !important;
+    justify-content: center !important;
     padding-right: 60vw !important;
   }
   
