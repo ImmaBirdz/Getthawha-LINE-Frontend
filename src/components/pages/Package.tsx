@@ -8,6 +8,7 @@ interface PackageProps {
     note?: string;
     onClick?: () => void;
     showOnlyTitle?: boolean;
+    
     // Drag and drop props
     draggable?: boolean;
     onDragStart?: (e: React.DragEvent) => void;

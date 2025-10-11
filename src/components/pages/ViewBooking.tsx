@@ -4,14 +4,13 @@ import {
   useState
 } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Swal from 'sweetalert2';
-import withReactContent from 'sweetalert2-react-content';
 
 // import API
 import { deleteBooking, getBookings } from '../../services/BackendApi';
 
-// import translation
+// import context
 import { useTranslation } from '../../context/TranslationContext';
+import { useAlert } from '../../context/AlertContext';
 
 // import assets
 import Backtohomepage from '../../assets/backhome.png';
@@ -49,7 +48,12 @@ function ViewBooking() {
   const navigate = useNavigate()
   const { t, language } = useTranslation()
 
-  const MySwal = withReactContent(Swal)
+  // Alert Context
+  const {
+    showDeleteBookingConfirmation,
+    showBookingDeletedAlert,
+    showDeleteErrorAlert
+  } = useAlert()
 
   // Function to check if booking is expired/timeout
   const isBookingTimeout = (bookingDate: string) => {
@@ -58,44 +62,23 @@ function ViewBooking() {
     return bookingDateTime < now;
   };
   const handleDeleteBooking = async (bookingId: string) => {
-    MySwal.fire({
-      title: <div className={language === 'TH' ? 'font-athiti font-black text-[#7E4300] text-lg' : 'font-tiroTamil text-[#7E4300] text-lg'}>{t.areYouSureDelete}</div>,
-      html: <div className={language === 'TH' ? 'font-athiti font-black text-[#6B4423] text-sm' : 'font-tiroTamil text-[#6B4423] text-sm'}>{t.cantChangeDecision}</div>,
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#7E4300",
-      cancelButtonColor: "#7E4300",
-      confirmButtonText: <span className={language === 'TH' ? 'font-athiti font-black' : 'font-tiroTamil'}>{t.yesDeleteIt}</span>,
-      cancelButtonText: <span className={language === 'TH' ? 'font-athiti font-black' : 'font-tiroTamil'}>{t.noKeepIt}</span>
-    }).then(async (result) => {
-      if (result.isConfirmed) {
-        try {
-          setDeleting(bookingId);
-          await deleteBooking(bookingId);
-          // Remove the deleted booking from the list
-          setBookings(bookings.filter(booking => booking.id !== bookingId));
-          
-          MySwal.fire({
-            title: <div className={language === 'TH' ? 'font-athiti font-black text-[#7E4300] text-lg' : 'font-tiroTamil text-[#7E4300] text-lg'}>{t.bookingCancelled}</div>,
-            html: <div className={language === 'TH' ? 'font-athiti font-black text-[#6B4423] text-sm' : 'font-tiroTamil text-[#6B4423] text-sm'}>{t.bookingDeleted}</div>,
-            icon: "success",
-            confirmButtonColor: "#7E4300",
-            confirmButtonText: <span className="font-tiroTamil">OK</span>
-          });
-        } catch (error) {
-          console.error('Failed to delete booking:', error);
-          MySwal.fire({
-            title: <div className={language === 'TH' ? 'font-athiti font-black text-[#7E4300] text-lg' : 'font-tiroTamil text-[#7E4300] text-lg'}>{t.error}</div>,
-            html: <div className={language === 'TH' ? 'font-athiti font-black text-[#6B4423] text-sm' : 'font-tiroTamil text-[#6B4423] text-sm'}>{t.failedToCancel}</div>,
-            icon: "error",
-            confirmButtonColor: "#7E4300",
-            confirmButtonText: <span className="font-tiroTamil">OK</span>
-          });
-        } finally {
-          setDeleting(null);
-        }
+    const shouldDelete = await showDeleteBookingConfirmation();
+    
+    if (shouldDelete) {
+      try {
+        setDeleting(bookingId);
+        await deleteBooking(bookingId);
+        // Remove the deleted booking from the list
+        setBookings(bookings.filter(booking => booking.id !== bookingId));
+        
+        showBookingDeletedAlert();
+      } catch (error) {
+        console.error('Failed to delete booking:', error);
+        showDeleteErrorAlert();
+      } finally {
+        setDeleting(null);
       }
-    });
+    }
   };
 
   useEffect(() => {

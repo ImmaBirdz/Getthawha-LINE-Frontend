@@ -15,20 +15,23 @@ import NotFound from './components/pages/NotFound'
 
 // import Translation Context
 import { TranslationProvider } from './context/TranslationContext'
+import { AlertProvider } from './context/AlertContext';
 
 function App() {
   return (
     <TranslationProvider>
-      <BrowserRouter>
-        <Header />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/booking" element={<ViewBooking />} />
-          <Route path="/booking/create" element={<CreateBooking />} />
-          <Route path="/booking/history" element={<History />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
+      <AlertProvider>
+        <BrowserRouter>
+          <Header />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/booking" element={<ViewBooking />} />
+            <Route path="/booking/create" element={<CreateBooking />} />
+            <Route path="/booking/history" element={<History />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </BrowserRouter>
+      </AlertProvider>
     </TranslationProvider>
   );
 }
