@@ -100,6 +100,10 @@ function Home() {
 
             // Check if LIFF is available and user is logged in
             if (window.liff && window.liff.isLoggedIn()) {
+                // Clear any stored user data
+                localStorage.clear();
+                sessionStorage.clear();
+                
                 // Perform LIFF logout
                 await window.liff.logout();
 
@@ -110,12 +114,15 @@ function Home() {
                         title: <div className={language === 'TH' ? 'font-athiti font-black text-[#7E4300] text-lg' : 'font-tiroTamil text-[#7E4300] text-lg'}>
                             {language === 'TH' ? 'ออกจากระบบสำเร็จ' : 'Logged out successfully'}
                         </div>,
+                        html: <div className={language === 'TH' ? 'font-athiti font-black text-[#6B4423] text-sm' : 'font-tiroTamil text-[#6B4423] text-sm'}>
+                            {language === 'TH' ? 'กรุณาเข้าสู่ระบบใหม่ผ่าน Rich Menu' : 'Please login again through Rich Menu'}
+                        </div>,
                         icon: 'success',
-                        timer: 1500,
+                        timer: 2500,
                         showConfirmButton: false,
                         confirmButtonColor: "#7E4300"
                     }).then(() => {
-                        // Close LIFF window for mobile devices
+                        // Close LIFF window and redirect to LINE rich menu
                         window.liff.closeWindow();
                     });
                 } else {
@@ -213,6 +220,41 @@ function Home() {
         setDraggedItem(null)
         setDraggedOverItem(null)
     }
+
+    // Check login status on component mount
+    useEffect(() => {
+        const checkLoginStatus = async () => {
+            if (window.liff) {
+                try {
+                    await window.liff.init({ liffId: process.env.REACT_APP_LIFF_ID || '' });
+                    
+                    // If not logged in, redirect to login through rich menu
+                    if (!window.liff.isLoggedIn()) {
+                        MySwal.fire({
+                            title: <div className={language === 'TH' ? 'font-athiti font-black text-[#7E4300] text-lg' : 'font-tiroTamil text-[#7E4300] text-lg'}>
+                                {language === 'TH' ? 'กรุณาเข้าสู่ระบบ' : 'Please Login'}
+                            </div>,
+                            html: <div className={language === 'TH' ? 'font-athiti font-black text-[#6B4423] text-sm' : 'font-tiroTamil text-[#6B4423] text-sm'}>
+                                {language === 'TH' ? 'กรุณาเข้าสู่ระบบผ่าน Rich Menu ของ LINE' : 'Please login through LINE Rich Menu'}
+                            </div>,
+                            icon: 'info',
+                            confirmButtonColor: "#7E4300",
+                            confirmButtonText: <span className={language === 'TH' ? 'font-athiti font-black' : 'font-tiroTamil'}>
+                                {language === 'TH' ? 'ตกลง' : 'OK'}
+                            </span>
+                        }).then(() => {
+                            window.liff.closeWindow();
+                        });
+                        return;
+                    }
+                } catch (error) {
+                    console.error('LIFF initialization error:', error);
+                }
+            }
+        };
+
+        checkLoginStatus();
+    }, [language, MySwal]);
 
     useEffect(() => {
         const fetchPackages = async () => {
