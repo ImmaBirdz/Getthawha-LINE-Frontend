@@ -100,43 +100,59 @@ function Home() {
 
             // Check if LIFF is available and user is logged in
             if (window.liff && window.liff.isLoggedIn()) {
-                // Clear all stored data to prevent auto-login
+                // Hard logout - Clear ALL data and reset to initial state
                 localStorage.clear();
                 sessionStorage.clear();
                 
-                // Set flag to prevent auto re-login
-                sessionStorage.setItem('userLoggedOut', 'true');
+                // Clear cookies and any cached data
+                if (document.cookie) {
+                    document.cookie.split(";").forEach((c) => {
+                        const eqPos = c.indexOf("=");
+                        const name = eqPos > -1 ? c.substr(0, eqPos) : c;
+                        document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/";
+                    });
+                }
+                
+                // Set permanent logout flag
+                sessionStorage.setItem('forceLogout', 'true');
+                sessionStorage.setItem('logoutTimestamp', Date.now().toString());
                 
                 // Perform LIFF logout
                 await window.liff.logout();
 
                 // Device-specific handling
                 if (window.liff.isInClient()) {
-                    // Running inside LINE app (phone/iPad)
+                    // Running inside LINE app (phone/iPad) - Force complete logout
                     MySwal.fire({
                         title: <div className={language === 'TH' ? 'font-athiti font-black text-[#7E4300] text-lg' : 'font-tiroTamil text-[#7E4300] text-lg'}>
                             {language === 'TH' ? 'ออกจากระบบสำเร็จ' : 'Logged out successfully'}
                         </div>,
+                        html: <div className={language === 'TH' ? 'font-athiti font-black text-[#6B4423] text-sm' : 'font-tiroTamil text-[#6B4423] text-sm'}>
+                            {language === 'TH' ? 'กรุณาเข้าสู่ระบบใหม่เพื่อใช้งาน' : 'Please login again to continue'}
+                        </div>,
                         icon: 'success',
-                        timer: 1500,
+                        timer: 2000,
                         showConfirmButton: false,
                         confirmButtonColor: "#7E4300"
                     }).then(() => {
-                        // Close LIFF window for mobile devices
+                        // Force close LIFF window for mobile devices
                         window.liff.closeWindow();
                     });
                 } else {
-                    // Running in external browser
+                    // Running in external browser (PC) - Same treatment as mobile
                     MySwal.fire({
                         title: <div className={language === 'TH' ? 'font-athiti font-black text-[#7E4300] text-lg' : 'font-tiroTamil text-[#7E4300] text-lg'}>
                             {language === 'TH' ? 'ออกจากระบบสำเร็จ' : 'Logged out successfully'}
                         </div>,
+                        html: <div className={language === 'TH' ? 'font-athiti font-black text-[#6B4423] text-sm' : 'font-tiroTamil text-[#6B4423] text-sm'}>
+                            {language === 'TH' ? 'กรุณาเข้าสู่ระบบใหม่เพื่อใช้งาน' : 'Please login again to continue'}
+                        </div>,
                         icon: 'success',
-                        timer: 1500,
+                        timer: 2000,
                         showConfirmButton: false,
                         confirmButtonColor: "#7E4300"
                     }).then(() => {
-                        // Redirect to home page
+                        // Redirect to authentication page
                         window.location.href = '/';
                     });
                 }
@@ -144,6 +160,10 @@ function Home() {
                 // Fallback when LIFF is not available or user not logged in
                 console.log('LIFF not available or user not logged in');
                 MySwal.close();
+                
+                // Force re-authentication for all platforms
+                sessionStorage.setItem('forceLogout', 'true');
+                sessionStorage.setItem('logoutTimestamp', Date.now().toString());
                 window.location.href = '/';
             }
         } catch (error) {
@@ -221,36 +241,40 @@ function Home() {
         setDraggedOverItem(null)
     }
 
-    // Check if user manually logged out and prevent auto-login
+    // Check if user force logged out and require re-authentication
     useEffect(() => {
-        const checkLogoutStatus = () => {
-            const userLoggedOut = sessionStorage.getItem('userLoggedOut');
+        const checkForceLogout = () => {
+            const forceLogout = sessionStorage.getItem('forceLogout');
+            const logoutTimestamp = sessionStorage.getItem('logoutTimestamp');
             
-            if (userLoggedOut === 'true') {
-                // User manually logged out, show message and prevent auto-login
+            if (forceLogout === 'true' && logoutTimestamp) {
+                // User was force logged out, require complete re-authentication
                 MySwal.fire({
                     title: <div className={language === 'TH' ? 'font-athiti font-black text-[#7E4300] text-lg' : 'font-tiroTamil text-[#7E4300] text-lg'}>
-                        {language === 'TH' ? 'คุณได้ออกจากระบบแล้ว' : 'You have been logged out'}
+                        {language === 'TH' ? 'เซสชันหมดอายุ' : 'Session Expired'}
                     </div>,
                     html: <div className={language === 'TH' ? 'font-athiti font-black text-[#6B4423] text-sm' : 'font-tiroTamil text-[#6B4423] text-sm'}>
-                        {language === 'TH' ? 'กรุณาเข้าสู่ระบบใหม่ผ่าน Rich Menu' : 'Please login again through Rich Menu'}
+                        {language === 'TH' ? 'กรุณาเข้าสู่ระบบใหม่เพื่อความปลอดภัย' : 'Please authenticate again for security'}
                     </div>,
-                    icon: 'info',
+                    icon: 'warning',
                     confirmButtonColor: "#7E4300",
                     confirmButtonText: <span className={language === 'TH' ? 'font-athiti font-black' : 'font-tiroTamil'}>
-                        {language === 'TH' ? 'ตกลง' : 'OK'}
+                        {language === 'TH' ? 'เข้าสู่ระบบใหม่' : 'Re-authenticate'}
                     </span>,
                     allowOutsideClick: false,
                     allowEscapeKey: false
                 }).then(() => {
-                    // Clear the logout flag
-                    sessionStorage.removeItem('userLoggedOut');
+                    // Clear all logout flags
+                    sessionStorage.removeItem('forceLogout');
+                    sessionStorage.removeItem('logoutTimestamp');
+                    localStorage.clear();
                     
-                    // Close LIFF window to go back to LINE
+                    // Force complete logout and re-authentication for ALL platforms
                     if (window.liff && window.liff.isInClient()) {
+                        // Close LIFF window to force re-entry through Rich Menu (mobile/tablet)
                         window.liff.closeWindow();
                     } else {
-                        // For external browser, redirect to home
+                        // In external browser (PC), redirect to authentication
                         window.location.href = '/';
                     }
                 });
@@ -258,8 +282,10 @@ function Home() {
             }
         };
 
-        // Small delay to ensure LIFF is initialized
-        setTimeout(checkLogoutStatus, 500);
+        // Delay to ensure LIFF and other components are ready
+        const timeoutId = setTimeout(checkForceLogout, 1000);
+        
+        return () => clearTimeout(timeoutId);
     }, [language, MySwal]);
 
     useEffect(() => {
