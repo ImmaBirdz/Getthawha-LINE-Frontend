@@ -11,7 +11,16 @@ import withReactContent from 'sweetalert2-react-content'
 // Extend Window interface for LIFF
 declare global {
     interface Window {
-        liff: any;
+        liff: {
+            init: (config: any) => Promise<void>;
+            login: (config?: any) => void;
+            logout: () => Promise<void>;
+            isLoggedIn: () => boolean;
+            isInClient: () => boolean;
+            closeWindow: () => void;
+            getProfile: () => Promise<any>;
+            getAccessToken: () => string;
+        };
     }
 }
 
@@ -73,6 +82,78 @@ function Home() {
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [draggedItem, setDraggedItem] = useState<Package | null>(null)
     const [draggedOverItem, setDraggedOverItem] = useState<Package | null>(null)
+
+    // Proper logout function for LINE app (phone/iPad)
+    const handleLogout = async () => {
+        try {
+            // Show loading indicator
+            MySwal.fire({
+                title: <div className={language === 'TH' ? 'font-athiti font-black text-[#7E4300] text-lg' : 'font-tiroTamil text-[#7E4300] text-lg'}>
+                    {language === 'TH' ? 'กำลังออกจากระบบ...' : 'Logging out...'}
+                </div>,
+                allowOutsideClick: false,
+                showConfirmButton: false,
+                didOpen: () => {
+                    MySwal.showLoading();
+                }
+            });
+
+            // Check if LIFF is available and user is logged in
+            if (window.liff && window.liff.isLoggedIn()) {
+                // Perform LIFF logout
+                await window.liff.logout();
+
+                // Device-specific handling
+                if (window.liff.isInClient()) {
+                    // Running inside LINE app (phone/iPad)
+                    MySwal.fire({
+                        title: <div className={language === 'TH' ? 'font-athiti font-black text-[#7E4300] text-lg' : 'font-tiroTamil text-[#7E4300] text-lg'}>
+                            {language === 'TH' ? 'ออกจากระบบสำเร็จ' : 'Logged out successfully'}
+                        </div>,
+                        icon: 'success',
+                        timer: 1500,
+                        showConfirmButton: false,
+                        confirmButtonColor: "#7E4300"
+                    }).then(() => {
+                        // Close LIFF window for mobile devices
+                        window.liff.closeWindow();
+                    });
+                } else {
+                    // Running in external browser
+                    MySwal.fire({
+                        title: <div className={language === 'TH' ? 'font-athiti font-black text-[#7E4300] text-lg' : 'font-tiroTamil text-[#7E4300] text-lg'}>
+                            {language === 'TH' ? 'ออกจากระบบสำเร็จ' : 'Logged out successfully'}
+                        </div>,
+                        icon: 'success',
+                        timer: 1500,
+                        showConfirmButton: false,
+                        confirmButtonColor: "#7E4300"
+                    }).then(() => {
+                        // Redirect to home page
+                        window.location.href = '/';
+                    });
+                }
+            } else {
+                // Fallback when LIFF is not available or user not logged in
+                console.log('LIFF not available or user not logged in');
+                MySwal.close();
+                window.location.href = '/';
+            }
+        } catch (error) {
+            console.error('Logout error:', error);
+            MySwal.fire({
+                title: <div className={language === 'TH' ? 'font-athiti font-black text-[#7E4300] text-lg' : 'font-tiroTamil text-[#7E4300] text-lg'}>
+                    {language === 'TH' ? 'เกิดข้อผิดพลาด' : 'Error'}
+                </div>,
+                html: <div className={language === 'TH' ? 'font-athiti font-black text-[#6B4423] text-sm' : 'font-tiroTamil text-[#6B4423] text-sm'}>
+                    {language === 'TH' ? 'ไม่สามารถออกจากระบบได้ กรุณาลองใหม่อีกครั้ง' : 'Unable to logout. Please try again.'}
+                </div>,
+                icon: 'error',
+                confirmButtonColor: "#7E4300",
+                confirmButtonText: <span className={language === 'TH' ? 'font-athiti font-black' : 'font-tiroTamil'}>OK</span>
+            });
+        }
+    };
 
     const handlePackageClick = (pkg: Package) => {
         setSelectedPackage(pkg)
@@ -218,11 +299,7 @@ function Home() {
                                                     </span>
                                                 }).then((result) => {
                                                     if (result.isConfirmed) {
-                                                        // LINE LIFF logout
-                                                        if (window.liff && window.liff.logout) {
-                                                            window.liff.logout();
-                                                            window.location.reload();
-                                                        }
+                                                        handleLogout();
                                                     }
                                                 });
                                             }}
