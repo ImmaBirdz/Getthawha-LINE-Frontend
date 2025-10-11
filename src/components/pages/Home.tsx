@@ -5,6 +5,15 @@ import {
     useState
 } from 'react'
 import { useNavigate } from 'react-router-dom'
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
+
+// Extend Window interface for LIFF
+declare global {
+    interface Window {
+        liff: any;
+    }
+}
 
 // import context
 import { ProfileContext } from '../../context/ProfileContext'
@@ -40,6 +49,14 @@ function Home() {
         profile,
         isLiffLoaded
     } = useContext(ProfileContext)
+    
+    // // Dummy profile for testing
+    // const profile = {
+    //     displayName: "John Doe",
+    //     pictureUrl: "https://via.placeholder.com/64x64/FF6B6B/FFFFFF?text=JD"
+    // };
+    // const isLiffLoaded = true;
+    
     // Translation context
     const {
         language,
@@ -48,6 +65,8 @@ function Home() {
     } = useTranslation();
     
     const navigate = useNavigate();
+
+    const MySwal = withReactContent(Swal);
 
     const [packages, setPackages] = useState<Package[]>([])
     const [selectedPackage, setSelectedPackage] = useState<Package | null>(null)
@@ -150,28 +169,76 @@ function Home() {
     }, []);
 
     return (
-        profile && isLiffLoaded ? (
+        profile && isLiffLoaded ?
+         (
                 <div className="App">
                     <div className="m-0 w-[360px] min-h-[90vh] bg-white flex flex-col relative">
                         <div className="px-6 py-4 text-[#D49F00] bg-white justify-evenly ">
                             <div className="text-left pb-8">
                                 {/* Profile picture and name section */}
                                 <div className="flex items-center gap-4 mb-4 relative">
-                                    {/* Language selector */}
-                                    <div className="absolute top-0 -right-4 text-sm text-[#673F00] font-tiroTamil">
-                                        <span
-                                            className={`cursor-pointer hover:text-[#DCA900] transition-colors ${language === 'TH' ? 'text-[#DCA900] font-bold' : ''}`}
-                                            onClick={() => setLanguage('TH')}
+                                    {/* Language selector and Logout */}
+                                    <div className="absolute top-0 -right-4 flex flex-col items-end gap-2">
+                                        {/* Language Selector */}
+                                        <div className="text-sm text-[#673F00] font-tiroTamil">
+                                            <span
+                                                className={`cursor-pointer hover:text-[#DCA900] transition-colors ${language === 'TH' ? 'text-[#DCA900] font-bold' : ''}`}
+                                                onClick={() => setLanguage('TH')}
+                                            >
+                                                TH
+                                            </span>
+                                            <span className="mx-1">|</span>
+                                            <span
+                                                className={`cursor-pointer hover:text-[#DCA900] transition-colors ${language === 'EN' ? 'text-[#DCA900] font-bold' : ''}`}
+                                                onClick={() => setLanguage('EN')}
+                                            >
+                                                EN
+                                            </span>
+                                        </div>
+                                        
+                                        {/* Logout Button */}
+                                        <div
+                                            onClick={() => {
+                                                MySwal.fire({
+                                                    title: <div className={language === 'TH' ? 'font-athiti font-black text-[#7E4300] text-lg' : 'font-tiroTamil text-[#7E4300] text-lg'}>
+                                                        {language === 'TH' ? 'ออกจากระบบ?' : 'Logout?'}
+                                                    </div>,
+                                                    html: <div className={language === 'TH' ? 'font-athiti font-black text-[#6B4423] text-sm' : 'font-tiroTamil text-[#6B4423] text-sm'}>
+                                                        {language === 'TH' ? 'คุณต้องการออกจากระบบหรือไม่?' : 'Do you want to logout?'}
+                                                    </div>,
+                                                    icon: "question",
+                                                    showCancelButton: true,
+                                                    confirmButtonColor: "#7E4300",
+                                                    cancelButtonColor: "#7E4300",
+                                                    confirmButtonText: <span className={language === 'TH' ? 'font-athiti font-black' : 'font-tiroTamil'}>
+                                                        {language === 'TH' ? 'ออกจากระบบ' : 'Yes, Logout'}
+                                                    </span>,
+                                                    cancelButtonText: <span className={language === 'TH' ? 'font-athiti font-black' : 'font-tiroTamil'}>
+                                                        {language === 'TH' ? 'ยกเลิก' : 'Cancel'}
+                                                    </span>
+                                                }).then((result) => {
+                                                    if (result.isConfirmed) {
+                                                        // LINE LIFF logout
+                                                        if (window.liff && window.liff.logout) {
+                                                            window.liff.logout();
+                                                            window.location.reload();
+                                                        }
+                                                    }
+                                                });
+                                            }}
+                                            className="flex items-center gap-1.5 px-2.5 py-1.5 bg-red-500 hover:bg-red-600 hover:scale-110 active:scale-95 active:bg-red-700 text-white text-xs rounded-full shadow-md hover:shadow-lg transition-all duration-200 cursor-pointer"
+                                            title={language === 'TH' ? 'ออกจากระบบ' : 'Logout'}
                                         >
-                                            TH
-                                        </span>
-                                        <span className="mx-1">|</span>
-                                        <span
-                                            className={`cursor-pointer hover:text-[#DCA900] transition-colors ${language === 'EN' ? 'text-[#DCA900] font-bold' : ''}`}
-                                            onClick={() => setLanguage('EN')}
-                                        >
-                                            EN
-                                        </span>
+                                            {/* Logout Icon */}
+                                            <svg 
+                                                className="w-3 h-3" 
+                                                fill="none" 
+                                                stroke="currentColor" 
+                                                viewBox="0 0 24 24"
+                                            >
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                                            </svg>
+                                        </div>
                                     </div>
 
                                     <div className="w-16 h-16 rounded-full bg-gray-300 overflow-hidden">
