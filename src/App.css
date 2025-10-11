@@ -563,6 +563,7 @@
   bottom: 0 !important;
   width: 100vw !important;
   height: 100vh !important;
+  padding-left: 35vw !important;
 }
 
 .swal2-container * {
@@ -611,7 +612,8 @@
   
   .swal2-container {
     padding: 1rem !important;
-    justify-content: center !important;
+    justify-content: flex-start !important;
+    padding-left: 30vw !important;
   }
   
   .swal2-title {
@@ -651,7 +653,8 @@
   
   .swal2-container {
     padding: 1rem !important;
-    justify-content: center !important;
+    justify-content: flex-start !important;
+    padding-left: 40vw !important;
   }
   
   .swal2-title {
